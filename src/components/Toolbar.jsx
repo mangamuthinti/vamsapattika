@@ -5,7 +5,6 @@ import { exportAsImage, exportAsPDF, printTree } from '../utils/exportUtils';
 import UserDropdown from './UserDropdown';
 import CustomConfirm from './CustomConfirm';
 import CustomAlert from './CustomAlert';
-import logo from '../assets/logo.jpeg';
 
 const Toolbar = () => {
   const { globalShowPhotos, setGlobalShowPhotos, familyData, resetTree, currentTreeName, userPlan, importData } = useFamilyTree();
@@ -279,7 +278,7 @@ const Toolbar = () => {
       <div className="top-toolbar">
       <div className="toolbar-left">
         <img
-          src={logo}
+          src="/images/logo.jpeg"
           alt="Family Tree Logo"
           style={{
             height: '50px',

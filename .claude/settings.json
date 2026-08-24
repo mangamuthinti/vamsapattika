@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx playwright *)",
+      "Bash(node /Users/kbcl804/Desktop/family-tree-react/screenshot.js)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(pkill -9 -f \"vite\")",
+      "Bash(npm install *)"
+    ]
+  }
+}

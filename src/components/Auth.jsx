@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
-import logo from '../assets/logo.jpeg';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -113,7 +112,7 @@ const Auth = () => {
           <div className="auth-box">
             <div className="auth-header">
               <img
-                src={logo}
+                src="/images/logo.jpeg"
                 alt="Vamsapattika Logo"
                 className="auth-logo-right"
               />

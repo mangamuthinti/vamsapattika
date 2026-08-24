@@ -2,18 +2,12 @@ import React from "react";
 import { steps } from "../data";
 import "./Process.css";
 
-import tree from "../assets/tree.png";
-import family from "../assets/family.png";
-import memories from "../assets/memories.png";
-import heritage from "../assets/heritage.png";
-import legacy from "../assets/newtree.jpg";
-
 const watermarkImages = [
-  tree,
-  family,
-  memories,
-  heritage,
-  legacy,
+  "/images/tree.png",
+  "/images/family.png",
+  "/images/memories.png",
+  "/images/heritage.png",
+  "/images/newtree.jpg",
 ];
 
 export default function Process() {

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./FAQ.css";
 
-import faqWatermark from "../assets/faq-watermark.png";
-
 const faqs = [
   {
     question: "What is VAMSHAPATTIKA?",
@@ -46,7 +44,7 @@ export default function FAQ() {
         <div
           className="faq-title-box"
           style={{
-            "--faq-watermark": `url(${faqWatermark})`,
+            "--faq-watermark": `url(/images/faq-watermark.png)`,
           }}
         >
           
