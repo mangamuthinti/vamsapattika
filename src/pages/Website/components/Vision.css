@@ -1,0 +1,1718 @@
+/* =========================================================
+   VISION SECTION
+   ========================================================= */
+
+.vision-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  padding: 80px 0 100px;
+
+  background:
+    radial-gradient(
+      circle at 15% 30%,
+      rgba(196, 154, 69, 0.08),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(16, 100, 63, 0.07),
+      transparent 38%
+    ),
+    #eef4f1;
+}
+
+
+/* =========================================================
+   VISION CONTAINER
+   DARK BLUE UI BOX
+   ========================================================= */
+
+.vision-container {
+  position: relative;
+
+  width: calc(96% - 90px);
+  max-width: 1400px;
+  min-height: 470px;
+
+  margin: 0 auto;
+  padding: 60px 55px 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 35px;
+
+  box-sizing: border-box;
+
+  background: #0b3550;
+
+  border: 2px solid #ffffff;
+  border-radius: 26px;
+
+  box-shadow:
+    0 20px 55px rgba(8, 47, 59, 0.15),
+    0 4px 15px rgba(8, 47, 59, 0.08);
+}
+
+
+/* =========================================================
+   VISION CONTENT
+   ========================================================= */
+
+.vision-content {
+  position: relative;
+  z-index: 5;
+
+  flex: 0 0 52%;
+  max-width: 700px;
+}
+
+
+/* =========================================================
+   OUR VISION CHECK BOX
+   ========================================================= */
+
+.vision-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 20px;
+  padding: 8px 15px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  box-sizing: border-box;
+}
+
+
+/* CHECK BOX BEFORE LABEL */
+
+.vision-label::before {
+  content: "✓";
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 21px;
+  height: 21px;
+
+  border-radius: 5px;
+
+  background: #c49a45;
+
+  color: #0b3550;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  letter-spacing: 0;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+.vision-content h2 {
+  margin: 0 0 20px;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  width: max-content;
+  max-width: none;
+
+  font-size: clamp(42px, 4.2vw, 58px);
+  line-height: 1.08;
+
+  color: #ffffff;
+
+  letter-spacing: -1px;
+}
+
+/* FORCE THE JSX <br> TO CREATE ONLY THE 2 LINES */
+.vision-content h2 br {
+  display: block;
+}
+.vision-content h2 span {
+  color: #c49a45;
+}
+
+/*
+   If the heading contains <br> tags from the JSX,
+   hide them so CSS controls the line wrapping.
+*/
+
+.vision-content h2 br {
+  display: block;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.vision-content p {
+  max-width: 620px;
+
+  margin: 0;
+
+  font-size: 17px;
+  line-height: 1.8;
+
+  color: rgba(255, 255, 255, 0.82);
+}
+
+
+/* =========================================================
+   FAMILY AREA
+   ========================================================= */
+
+.vision-progress-area {
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  max-width: 650px;
+
+  height: 190px;
+
+  margin-top: 70px;
+
+  overflow: visible;
+}
+
+
+/* =========================================================
+   HORIZONTAL LINE
+   ========================================================= */
+
+.vision-progress-line {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 82%;
+
+  height: 6px;
+
+  transform: translateY(-50%);
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  z-index: 1;
+}
+
+
+/* =========================================================
+   GOLD DASHES
+   ========================================================= */
+
+.vision-progress-line::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: 50%;
+
+  height: 2px;
+
+  transform: translateY(-50%);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #c49a45 0 20px,
+      transparent 20px 34px
+    );
+
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   LINE GLOW
+   ========================================================= */
+
+.vision-progress-line::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  top: -2px;
+
+  height: 10px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(16, 100, 63, 0.6),
+      rgba(196, 154, 69, 0.7),
+      rgba(16, 100, 63, 0.6)
+    );
+
+  opacity: 0.30;
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   GOLD START DOT
+   ========================================================= */
+
+.vision-progress-dot {
+  position: absolute;
+
+  left: 0;
+  top: 62%;
+
+  width: 16px;
+  height: 16px;
+
+  transform: translate(-3px, -50%);
+
+  border-radius: 50%;
+
+  background: #c49a45;
+
+  box-shadow:
+    0 0 0 7px rgba(196, 154, 69, 0.12),
+    0 0 20px rgba(196, 154, 69, 0.30);
+
+  z-index: 5;
+}
+
+
+/* =========================================================
+   FAMILY TRACK
+   ========================================================= */
+
+.family-running-track {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 190px;
+
+  overflow: visible;
+
+  pointer-events: none;
+
+  z-index: 10;
+}
+
+
+/* =========================================================
+   PERSON
+   ALL PEOPLE SAME MEDIUM SIZE
+   ========================================================= */
+
+.family-person {
+  position: absolute;
+
+  left: -150px;
+
+  top: 26px;
+
+  width: 90px;
+  height: 130px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  will-change: left, opacity, transform;
+}
+
+
+/* =========================================================
+   PERSON IMAGE
+   ========================================================= */
+
+.family-person img {
+  display: block;
+
+  width: 100%;
+  
+
+  object-fit: contain;
+
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  filter:
+    drop-shadow(
+      0 5px 5px rgba(0, 0, 0, 0.22)
+    );
+}
+
+
+/* =========================================================
+   FAMILY 3
+   SAME MEDIUM BASE SIZE
+   ========================================================= */
+
+.person-3 {
+  width: 90px;
+  height: 130px;
+
+  top: 26px;
+}
+
+
+/* =========================================================
+   GIRL
+   VISUALLY SLIGHTLY LARGER
+   ========================================================= */
+
+.person-4 img {
+  transform: scale(1.12);
+  transform-origin: bottom center;
+}
+
+
+/* =========================================================
+   COUPLE VISUAL SPACING
+   ========================================================= */
+
+.person-1,
+.person-2 {
+  width: 94px;
+}
+
+
+.person-3,
+.person-4 {
+  width: 94px;
+}
+
+
+/* =========================================================
+   ANIMATION SETTINGS
+   ========================================================= */
+
+.person-1,
+.person-2,
+.person-3,
+.person-4,
+.person-5,
+.person-6 {
+  animation-duration: 24s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* =========================================================
+   1. GRANDFATHER
+   POSITION = 76%
+   ========================================================= */
+
+.person-1 {
+  animation-name: grandfatherMove;
+}
+
+@keyframes grandfatherMove {
+
+  0% {
+    left: -150px;
+    opacity: 0;
+  }
+
+  3% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  8% {
+    left: 30%;
+    opacity: 1;
+  }
+
+  14% {
+    left: 55%;
+    opacity: 1;
+  }
+
+  20% {
+    left: 70%;
+    opacity: 1;
+  }
+
+  24% {
+    left: 68%;
+    opacity: 1;
+  }
+
+  /* STAY UNTIL EVERYONE ARRIVES */
+  82% {
+    left: 68%;
+    opacity: 1;
+  }
+
+  /* ALL PEOPLE START DISAPPEARING TOGETHER */
+  91% {
+    left: 68%;
+    opacity: 1;
+  }
+
+  95% {
+    left: 90%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -150px;
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   2. GRANDMOTHER
+   NEW CLOSER POSITION = 60%
+   ========================================================= */
+
+.person-2 {
+  animation-name: grandmotherMove;
+}
+
+@keyframes grandmotherMove {
+
+  0% {
+    left: -150px;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  17% {
+    left: -150px;
+    opacity: 0;
+  }
+
+  20% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  /* NEW CLOSER POSITION */
+  31% {
+    left: 60%;
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
+  34% {
+    left: 60%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* STAY */
+  82% {
+    left: 60%;
+    opacity: 1;
+  }
+
+  /* ALL DISAPPEAR TOGETHER */
+  91% {
+    left: 60%;
+    opacity: 1;
+  }
+
+  95% {
+    left: 84%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -150px;
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   3. BOY
+   POSITION = 43%
+   ========================================================= */
+
+.person-3 {
+  animation-name: familyThreeMove;
+}
+
+@keyframes familyThreeMove {
+
+  0% {
+    left: -160px;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  32% {
+    left: -160px;
+    opacity: 0;
+  }
+
+  35% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  /* POSITION */
+  46% {
+    left: 43%;
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
+  49% {
+    left: 43%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* STAY */
+  82% {
+    left: 43%;
+    opacity: 1;
+  }
+
+  /* ALL DISAPPEAR TOGETHER */
+  91% {
+    left: 43%;
+    opacity: 1;
+  }
+
+  95% {
+    left: 58%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -160px;
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   4. GIRL
+   POSITION = 37%
+   ========================================================= */
+
+.person-4 {
+  animation-name: familyFourMove;
+}
+
+@keyframes familyFourMove {
+
+  0% {
+    left: -150px;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  47% {
+    left: -150px;
+    opacity: 0;
+  }
+
+  50% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  61% {
+    left: 37%;
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
+  64% {
+    left: 37%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* STAY */
+  82% {
+    left: 37%;
+    opacity: 1;
+  }
+
+  /* ALL DISAPPEAR TOGETHER */
+  91% {
+    left: 37%;
+    opacity: 1;
+  }
+
+  95% {
+    left: 52%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -150px;
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   5. CHILD BOY
+   POSITION = 18%
+   ========================================================= */
+
+.person-5 {
+  animation-name: familyFiveMove;
+}
+
+@keyframes familyFiveMove {
+
+  0% {
+    left: -150px;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  62% {
+    left: -150px;
+    opacity: 0;
+  }
+
+  65% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  75% {
+    left: 18%;
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
+  78% {
+    left: 18%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* STAY */
+  82% {
+    left: 18%;
+    opacity: 1;
+  }
+
+  /* ALL DISAPPEAR TOGETHER */
+  91% {
+    left: 18%;
+    opacity: 1;
+  }
+
+  95% {
+    left: 33%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -150px;
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   6. CHILD
+   POSITION = 7%
+   ========================================================= */
+
+.person-6 {
+  animation-name: childMove;
+}
+
+@keyframes childMove {
+
+  0% {
+    left: -150px;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  76% {
+    left: -150px;
+    opacity: 0;
+  }
+
+  79% {
+    left: -20px;
+    opacity: 1;
+  }
+
+  87% {
+    left: 7%;
+    opacity: 1;
+    transform: translateY(-5px);
+  }
+
+  90% {
+    left: 7%;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* STAY UNTIL EVERYONE IS TOGETHER */
+  91% {
+    left: 7%;
+    opacity: 1;
+  }
+
+  /* ALL DISAPPEAR TOGETHER */
+  95% {
+    left: 22%;
+    opacity: 0;
+  }
+
+  98% {
+    left: 100%;
+    opacity: 0;
+  }
+
+  100% {
+    left: -150px;
+    opacity: 0;
+  }
+}
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .vision-container {
+    width: calc(100% - 40px);
+
+    padding: 55px 40px 60px;
+
+    gap: 25px;
+  }
+
+  .vision-content {
+    flex: 0 0 50%;
+  }
+
+  .vision-content h2 {
+    max-width: 620px;
+
+    font-size: clamp(38px, 4.5vw, 52px);
+  }
+
+  .vision-progress-area {
+    max-width: 540px;
+  }
+
+  .family-person {
+    width: 78px;
+    height: 112px;
+
+    top: 32px;
+  }
+
+  .person-1,
+  .person-2,
+  .person-3,
+  .person-4 {
+    width: 82px;
+  }
+
+  .person-4 img {
+    transform: scale(1.10);
+    transform-origin: bottom center;
+  }
+
+  .person-3 {
+    width: 82px;
+    height: 112px;
+
+    top: 32px;
+  }
+
+
+  /* =======================================================
+     TABLET GRANDFATHER
+     ======================================================= */
+
+  @keyframes grandfatherMove {
+
+    0% {
+      left: -120px;
+      opacity: 0;
+    }
+
+    3% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    8% {
+      left: 30%;
+      opacity: 1;
+    }
+
+    14% {
+      left: 55%;
+      opacity: 1;
+    }
+
+    20% {
+      left: 70%;
+      opacity: 1;
+    }
+
+    24%,
+    82% {
+      left: 76%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 76%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 90%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -120px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     TABLET GRANDMOTHER
+     ======================================================= */
+
+  @keyframes grandmotherMove {
+
+    0%,
+    17% {
+      left: -120px;
+      opacity: 0;
+    }
+
+    20% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    31%,
+    82% {
+      left: 69%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 69%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 84%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -120px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     TABLET BOY
+     NEW POSITION = 43%
+     ======================================================= */
+
+  @keyframes familyThreeMove {
+
+    0%,
+    32% {
+      left: -130px;
+      opacity: 0;
+    }
+
+    35% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    46%,
+    82% {
+      left: 43%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 43%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 58%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -130px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     TABLET GIRL
+     ======================================================= */
+
+  @keyframes familyFourMove {
+
+    0%,
+    47% {
+      left: -120px;
+      opacity: 0;
+    }
+
+    50% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    61%,
+    82% {
+      left: 37%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 37%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 52%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -120px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     TABLET CHILD BOY
+     NEW POSITION = 18%
+     ======================================================= */
+
+  @keyframes familyFiveMove {
+
+    0%,
+    62% {
+      left: -120px;
+      opacity: 0;
+    }
+
+    65% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    75%,
+    82% {
+      left: 18%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 18%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 33%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -120px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     TABLET CHILD
+     ======================================================= */
+
+  @keyframes childMove {
+
+    0%,
+    76% {
+      left: -120px;
+      opacity: 0;
+    }
+
+    79% {
+      left: -15px;
+      opacity: 1;
+    }
+
+    87%,
+    90% {
+      left: 7%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 7%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 22%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -120px;
+      opacity: 0;
+    }
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .vision-section {
+    padding: 65px 0 80px;
+  }
+
+  .vision-container {
+    width: calc(100% - 30px);
+
+    min-height: auto;
+
+    padding: 45px 25px 50px;
+
+    display: block;
+
+    border-radius: 22px;
+  }
+
+  .vision-content {
+    width: 100%;
+    max-width: none;
+  }
+
+  .vision-content h2 {
+    max-width: 100%;
+
+    font-size: 40px;
+    line-height: 1.08;
+  }
+
+  .vision-content p {
+    font-size: 15px;
+  }
+
+  .vision-progress-area {
+    width: 100%;
+    max-width: none;
+
+    height: 170px;
+
+    margin-top: 60px;
+  }
+
+  .family-running-track {
+    height: 170px;
+  }
+
+  .family-person {
+    width: 65px;
+    height: 92px;
+
+    top: 42px;
+  }
+
+  .person-1,
+  .person-2,
+  .person-3,
+  .person-4 {
+    width: 68px;
+  }
+
+  .person-4 img {
+    transform: scale(1.10);
+    transform-origin: bottom center;
+  }
+
+  .person-3 {
+    width: 68px;
+    height: 92px;
+
+    top: 42px;
+  }
+
+
+  /* =======================================================
+     MOBILE GRANDFATHER
+     ======================================================= */
+
+  @keyframes grandfatherMove {
+
+    0% {
+      left: -80px;
+      opacity: 0;
+    }
+
+    3% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    8% {
+      left: 30%;
+      opacity: 1;
+    }
+
+    14% {
+      left: 55%;
+      opacity: 1;
+    }
+
+    20% {
+      left: 70%;
+      opacity: 1;
+    }
+
+    24%,
+    82% {
+      left: 76%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 76%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 90%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     MOBILE GRANDMOTHER
+     ======================================================= */
+
+  @keyframes grandmotherMove {
+
+    0%,
+    17% {
+      left: -20px;
+      opacity: 0;
+    }
+
+    20% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    31%,
+    82% {
+      left: 69%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 69%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 84%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     MOBILE BOY
+     NEW POSITION = 43%
+     ======================================================= */
+
+  @keyframes familyThreeMove {
+
+    0%,
+    32% {
+      left: -90px;
+      opacity: 0;
+    }
+
+    35% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    46%,
+    82% {
+      left: 43%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 43%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 58%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -90px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     MOBILE GIRL
+     ======================================================= */
+
+  @keyframes familyFourMove {
+
+    0%,
+    47% {
+      left: -80px;
+      opacity: 0;
+    }
+
+    50% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    61%,
+    82% {
+      left: 37%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 37%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 52%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     MOBILE CHILD BOY
+     NEW POSITION = 18%
+     ======================================================= */
+
+  @keyframes familyFiveMove {
+
+    0%,
+    62% {
+      left: -80px;
+      opacity: 0;
+    }
+
+    65% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    75%,
+    82% {
+      left: 18%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 18%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 33%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+
+
+  /* =======================================================
+     MOBILE CHILD
+     ======================================================= */
+
+  @keyframes childMove {
+
+    0%,
+    76% {
+      left: -80px;
+      opacity: 0;
+    }
+
+    79% {
+      left: -8px;
+      opacity: 1;
+    }
+
+    87%,
+    90% {
+      left: 7%;
+      opacity: 1;
+    }
+
+    /* ALL DISAPPEAR TOGETHER */
+    91% {
+      left: 7%;
+      opacity: 1;
+    }
+
+    95% {
+      left: 22%;
+      opacity: 0;
+    }
+
+    98% {
+      left: 100%;
+      opacity: 0;
+    }
+
+    100% {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .vision-section {
+    padding: 55px 0 70px;
+  }
+
+  .vision-container {
+    width: calc(100% - 20px);
+
+    padding: 38px 18px 40px;
+
+    border-radius: 18px;
+  }
+
+  .vision-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+  }
+
+  .vision-content h2 {
+    max-width: 100%;
+
+    font-size: 34px;
+    line-height: 1.08;
+  }
+
+  .vision-content p {
+    font-size: 14px;
+  }
+
+  .vision-progress-area {
+    height: 145px;
+
+    margin-top: 50px;
+  }
+
+  .family-running-track {
+    height: 145px;
+  }
+
+  .family-person {
+    width: 55px;
+    height: 78px;
+
+    top: 38px;
+  }
+
+  .person-1,
+  .person-2,
+  .person-3,
+  .person-4 {
+    width: 58px;
+  }
+
+  .person-4 img {
+    transform: scale(1.08);
+    transform-origin: bottom center;
+  }
+
+  .person-3 {
+    width: 58px;
+    height: 78px;
+
+    top: 38px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .family-person {
+    animation: none !important;
+
+    opacity: 1;
+
+    transform: none !important;
+  }
+
+
+  /*
+    FINAL ORDER:
+    CHILD → CHILD BOY → GIRL → BOY → GRANDMOTHER → GRANDFATHER
+  */
+
+  .person-6 {
+    left: 7%;
+  }
+
+  .person-5 {
+    left: 18%;
+  }
+
+  .person-4 {
+    left: 37%;
+  }
+
+  .person-3 {
+    left: 43%;
+  }
+
+  .person-2 {
+    left: 69%;
+  }
+
+  .person-1 {
+    left: 76%;
+  }
+}
+
+
+/* =========================================================
+   COUPLE SPACING — FINAL
+   ========================================================= */
+
+/* GIRL + BOY — bring them close together */
+.person-4 {
+  margin-right: -10px;
+}
+
+
+/* GRANDMOTHER + GRANDFATHER — bring them close together */
+.person-2 {
+  margin-right: -10px;
+}
+
+
+/* =========================================================
+   COUPLE IMAGE ALIGNMENT
+   ========================================================= */
+
+.person-4 img,
+.person-3 img,
+.person-2 img,
+.person-1 img {
+  object-position: bottom center;
+}
+
+
+/* =========================================================
+   KEEP FEET ON THE ROAD
+   ========================================================= */
+
+.family-person {
+  align-items: flex-end;
+}
+
+.family-person img {
+  vertical-align: bottom;
+}

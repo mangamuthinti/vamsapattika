@@ -1,0 +1,930 @@
+/* =========================================================
+   VAMSAPATTIKA — ABOUT SECTION
+   UPDATED — NATURAL OLD-MAN STICKER / CONTINUOUS JUMP
+========================================================= */
+
+
+/* =========================================================
+   COMMON SECTION
+========================================================= */
+
+.section {
+  padding: 112px 0;
+}
+
+
+/* =========================================================
+   ABOUT SECTION
+========================================================= */
+
+.about {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  min-height: 560px;
+
+  background:
+    radial-gradient(
+      circle at 7% 45%,
+      rgba(0, 155, 181, 0.075),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 93% 80%,
+      rgba(239, 35, 128, 0.045),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fcfbf8 55%,
+      #f8f7f3 100%
+    );
+
+  color: #172844;
+}
+
+
+/* =========================================================
+   LEFT CIRCULAR BACKGROUND ORNAMENT
+========================================================= */
+
+.about::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  left: -245px;
+  top: 80px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(0, 155, 181, 0.08);
+
+  box-shadow:
+    0 0 0 35px rgba(0, 155, 181, 0.025),
+    0 0 0 75px rgba(0, 155, 181, 0.018),
+    0 0 0 120px rgba(0, 155, 181, 0.012);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   RIGHT BACKGROUND GLOW
+========================================================= */
+
+.about::after {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  right: -170px;
+  bottom: -150px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(239, 35, 128, 0.055),
+      transparent 70%
+    );
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   MAIN ABOUT GRID
+========================================================= */
+
+.about-grid {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+
+  grid-template-columns: 355px minmax(0, 1fr);
+
+  column-gap: 48px;
+
+  align-items: center;
+
+  width: min(1180px, calc(100% - 50px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   LEFT ABOUT AREA
+========================================================= */
+
+.about-vertical {
+  margin-left: 130px;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: flex-start;
+
+  width: 100%;
+
+  min-height: 355px;
+
+  padding-top: 0;
+
+  gap: 0;
+}
+
+
+/* =========================================================
+   ABOUT LABEL — ABOVE THE FAMILY / OLD MAN
+========================================================= */
+
+.about-label {
+  position: absolute;
+
+  top: -58px;
+  left: 170px;
+
+  z-index: 5;
+
+  color: #009bb5;
+
+  font-family:
+    "Cinzel",
+    Georgia,
+    serif;
+
+  font-size: 29px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  opacity: 0.95;
+}
+
+
+/* =========================================================
+   RED UNDERLINE
+========================================================= */
+
+.abo-underline {
+  text-decoration: underline;
+
+  text-decoration-color: #cd0505;
+
+  text-decoration-thickness: 3px;
+
+  text-underline-offset: 5px;
+}
+
+
+/* =========================================================
+   SMALL VERTICAL LINE ABOVE ABOUT
+========================================================= */
+
+.about-label::before {
+  content: "";
+
+  position: absolute;
+
+  width: 1px;
+  height: 48px;
+
+  left: 50%;
+  bottom: calc(100% + 10px);
+
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(0, 155, 181, 0.65)
+    );
+}
+
+
+/* =========================================================
+   OLD MAN
+========================================================= */
+
+.about-oldman {
+  position: relative;
+
+  width: 175px;
+
+  height: 335px;
+
+  margin-top: 0;
+  margin-left: 0;
+
+  overflow: visible;
+
+  border-radius: 0;
+
+  flex-shrink: 0;
+
+  background: transparent;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: center;
+}
+
+
+/* =========================================================
+   OLD MAN IMAGE
+   NATURAL TRANSPARENT CUTOUT
+   CONTINUOUS SLIGHT JUMP
+========================================================= */
+
+.about-oldman-image {
+  display: block;
+
+  width: auto;
+
+  margin-top: -60px;
+  margin-left: -99px;
+
+  height: 390px;
+
+  max-width: 280px;
+
+  object-position: center top;
+
+  background: transparent;
+
+  /*
+    Continuous gentle jumping movement.
+    The old man moves slightly upward and
+    returns smoothly.
+  */
+
+  animation:
+    oldManJump 1.8s ease-in-out infinite;
+
+  /*
+    Makes the movement originate naturally
+    from the bottom of the character.
+  */
+
+  transform-origin: center bottom;
+
+  /*
+    Keep the animation smooth.
+  */
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   OLD MAN JUMP ANIMATION
+========================================================= */
+
+@keyframes oldManJump {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  45% {
+    transform: translateY(-8px);
+  }
+
+  55% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   OLD MAN HOVER
+   Slightly enlarges without destroying jump animation
+========================================================= */
+
+.about-oldman:hover .about-oldman-image {
+  animation-name: oldManJumpHover;
+}
+
+
+/* =========================================================
+   HOVER + JUMP COMBINED
+========================================================= */
+
+@keyframes oldManJumpHover {
+
+  0% {
+    transform: translateY(0) scale(1.025);
+  }
+
+  45% {
+    transform: translateY(-8px) scale(1.025);
+  }
+
+  55% {
+    transform: translateY(-8px) scale(1.025);
+  }
+
+  100% {
+    transform: translateY(0) scale(1.025);
+  }
+
+}
+
+
+/* =========================================================
+   VAMSAPATTIKA
+   DIRECTLY BESIDE THE OLD MAN
+========================================================= */
+
+.about-logo-text {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 1px;
+
+  margin-top: -5px;
+
+  margin-left: 18px;
+
+  font-family:
+    "Cinzel",
+    Georgia,
+    serif;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  line-height: 0.91;
+
+  letter-spacing: 0;
+}
+
+
+/* =========================================================
+   VAMSAPATTIKA COLORS
+========================================================= */
+
+.about-logo-text span:nth-child(1) {
+  color: #cd0505;
+}
+
+.about-logo-text span:nth-child(2) {
+  color: #f30a7e;
+}
+
+.about-logo-text span:nth-child(3) {
+  color: #8fdb4b;
+}
+
+.about-logo-text span:nth-child(4) {
+  color: #f38f0d;
+}
+
+.about-logo-text span:nth-child(5) {
+  color: #2b024d;
+}
+
+.about-logo-text span:nth-child(6) {
+  color: #295303;
+}
+
+.about-logo-text span:nth-child(7) {
+  color: #009bb5;
+}
+
+.about-logo-text span:nth-child(8) {
+  color: #07000c;
+}
+
+.about-logo-text span:nth-child(9) {
+  color: #8fdb4b;
+}
+
+.about-logo-text span:nth-child(10) {
+  color: #009bb5;
+}
+
+.about-logo-text span:nth-child(11) {
+  color: #7435a8;
+}
+
+.about-logo-text span:nth-child(12) {
+  color: #8fdb4b;
+}
+
+
+/* =========================================================
+   LETTER HOVER
+========================================================= */
+
+.about-logo-text span {
+  display: block;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.about-logo-text span:hover {
+  transform: translateX(3px);
+
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   RIGHT CONTENT
+========================================================= */
+
+.about-content {
+  position: relative;
+
+  max-width: 820px;
+
+  padding-top: 0;
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
+
+.about-content h2 {
+  position: relative;
+
+  max-width: 760px;
+
+  margin: 0 0 23px;
+
+  color: #173873;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(42px, 4.35vw, 42px);
+
+  font-weight: 700;
+
+  line-height: 1.03;
+
+  letter-spacing: -1.8px;
+}
+
+
+/* =========================================================
+   HEADING GREEN / BLUE ACCENT
+========================================================= */
+
+.about-content h2::after {
+  content: "";
+
+  display: block;
+
+  width: 56px;
+  height: 3px;
+
+  margin-top: 21px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #009bb5 0%,
+      #8fdb4b 100%
+    );
+}
+
+
+/* =========================================================
+   LEAD PARAGRAPH
+========================================================= */
+
+.about-content .lead {
+  max-width: 780px;
+
+  margin: 0 0 17px;
+
+  color: #294464;
+
+  font-size:
+    clamp(16px, 1.25vw, 18px);
+
+  line-height: 1.75;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   LEAD STRONG TEXT
+========================================================= */
+
+.about-content .lead strong {
+  color: #173873;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   SECOND PARAGRAPH
+========================================================= */
+
+.about-content > p:not(.lead) {
+  max-width: 740px;
+
+  margin: 0 0 27px;
+
+  color: #64758c;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   HERITAGE QUOTE
+========================================================= */
+
+.heritage-quote {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  max-width: 690px;
+
+  min-height: 80px;
+
+  margin-top: 24px;
+
+  padding: 15px 24px;
+
+  border-left: 3px solid #ef2380;
+
+  border-radius: 0 14px 14px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(239, 35, 128, 0.055),
+      rgba(239, 35, 128, 0.018),
+      transparent
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+
+/* =========================================================
+   QUOTE SYMBOL
+========================================================= */
+
+.heritage-quote > span {
+  flex-shrink: 0;
+
+  margin-right: 15px;
+
+  color: #ef2380;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 43px;
+
+  font-weight: 700;
+
+  line-height: 0.8;
+}
+
+
+/* =========================================================
+   QUOTE TEXT
+========================================================= */
+
+.heritage-quote p {
+  margin: 0;
+
+  color: #173873;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .section {
+    padding: 82px 0;
+  }
+
+  .about-grid {
+    grid-template-columns: 310px minmax(0, 1fr);
+
+    column-gap: 35px;
+
+    width: min(930px, calc(100% - 40px));
+  }
+
+  .about-label {
+    left: 87px;
+
+    font-size: 25px;
+  }
+
+  .about-oldman {
+    width: 125px;
+    height: 270px;
+  }
+
+  .about-logo-text {
+    font-size: 27px;
+
+    margin-left: 14px;
+  }
+
+  .about-content h2 {
+    font-size: 44px;
+  }
+
+  .about-content .lead {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+
+    row-gap: 48px;
+
+    width: min(560px, calc(100% - 32px));
+  }
+
+
+  /* LEFT AREA */
+
+  .about-vertical {
+    width: 100%;
+
+    min-height: 285px;
+
+    justify-content: center;
+
+    align-items: flex-start;
+  }
+
+
+  .about-label {
+    top: -35px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 24px;
+  }
+
+
+  .about-oldman {
+    width: 200px;
+    height: 265px;
+  }
+
+
+  .about-logo-text {
+    font-size: 26px;
+
+    margin-left: 14px;
+  }
+
+
+  /* CONTENT */
+
+  .about-content {
+    max-width: 100%;
+  }
+
+
+  .about-content h2 {
+    max-width: 100%;
+
+    font-size:
+      clamp(34px, 8vw, 45px);
+
+    line-height: 1.06;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 20px;
+  }
+
+
+  .about-content h2::after {
+    width: 48px;
+
+    margin-top: 17px;
+  }
+
+
+  .about-content .lead {
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+
+  .about-content > p:not(.lead) {
+    font-size: 14px;
+
+    line-height: 1.75;
+  }
+
+
+  .heritage-quote {
+    min-height: auto;
+
+    padding: 14px 17px;
+
+    margin-top: 20px;
+  }
+
+
+  .heritage-quote > span {
+    font-size: 36px;
+
+    margin-right: 11px;
+  }
+
+
+  .heritage-quote p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+
+  .about-grid {
+    width: calc(100% - 28px);
+  }
+
+
+  .about-vertical {
+    min-height: 245px;
+  }
+
+
+  .about-label {
+    top: -30px;
+
+    font-size: 20px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  .about-label::before {
+    height: 35px;
+  }
+
+
+  .about-oldman {
+    width: 108px;
+    height: 230px;
+  }
+
+
+  .about-logo-text {
+    font-size: 22px;
+
+    margin-left: 11px;
+  }
+
+
+  .about-content h2 {
+    font-size: 31px;
+  }
+
+
+  .about-content .lead {
+    font-size: 15px;
+  }
+
+
+  .about-content > p:not(.lead) {
+    font-size: 13.5px;
+  }
+
+
+  .heritage-quote {
+    padding: 12px 13px;
+  }
+
+
+  .heritage-quote > span {
+    font-size: 32px;
+
+    margin-right: 9px;
+  }
+
+
+  .heritage-quote p {
+    font-size: 12.5px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   Keep accessibility support
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-logo-text span {
+    transition: none;
+  }
+
+  .about-oldman-image {
+    animation: none;
+  }
+}

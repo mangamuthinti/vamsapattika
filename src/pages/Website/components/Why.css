@@ -1,0 +1,388 @@
+/* =========================================================
+   WHY SECTION — PREMIUM DARK UI
+   ========================================================= */
+
+.why-section {
+  position: relative;
+  padding: 95px 20px;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      circle at 18% 30%,
+      rgba(0, 155, 181, 0.09),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 82% 70%,
+      rgba(116, 53, 168, 0.10),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0b1728 52%,
+      #101a2d 100%
+    );
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+.why-section::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,0.022) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.022) 1px,
+      transparent 1px
+    );
+
+  background-size: 44px 44px;
+
+  mask-image:
+    radial-gradient(
+      circle at center,
+      black 15%,
+      transparent 78%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle at center,
+      black 15%,
+      transparent 78%
+    );
+
+  pointer-events: none;
+  z-index: -2;
+}
+
+
+/* =========================================================
+   AMBIENT GLOW
+   ========================================================= */
+
+.why-section::after {
+  content: "";
+
+  position: absolute;
+
+  width: 360px;
+  height: 360px;
+
+  left: -150px;
+  bottom: -170px;
+
+  border-radius: 50%;
+
+  background: rgba(116, 53, 168, 0.12);
+
+  filter: blur(85px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.why-grid {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+
+  justify-content: center;
+}
+
+
+.why-copy {
+  position: relative;
+
+  width: min(800px, 100%);
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   SMALL TOP ACCENT
+   ========================================================= */
+
+.why-copy::before {
+  content: "";
+
+  display: block;
+
+  width: 42px;
+  height: 2px;
+
+  margin: 0 auto 24px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #61d7d8,
+      #8fdb4b
+    );
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 0 14px rgba(97,215,216,0.25);
+}
+
+
+/* =========================================================
+   KICKER
+   ========================================================= */
+
+.why-copy .kicker {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-bottom: 17px;
+
+  padding: 7px 14px;
+
+  color: #61d7d8;
+
+  background: rgba(97,215,216,0.07);
+
+  border: 1px solid rgba(97,215,216,0.16);
+
+  border-radius: 999px;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 2.3px;
+
+  text-transform: uppercase;
+}
+
+
+/* Small status dot */
+
+.why-copy .kicker::before {
+  content: "";
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #61d7d8;
+
+  box-shadow:
+    0 0 9px rgba(97,215,216,0.8);
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.why-copy h2 {
+  margin: 0 0 20px;
+
+  color: #f6f9fc;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(34px, 4vw, 59px);
+
+  font-weight: 600;
+
+  line-height: 1.08;
+
+  letter-spacing: -1px;
+}
+
+
+.why-copy h2 em {
+  color: #d28aff;
+
+  font-style: italic;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 0 24px rgba(210,138,255,0.15);
+}
+
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.why-copy p {
+  width: min(680px, 100%);
+
+  margin: 0 auto;
+
+  color: rgba(211,224,238,0.68);
+
+  font-size: 19px;
+
+  line-height: 1.8;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   SUBTLE BOTTOM LINE
+   ========================================================= */
+
+.why-copy p::after {
+  content: "";
+
+  display: block;
+
+  width: 90px;
+  height: 1px;
+
+  margin: 30px auto 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(97,215,216,0.45),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .why-section {
+    padding: 75px 20px;
+  }
+
+  .why-copy {
+    width: 92%;
+  }
+
+  .why-copy h2 {
+    font-size: 40px;
+  }
+
+  .why-copy p {
+    font-size: 13.5px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .why-section {
+    padding: 62px 16px;
+  }
+
+  .why-copy {
+    width: 100%;
+  }
+
+  .why-copy::before {
+    width: 34px;
+
+    margin-bottom: 19px;
+  }
+
+  .why-copy .kicker {
+    font-size: 8px;
+
+    padding: 6px 12px;
+
+    letter-spacing: 1.8px;
+  }
+
+  .why-copy h2 {
+    font-size: 31px;
+
+    letter-spacing: -0.6px;
+
+    margin-bottom: 17px;
+  }
+
+  .why-copy p {
+    font-size: 12.5px;
+
+    line-height: 1.75;
+  }
+
+  .why-copy p::after {
+    margin-top: 24px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .why-section {
+    padding: 52px 14px;
+  }
+
+  .why-copy h2 {
+    font-size: 28px;
+  }
+
+  .why-copy p {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .why-section::before,
+  .why-section::after {
+    animation: none;
+  }
+}

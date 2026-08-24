@@ -1,0 +1,398 @@
+/* =========================================================
+   VAMSAPATTIKA — MODERN DARK PREMIUM CTA SECTION
+   With Glassmorphism, Ambient Glows & Dynamic Bubbles
+========================================================= */
+
+:root {
+  /* Dark Canvas Colors */
+  --cta-bg-base: #060913;
+  --cta-bg-gradient: radial-gradient(circle at 50% 0%, #111a33 0%, #060913 70%);
+  
+  /* Accent Colors */
+  --cta-accent-purple: #7928ca;
+  --cta-accent-cyan: #00dfd8;
+  --cta-accent-emerald: #10b981;
+  
+  /* Text Colors */
+  --cta-text-white: #ffffff;
+  --cta-text-muted: #94a3b8;
+  
+  /* Glass & Borders */
+  --cta-glass-bg: rgba(255, 255, 255, 0.03);
+  --cta-glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  
+  /* Shadows */
+  --cta-btn-shadow: 0 10px 30px -10px rgba(0, 223, 216, 0.3);
+  --cta-btn-hover-shadow: 0 15px 35px -5px rgba(0, 223, 216, 0.5);
+  
+  /* Transitions */
+  --cta-transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================
+   MAIN SECTION CONTAINER
+   ========================================= */
+
+.cta-section {
+  position: relative;
+  padding: 120px 24px;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--cta-bg-base);
+  background-image: var(--cta-bg-gradient);
+  color: var(--cta-text-white);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  cursor: pointer;
+}
+
+/* =========================================
+   DYNAMIC BUBBLE EFFECT STYLES
+   ========================================= */
+
+.bubble-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 223, 216, 0.8), rgba(121, 40, 202, 0.3));
+  box-shadow: 0 0 12px rgba(0, 223, 216, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  animation: floatUp 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.3);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-400px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* =========================================
+   AMBIENT GLOWS & BACKGROUNDS
+   ========================================= */
+
+.cta-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cta-section::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 350px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(121, 40, 202, 0.25) 0%,
+    rgba(0, 223, 216, 0.15) 50%,
+    transparent 70%
+  );
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+  animation: ctaPulseGlow 8s ease-in-out infinite alternate;
+}
+
+.cta-tree-pattern {
+  position: absolute;
+  top: 50%;
+  right: -200px;
+  transform: translateY(-50%);
+  width: 750px;
+  height: 750px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 
+    0 0 0 60px rgba(255, 255, 255, 0.02),
+    0 0 0 140px rgba(255, 255, 255, 0.015),
+    0 0 0 240px rgba(255, 255, 255, 0.01);
+  pointer-events: none;
+  z-index: 0;
+  transition: var(--cta-transition);
+}
+
+.cta-section:hover .cta-tree-pattern {
+  transform: translateY(-50%) rotate(5deg) scale(1.02);
+  border-color: rgba(0, 223, 216, 0.12);
+}
+
+/* =========================================
+   CONTENT LAYOUT
+   ========================================= */
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* =========================================
+   KICKER / BADGE
+   ========================================= */
+
+.cta-section .kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  margin-bottom: 28px;
+  border: var(--cta-glass-border);
+  border-radius: 999px;
+  background: var(--cta-glass-bg);
+  color: var(--cta-text-white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: var(--cta-transition);
+}
+
+.cta-section .kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--cta-accent-emerald);
+  box-shadow: 0 0 10px var(--cta-accent-emerald);
+  animation: ctaDotPulse 2s infinite;
+}
+
+.cta-section .kicker:hover {
+  border-color: rgba(0, 223, 216, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 223, 216, 0.15);
+}
+
+/* =========================================
+   HEADING & TEXT
+   ========================================= */
+
+.cta-section h2 {
+  margin: 0 0 20px;
+  color: var(--cta-text-white);
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  transition: var(--cta-transition);
+}
+
+/* Gradient Emphasis Text (Fixed Syntax) */
+.cta-section h2 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--cta-accent-cyan), var(--cta-accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+.cta-section p {
+  max-width: 580px;
+  margin: 0 auto 44px;
+  color: var(--cta-text-muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  transition: var(--cta-transition);
+}
+
+.cta-section:hover p {
+  color: #cbd5e1;
+}
+
+/* =========================================
+   BUTTON ACTIONS
+   ========================================= */
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cta-actions .btn-primary,
+.cta-actions button:first-child,
+.cta-actions a:first-child {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 34px;
+  min-height: 52px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cta-accent-cyan), var(--cta-accent-purple));
+  
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--cta-btn-shadow);
+  transition: var(--cta-transition);
+}
+
+.cta-actions .btn-primary::after,
+.cta-actions button:first-child::after,
+.cta-actions a:first-child::after {
+  content: "→";
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.cta-actions .btn-primary:hover,
+.cta-actions button:first-child:hover,
+.cta-actions a:first-child:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--cta-btn-hover-shadow);
+  filter: brightness(1.1);
+}
+
+.cta-actions .btn-primary:hover::after,
+.cta-actions button:first-child:hover::after,
+.cta-actions a:first-child:hover::after {
+  transform: translateX(4px);
+}
+
+.cta-actions .btn-secondary,
+.cta-actions button:nth-child(2),
+.cta-actions a:nth-child(2) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 16px 30px;
+  border-radius: 999px;
+  border: var(--cta-glass-border);
+  background: var(--cta-glass-bg);
+  color: var(--cta-text-white);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: var(--cta-transition);
+}
+
+.cta-actions .btn-secondary:hover,
+.cta-actions button:nth-child(2):hover,
+.cta-actions a:nth-child(2):hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================================
+   KEYFRAME ANIMATIONS
+   ========================================= */
+
+@keyframes ctaDotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+@keyframes ctaPulseGlow {
+  0% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 768px) {
+  .cta-section {
+    padding: 80px 20px;
+  }
+
+  .cta-section h2 {
+    font-size: 2.3rem;
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    margin-bottom: 36px;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-actions .btn-primary,
+  .cta-actions .btn-secondary,
+  .cta-actions button,
+  .cta-actions a {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-section {
+    padding: 60px 16px;
+  }
+
+  .cta-section .kicker {
+    font-size: 0.75rem;
+    padding: 6px 14px;
+  }
+
+  .cta-section h2 {
+    font-size: 1.9rem;
+  }
+
+  .cta-section p {
+    font-size: 0.92rem;
+  }
+}

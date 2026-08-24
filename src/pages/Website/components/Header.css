@@ -1,0 +1,387 @@
+/* =========================================================
+   VAMSAPATTIKA HEADER
+   CLEAN HEADER • NO OUTER BORDER • ALL NAV ITEMS BUTTONS
+========================================================= */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 4px 18px rgba(20, 35, 60, 0.06);
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.nav {
+  width: 100%;
+  max-width: 1320px;
+  height: 88px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.brand {
+  width: 210px;
+  height: 76px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.brand img {
+  display: block;
+  width: 170px;
+  height: 88px;
+
+  object-position: left center;
+  mix-blend-mode: multiply;
+  transition: transform 0.25s ease;
+}
+
+.brand:hover img {
+  transform: scale(1.03);
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  margin-left: auto;
+}
+
+/* =========================================================
+   ALL NAV BUTTONS
+========================================================= */
+
+.nav-links button {
+  position: relative;
+  min-height: 42px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #172b4d;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.nav-links button:not(.nav-cta):hover {
+  color: #56347f;
+  background:
+    rgba(86, 52, 127, 0.08);
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   ACTIVE / FOCUS STYLE
+========================================================= */
+
+.nav-links button:not(.nav-cta):focus-visible {
+  outline: 2px solid #56347f;
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   START YOUR TREE BUTTON
+========================================================= */
+
+.nav-links .nav-cta {
+  min-height: 44px;
+  padding: 0 22px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      135deg,
+      #183866 0%,
+      #294d7e 100%
+    );
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow:
+    0 6px 16px rgba(24, 56, 102, 0.18);
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* CTA HOVER */
+
+.nav-links .nav-cta:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #56327e 0%,
+      #7547a0 100%
+    );
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 9px 22px rgba(86, 50, 126, 0.25);
+}
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.menu-toggle {
+  display: none;
+  width: 43px;
+  height: 43px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #f4f6f8;
+  color: #172b4d;
+  font-size: 23px;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.menu-toggle:hover {
+  background: #e9edf2;
+  transform: scale(1.04);
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .nav {
+    height: 84px;
+    padding: 0 22px;
+  }
+
+  .brand {
+    width: 185px;
+  }
+
+  .brand img {
+    width: 140px;
+    height: 62px;
+  }
+
+  .nav-links {
+    gap: 2px;
+  }
+
+  .nav-links button {
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .nav-links .nav-cta {
+    padding: 0 17px;
+    margin-left: 5px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+  .nav {
+    height: 76px;
+    padding: 0 18px;
+  }
+
+  .brand {
+    width: 175px;
+    height: 65px;
+  }
+
+  .brand img {
+    width: 135px;
+    height: 59px;
+  }
+
+  /* HIDE DESKTOP NAV */
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 76px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    margin: 0;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow:
+      0 12px 30px rgba(20, 35, 60, 0.14);
+    box-sizing: border-box;
+  }
+
+  /* OPEN MENU */
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  /* MOBILE BUTTONS */
+
+  .nav-links button {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 15px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .nav-links button:not(.nav-cta):hover {
+    background:
+      rgba(86, 52, 127, 0.08);
+  }
+
+  .nav-links .nav-cta {
+    margin: 4px 0 0;
+    min-height: 46px;
+  }
+
+  /* SHOW MENU BUTTON */
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .nav {
+    height: 70px;
+    padding: 0 14px;
+  }
+
+  .brand {
+    width: 155px;
+    height: 60px;
+  }
+
+  .brand img {
+    width: 125px;
+    height: 55px;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .nav-links {
+    top: 70px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.brand:focus-visible,
+.nav-links button:focus-visible,
+.menu-toggle:focus-visible {
+  outline:
+    2px solid #56327e;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .brand img,
+  .nav-links button,
+  .nav-links .nav-cta,
+  .menu-toggle {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   FIXED HEADER PAGE OFFSET
+========================================================= */
+
+body {
+  margin: 0;
+  padding-top: 88px;
+}
+
+@media (max-width: 1050px) {
+  body {
+    padding-top: 84px;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    padding-top: 76px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 70px;
+  }
+}

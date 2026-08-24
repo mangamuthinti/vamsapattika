@@ -1,0 +1,274 @@
+/* ========================================
+   FAQ SECTION & CONTAINER
+======================================== */
+
+.faq-section {
+  padding: 90px 20px;
+  /* Deep, elegant multi-layered background blend matching Privacy section */
+  background: radial-gradient(at 10% 20%, #f7f4ea 0px, transparent 50%),
+              radial-gradient(at 90% 80%, #e8f3f5 0px, transparent 50%),
+              #f1ebd9;
+}
+
+.faq-section .container {
+  max-width: 1130px;
+  margin: 0 auto;
+}
+
+/* ========================================
+   FAQ MASTER CONTAINER (HEADER + LIST)
+======================================== */
+
+.faq-title-box {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  /* Modern Glass/Card Styling */
+  background: #ffffff;
+  border-radius: 28px 28px 0 0; /* Rounded top corners */
+  padding: 48px 40px;
+  text-align: center;
+
+  /* Real UI Elevation Shadow */
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.02),
+    0 12px 24px -4px rgba(26, 43, 76, 0.06);
+  
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  outline: 1px solid rgba(26, 43, 76, 0.06);
+}
+
+/* Subtle Gradient Watermark Layer */
+.faq-title-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--faq-watermark);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+/* ========================================
+   TITLE CONTENT & TYPOGRAPHY
+======================================== */
+
+.faq-title-box .section-label,
+.faq-title-box h2 {
+  position: relative;
+  z-index: 2;
+}
+
+.faq-title-box .section-label {
+  display: inline-block;
+  color: var(--teal, #009bb5);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: rgba(0, 155, 181, 0.08);
+  border-radius: 20px;
+}
+
+.faq-title-box h2 {
+  margin: 0;
+  color: var(--navy, #1a2b4c);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 38px;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.faq-title-box h2 em {
+  color: #7435a8;
+  font-style: italic;
+}
+
+/* ========================================
+   QUESTIONS BOX (ACCORDION WRAPPER)
+======================================== */
+
+.faq-questions {
+  background: #ffffff;
+  border-radius: 0 0 28px 28px; /* Rounded bottom corners */
+  padding: 12px 24px 28px 24px;
+  
+  /* Matches bottom elevation of header card */
+  box-shadow: 
+    0 20px 40px -12px rgba(26, 43, 76, 0.12),
+    0 12px 24px -4px rgba(26, 43, 76, 0.06);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-top: none;
+  outline: 1px solid rgba(26, 43, 76, 0.06);
+}
+
+/* ========================================
+   FAQ ITEM & TRIGGER
+======================================== */
+
+.faq-item {
+  border-bottom: 1px dashed rgba(26, 43, 76, 0.12); /* Clean separator line */
+  transition: all 0.25s ease;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  min-height: 68px;
+  padding: 16px 20px;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 0;
+  background: transparent;
+
+  color: var(--navy, #1a2b4c);
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  text-align: left;
+
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover pill highlight on question button */
+.faq-question:hover {
+  background: #f8f9fa;
+  transform: translateX(4px);
+}
+
+.faq-question span:first-child {
+  padding-right: 20px;
+  white-space: normal; /* Mobile safe word wraps */
+}
+
+/* ========================================
+   PLUS / MINUS TRIGGER BADGE
+======================================== */
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(223, 33, 125, 0.08); /* Soft pink pill */
+  color: var(--pink, #df217d);
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  transition: all 0.25s ease;
+}
+
+.faq-question:hover .faq-icon {
+  background: var(--pink, #df217d);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(223, 33, 125, 0.3);
+}
+
+/* ========================================
+   ANSWER BODY
+======================================== */
+
+.faq-answer {
+  padding: 0 20px 24px 20px;
+  animation: faqOpen 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer p {
+  margin: 0;
+  color: var(--muted, #5d6b82);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* ========================================
+   ANIMATION
+======================================== */
+
+@keyframes faqOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+@media (max-width: 768px) {
+  .faq-section {
+    padding: 60px 16px;
+  }
+
+  .faq-title-box {
+    padding: 36px 24px;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .faq-title-box h2 {
+    font-size: 30px;
+  }
+
+  .faq-questions {
+    padding: 8px 16px 20px 16px;
+    border-radius: 0 0 20px 20px;
+  }
+
+  .faq-question {
+    min-height: 60px;
+    padding: 14px 12px;
+    font-size: 15px;
+  }
+
+  .faq-answer {
+    padding: 0 12px 18px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-title-box {
+    padding: 28px 16px;
+  }
+
+  .faq-title-box h2 {
+    font-size: 24px;
+  }
+
+  .faq-question {
+    font-size: 14px;
+  }
+
+  .faq-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+}
