@@ -211,16 +211,6 @@ const PropertiesPanel = () => {
       return;
     }
 
-    // Check file size (max 1MB = 1048576 bytes)
-    const maxSize = 1 * 1024 * 1024; // 1MB in bytes
-    if (file.size > maxSize) {
-      setAlertState({
-        isOpen: true,
-        message: `Image size is too large (${(file.size / 1024 / 1024).toFixed(2)}MB). Please upload an image smaller than 1MB.`
-      });
-      return;
-    }
-
     const reader = new FileReader();
     reader.onloadend = () => {
       console.log('📸 Photo loaded, opening NEW editor');

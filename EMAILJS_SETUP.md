@@ -11,7 +11,7 @@ The feedback form uses EmailJS to send emails. Follow these steps to set it up:
 1. Go to "Email Services" in the dashboard
 2. Click "Add New Service"
 3. Select Gmail (or your preferred email provider)
-4. Connect your Gmail account: **kdpreasad.siripireddi@gmail.com**
+4. Connect your Gmail account: **support@vamsapattika.com**
 5. Copy the **Service ID** (something like `service_xxxxxx`)
 #### service_m9f0av3
 
@@ -70,7 +70,7 @@ const PUBLIC_KEY = 'xxxxxxxxxxx';
 2. Export a tree (PNG, PDF, or Print)
 3. Fill out the feedback form
 4. Submit
-5. Check your email at **kdpreasad.siripireddi@gmail.com**
+5. Check your email at **support@vamsapattika.com**
 
 ## Troubleshooting
 - Make sure your Gmail account allows "less secure apps" or use App Password

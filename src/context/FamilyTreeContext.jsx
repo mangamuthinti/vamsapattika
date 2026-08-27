@@ -87,7 +87,39 @@ export const FamilyTreeProvider = ({ children }) => {
             // Load user plan from Firebase
             if (firebaseData.userPlan) {
               console.log('✅ Loaded userPlan from Firebase:', firebaseData.userPlan);
-              setUserPlan(firebaseData.userPlan);
+              // Convert 999999 back to Infinity (Firebase doesn't support Infinity)
+              let loadedPlan = {
+                ...firebaseData.userPlan,
+                maxCards: firebaseData.userPlan.maxCards === 999999 ? Infinity : firebaseData.userPlan.maxCards
+              };
+              console.log('📋 Converted plan:', loadedPlan);
+
+              // Check if plan has expired (for paid plans only)
+              if (loadedPlan.price > 0 && loadedPlan.expiryDate) {
+                const expiryDate = new Date(loadedPlan.expiryDate);
+                const now = new Date();
+                if (now > expiryDate) {
+                  console.log('⚠️ Plan has expired! Downgrading to Free plan');
+                  loadedPlan = {
+                    maxCards: 4,
+                    price: 0,
+                    name: 'Free',
+                    purchaseDate: null,
+                    expiryDate: null,
+                    previousPlan: loadedPlan.name // Keep track of expired plan
+                  };
+                  showAlert(`Your ${firebaseData.userPlan.name} plan has expired. Please renew to continue using premium features.`);
+                } else {
+                  // Calculate days remaining
+                  const daysRemaining = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+                  console.log(`📅 Plan expires in ${daysRemaining} days`);
+                  if (daysRemaining <= 30) {
+                    console.log(`⚠️ Plan expiring soon!`);
+                  }
+                }
+              }
+
+              setUserPlan(loadedPlan);
             } else {
               // Infer plan from current card count for backward compatibility
               const cardCount = Object.keys(cleanedData).length;
@@ -95,16 +127,16 @@ export const FamilyTreeProvider = ({ children }) => {
 
               if (cardCount <= 4) {
                 console.log('➡️ Setting Free plan (4 cards)');
-                setUserPlan({ maxCards: 4, price: 0, name: 'Free' });
+                setUserPlan({ maxCards: 4, price: 0, name: 'Free', purchaseDate: null, expiryDate: null });
               } else if (cardCount <= 10) {
-                console.log('➡️ Setting Silver plan (10 cards)');
-                setUserPlan({ maxCards: 10, price: 600, name: 'Silver' });
-              } else if (cardCount <= 15) {
-                console.log('➡️ Setting Gold plan (15 cards)');
-                setUserPlan({ maxCards: 15, price: 1500, name: 'Gold' });
+                console.log('➡️ Setting Silver plan (10 cards) - No dates, legacy plan');
+                setUserPlan({ maxCards: 10, price: 499, name: 'Silver', purchaseDate: null, expiryDate: null });
+              } else if (cardCount <= 18) {
+                console.log('➡️ Setting Gold plan (18 cards) - No dates, legacy plan');
+                setUserPlan({ maxCards: 18, price: 999, name: 'Gold', purchaseDate: null, expiryDate: null });
               } else {
-                console.log('➡️ Setting Diamond plan (unlimited cards)');
-                setUserPlan({ maxCards: Infinity, price: 2600, name: 'Diamond' });
+                console.log('➡️ Setting Diamond plan (unlimited cards) - No dates, legacy plan');
+                setUserPlan({ maxCards: Infinity, price: 1499, name: 'Diamond', purchaseDate: null, expiryDate: null });
               }
             }
           } else {
@@ -149,7 +181,13 @@ export const FamilyTreeProvider = ({ children }) => {
   });
 
   // Payment/Plan state - Default Free plan
-  const [userPlan, setUserPlan] = useState({ maxCards: 4, price: 0, name: 'Free' });
+  const [userPlan, setUserPlan] = useState({
+    maxCards: 4,
+    price: 0,
+    name: 'Free',
+    purchaseDate: null,
+    expiryDate: null
+  });
 
   const [showPricingModal, setShowPricingModal] = useState(false);
 
@@ -183,20 +221,48 @@ export const FamilyTreeProvider = ({ children }) => {
   // Check if user can add more cards
   const canAddCard = () => {
     const currentCardCount = Object.keys(familyData).length;
+    // Unlimited plans (Infinity or 999999) always allow adding
+    if (userPlan.maxCards === Infinity || userPlan.maxCards >= 999999) {
+      return true;
+    }
     return currentCardCount < userPlan.maxCards;
   };
 
   // Upgrade user plan
-  const upgradePlan = (maxCards, price) => {
+  const upgradePlan = async (maxCards, price) => {
     const tierName =
       maxCards === 4 ? 'Free' :
       maxCards === 10 ? 'Silver' :
-      maxCards === 15 ? 'Gold' :
+      maxCards === 18 ? 'Gold' :
       'Diamond';
 
-    const newPlan = { maxCards, price, name: tierName };
+    const purchaseDate = new Date().toISOString();
+    const expiryDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(); // 1 year from now
+
+    const newPlan = {
+      maxCards,
+      price,
+      name: tierName,
+      purchaseDate,
+      expiryDate
+    };
+    console.log('🔄 Upgrading plan to:', newPlan);
+    console.log('📋 Plan details - maxCards:', maxCards, 'isInfinity:', maxCards === Infinity);
+    console.log('📅 Purchase Date:', purchaseDate);
+    console.log('📅 Expiry Date:', expiryDate);
     setUserPlan(newPlan);
-    // Will be saved to Firebase automatically by the useEffect above
+
+    // Explicitly save to Firebase immediately
+    if (currentUser) {
+      console.log('💾 Saving plan update to Firebase immediately...');
+      try {
+        await saveFamilyTree(familyData, nextId, currentTreeId, currentTreeName, currentTreeCreatedAt, newPlan);
+        console.log('✅ Plan saved successfully to Firebase');
+      } catch (error) {
+        console.error('❌ Error saving plan to Firebase:', error);
+        throw error;
+      }
+    }
   };
 
   // Add a new person

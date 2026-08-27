@@ -61,6 +61,27 @@
     color: #333;
 }
 
+.feedback-info {
+    padding: 15px 20px;
+    background: #f0f9f4;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.feedback-info p {
+    margin: 0;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.feedback-info a {
+    text-decoration: none;
+}
+
+.feedback-info a:hover {
+    text-decoration: underline;
+}
+
 .feedback-form {
     padding: 20px;
 }

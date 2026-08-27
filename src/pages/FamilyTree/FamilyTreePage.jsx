@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { FamilyTreeProvider, useFamilyTree } from '../../context/FamilyTreeContext';
 import Toolbar from '../../components/Toolbar';
 import FamilyTree from '../../components/FamilyTree';
@@ -9,6 +9,8 @@ import PricingModal from '../../components/PricingModal';
 import Profile from '../../components/Profile';
 import CustomConfirm from '../../components/CustomConfirm';
 import CustomAlert from '../../components/CustomAlert';
+import WelcomeModal from '../../components/WelcomeModal';
+import { useAuth } from '../../context/AuthContext';
 
 // Profile Modal Context
 const ProfileModalContext = createContext();
@@ -16,9 +18,25 @@ export const useProfileModal = () => useContext(ProfileModalContext);
 
 function FamilyTreePageContent() {
   const { showPricingModal, setShowPricingModal, familyData, upgradePlan, userPlan } = useFamilyTree();
+  const { currentUser } = useAuth();
   const [showProfileModal, setShowProfileModal] = useState(false);
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
   const [confirmState, setConfirmState] = useState({ isOpen: false, message: '', onConfirm: null, tier: null });
   const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
+
+  // Show welcome modal on every login
+  useEffect(() => {
+    if (currentUser) {
+      // Small delay to let the page load first
+      setTimeout(() => {
+        setShowWelcomeModal(true);
+      }, 500);
+    }
+  }, [currentUser]);
+
+  const handleWelcomeClose = () => {
+    setShowWelcomeModal(false);
+  };
 
   const handleUpgrade = (tier) => {
     console.log('🟢 handleUpgrade called with tier:', tier);
@@ -32,14 +50,33 @@ function FamilyTreePageContent() {
       isOpen: true,
       message: `Upgrade to ${tier.name} plan for ₹${tier.price}?\n\nThis will allow you to add up to ${tier.max === Infinity ? 'unlimited' : tier.max} family cards.`,
       tier: tier,
-      onConfirm: () => {
+      onConfirm: async () => {
         console.log('✅ Calling upgradePlan:', tier.max, tier.price);
-        upgradePlan(tier.max, tier.price);
         setConfirmState({ isOpen: false, message: '', onConfirm: null, tier: null });
+
+        // Show saving message
         setAlertState({
           isOpen: true,
-          message: `Payment successful! You are now on the ${tier.name} plan.`
+          message: `Upgrading to ${tier.name} plan... Please wait.`
         });
+
+        try {
+          await upgradePlan(tier.max, tier.price);
+
+          // Wait a moment to ensure Firebase write completes
+          await new Promise(resolve => setTimeout(resolve, 1000));
+
+          setAlertState({
+            isOpen: true,
+            message: `✅ Payment successful! You are now on the ${tier.name} plan with ${tier.max === Infinity ? 'unlimited' : tier.max} cards. Your plan has been saved to the cloud.`
+          });
+        } catch (error) {
+          console.error('❌ Error upgrading plan:', error);
+          setAlertState({
+            isOpen: true,
+            message: `Error upgrading plan. Please try again.`
+          });
+        }
       }
     });
   };
@@ -95,6 +132,11 @@ function FamilyTreePageContent() {
             setAlertState({ isOpen: false, message: '' });
             setShowPricingModal(false);
           }}
+        />
+
+        <WelcomeModal
+          isOpen={showWelcomeModal}
+          onClose={handleWelcomeClose}
         />
       </div>
     </ProfileModalContext.Provider>

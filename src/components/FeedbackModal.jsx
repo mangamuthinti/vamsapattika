@@ -60,7 +60,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         user_email: email,
         rating: `${rating} stars`,
         feedback: feedback,
-        to_email: 'kdpreasad.siripireddi@gmail.com'
+        to_email: 'support@vamsapattika.com'
       };
 
       console.log('Sending feedback:', templateParams);
@@ -100,6 +100,16 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         <div className="feedback-modal-header">
           <h3>Send Feedback</h3>
           <button className="feedback-close-btn" onClick={onClose}>×</button>
+        </div>
+
+        <div className="feedback-info">
+          <p>
+            We'd love to hear from you! Share your thoughts, suggestions, or report issues.
+            You can also reach us directly at{' '}
+            <a href="mailto:support@vamsapattika.com" style={{ color: '#009444', fontWeight: '600' }}>
+              support@vamsapattika.com
+            </a>
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="feedback-form">

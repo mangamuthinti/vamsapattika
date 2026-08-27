@@ -21,7 +21,7 @@
   overflow-y: auto;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  padding: 12px;
 }
 
 .pricing-modal-close {
@@ -49,26 +49,27 @@
 
 .pricing-modal-header {
   text-align: center;
-  margin-bottom: 18px;
+  margin-bottom: 8px;
 }
 
 .pricing-modal-header h2 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .pricing-modal-header p {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
+  margin: 2px 0;
 }
 
 .pricing-tiers {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 @media (max-width: 1400px) {
@@ -87,12 +88,12 @@
   background: white;
   border: 1.5px solid #e5e5e5;
   border-radius: 8px;
-  padding: 16px 12px;
+  padding: 8px 8px;
   position: relative;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
-  min-height: 360px;
+  min-height: 260px;
 }
 
 .pricing-card:hover {
@@ -126,58 +127,58 @@
 }
 
 .pricing-card-icon {
-  font-size: 32px;
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.pricing-card-name {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-size: 24px;
   text-align: center;
   margin-bottom: 4px;
 }
 
+.pricing-card-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 2px;
+}
+
 .pricing-card-description {
-  font-size: 11px;
+  font-size: 10px;
   color: #666;
   text-align: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .pricing-card-price {
   text-align: center;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
   border-bottom: 1px solid #e5e5e5;
 }
 
 .price-amount {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: #1a1a1a;
   display: block;
 }
 
 .price-period {
-  font-size: 11px;
+  font-size: 10px;
   color: #666;
   display: block;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .pricing-card-features {
   flex: 1;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .feature {
   display: flex;
   align-items: center;
-  gap: 5px;
-  margin-bottom: 6px;
-  font-size: 12px;
+  gap: 4px;
+  margin-bottom: 3px;
+  font-size: 11px;
   color: #333;
 }
 
@@ -188,9 +189,9 @@
 
 .pricing-card-button {
   width: 100%;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -231,10 +232,40 @@
 
 .pricing-modal-footer {
   text-align: center;
-  padding-top: 12px;
+  padding-top: 8px;
   border-top: 1px solid #e5e5e5;
   color: #666;
   font-size: 11px;
+}
+
+.pricing-warning {
+  background: linear-gradient(135deg, #fff3cd 0%, #fff8e1 100%);
+  border: 2px solid #ffc107;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+}
+
+.warning-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.warning-text {
+  font-size: 11px;
+  color: #856404;
+  line-height: 1.4;
+}
+
+.warning-text strong {
+  color: #664d03;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {
@@ -251,6 +282,6 @@
   }
 
   .pricing-card {
-    min-height: 320px;
+    min-height: 260px;
   }
 }

@@ -6,7 +6,8 @@ import {
   onAuthStateChanged,
   updateProfile,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { ref, set, get, update } from 'firebase/database';
 import { auth, database } from '../firebase/config';
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
           level: 1,
           photo: null,
           photoShape: 'circle',
-          shape: 'apple',
+          shape: 'rounded',
           customColors: {},
           textStyles: {},
           link: null,
@@ -128,7 +129,7 @@ export const AuthProvider = ({ children }) => {
             level: 1,
             photo: null,
             photoShape: 'circle',
-            shape: 'apple',
+            shape: 'rounded',
             customColors: {},
             textStyles: {},
             link: null,
@@ -163,6 +164,17 @@ export const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  // Reset password
+  const resetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return true;
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      throw error;
+    }
+  };
+
   // Save family tree data to database
   const saveFamilyTree = async (familyData, nextId, treeId = 'default', treeName = 'My Vamsapattika', createdAt = null, userPlan = null) => {
     if (!currentUser) return;
@@ -183,19 +195,26 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
+    // Firebase doesn't support Infinity, so convert it to 999999
+    const userPlanToSave = userPlan ? {
+      ...userPlan,
+      maxCards: userPlan.maxCards === Infinity ? 999999 : userPlan.maxCards
+    } : { maxCards: 4, price: 0, name: 'Free' };
+
     const treeData = {
       id: treeId,
       name: treeName,
       familyData: familyData,
       nextId: nextId,
-      userPlan: userPlan || { maxCards: 4, price: 0, name: 'Free' },
+      userPlan: userPlanToSave,
       createdAt: finalCreatedAt,
       lastUpdated: new Date().toISOString()
     };
 
-    console.log('Saving tree to Firebase:', treeId, treeData);
+    console.log('💾 Saving tree to Firebase:', treeId);
+    console.log('📋 User Plan being saved:', treeData.userPlan);
     await set(ref(database, `familyTrees/${currentUser.uid}/${treeId}`), treeData);
-    console.log('Tree saved successfully');
+    console.log('✅ Tree saved successfully to Firebase');
   };
 
   // Load family tree data from database
@@ -315,7 +334,7 @@ export const AuthProvider = ({ children }) => {
         level: 1,
         photo: null,
         photoShape: 'circle',
-        shape: 'apple',
+        shape: 'rounded',
         customColors: {},
         textStyles: {},
         link: null,
@@ -420,6 +439,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signInWithGoogle,
     logout,
+    resetPassword,
     saveFamilyTree,
     loadFamilyTree,
     getAllTrees,

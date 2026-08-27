@@ -8,9 +8,7 @@ import CustomConfirm from './CustomConfirm';
 const PersonCard = ({ personId }) => {
   const { familyData, globalShowPhotos, updatePerson, removePerson, setModalState, setSelectedPerson, textToolbarState, setTextToolbarState } = useFamilyTree();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
-  const menuButtonRef = useRef(null);
   const activeTextElementRef = useRef(null);
   const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
   const [confirmState, setConfirmState] = useState({ isOpen: false, message: '', onConfirm: null });
@@ -132,18 +130,6 @@ const PersonCard = ({ personId }) => {
       setTextToolbarState({ isOpen: false, position: { x: 0, y: 0 }, personId: null, field: null });
     }
 
-    if (!menuOpen && menuButtonRef.current) {
-      const buttonRect = menuButtonRef.current.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-
-      // Position menu below button, accounting for scroll (like HTML version)
-      const top = buttonRect.bottom + scrollTop + 5;
-      const left = buttonRect.right + scrollLeft - 180; // 180 = menu width, align to right
-
-      setMenuPosition({ x: left, y: top });
-    }
-
     setMenuOpen(!menuOpen);
   };
 
@@ -259,17 +245,15 @@ const PersonCard = ({ personId }) => {
         style={cardStyle}
         onClick={handleCardClick}
       >
-      <button ref={menuButtonRef} className="card-menu-btn" onClick={toggleMenu}>⋮</button>
+      <button className="card-menu-btn" onClick={toggleMenu}>⋮</button>
 
-      {/* Render menu in portal to escape clip-path, just like HTML version */}
-      {ReactDOM.createPortal(
-        <div
-          className={`card-menu ${menuOpen ? 'show' : ''}`}
-          style={{
-            left: `${menuPosition.x}px`,
-            top: `${menuPosition.y}px`
-          }}
-        >
+      {/* Render menu in portal, centered on screen */}
+      {menuOpen && ReactDOM.createPortal(
+        <div className="card-menu-overlay" onClick={() => setMenuOpen(false)}>
+          <div
+            className="card-menu show"
+            onClick={(e) => e.stopPropagation()}
+          >
           <button className="menu-item" onClick={handleEdit}>
             <span className="menu-icon">✏️</span>
             <span>Edit Info</span>
@@ -298,6 +282,7 @@ const PersonCard = ({ personId }) => {
               <span>Remove</span>
             </button>
           )}
+          </div>
         </div>,
         document.body
       )}

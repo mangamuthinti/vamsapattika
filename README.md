@@ -7,7 +7,7 @@ A modern, interactive family tree application built with **React 18** and **Vite
 ### Installation
 
 ```bash
-cd family-tree-react
+cd vamsapattika
 npm install
 ```
 
@@ -62,7 +62,7 @@ npm run preview
 ## 📁 Project Structure
 
 ```
-family-tree-react/
+vamsapattika/
 ├── src/
 │   ├── components/
 │   │   ├── FamilyTree.jsx      # Main tree component with recursive rendering

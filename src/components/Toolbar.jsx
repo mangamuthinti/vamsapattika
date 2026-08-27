@@ -7,21 +7,28 @@ import CustomConfirm from './CustomConfirm';
 import CustomAlert from './CustomAlert';
 
 const Toolbar = () => {
-  const { globalShowPhotos, setGlobalShowPhotos, familyData, resetTree, currentTreeName, userPlan, importData } = useFamilyTree();
+  const { globalShowPhotos, setGlobalShowPhotos, familyData, userPlan, importData } = useFamilyTree();
   const { currentUser } = useAuth();
   const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
-  const [showRefreshWarning, setShowRefreshWarning] = useState(false);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
+  const [showInfoTooltip, setShowInfoTooltip] = useState(false);
 
   // Calculate remaining cards and style based on usage
   const currentCards = Object.keys(familyData).length;
   const maxCards = userPlan.maxCards;
-  const remainingCards = maxCards - currentCards;
-  const usagePercentage = (currentCards / maxCards) * 100;
+  const isUnlimited = maxCards === Infinity || maxCards >= 999999;
+  const remainingCards = isUnlimited ? Infinity : maxCards - currentCards;
+  const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
 
   const getCardCounterStyle = () => {
-    if (usagePercentage >= 100) {
+    if (isUnlimited) {
+      return {
+        background: 'rgba(76, 175, 80, 0.9)',
+        border: '1px solid rgba(255, 255, 255, 0.5)',
+        color: 'white'
+      };
+    } else if (usagePercentage >= 100) {
       return {
         background: 'rgba(244, 67, 54, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.5)',
@@ -41,6 +48,23 @@ const Toolbar = () => {
       };
     }
   };
+
+  // Calculate plan expiry
+  const getPlanExpiryInfo = () => {
+    if (!userPlan.expiryDate || userPlan.price === 0) return null;
+
+    const expiryDate = new Date(userPlan.expiryDate);
+    const now = new Date();
+    const daysRemaining = Math.ceil((expiryDate - now) / (1000 * 60 * 60 * 24));
+
+    if (daysRemaining <= 0) return null; // Already handled by expiry check on load
+    if (daysRemaining <= 30) {
+      return { daysRemaining, isExpiringSoon: true };
+    }
+    return { daysRemaining, isExpiringSoon: false };
+  };
+
+  const expiryInfo = getPlanExpiryInfo();
   const [confirmState, setConfirmState] = useState({
     isOpen: false,
     message: '',
@@ -55,7 +79,8 @@ const Toolbar = () => {
   const bgImages = [
     '/images/family-watermark.jpeg',
     '/images/family-watermark2.jpeg',
-    '/images/family-watermark3.jpeg'
+    '/images/rainbow.jpg',
+    '/images/tree.jpg'
   ];
 
   // Initialize Google Translate when component mounts
@@ -226,28 +251,14 @@ const Toolbar = () => {
     window.location.reload();
   };
 
-  const handleRefresh = () => {
-    setConfirmState({
-      isOpen: true,
-      message: 'Warning: This will reset the current tree to a single node. You may lose unsaved data. Are you sure you want to continue?',
-      onConfirm: () => {
-        resetTree();
-        setShowRefreshWarning(false);
-        setConfirmState({ isOpen: false, message: '', onConfirm: null });
-      }
-    });
-  };
-
   const changeBackground = () => {
     const nextIndex = (currentBgIndex + 1) % bgImages.length;
     setCurrentBgIndex(nextIndex);
-    const bgElement = document.body;
-    bgElement.style.setProperty('--bg-image', `url('${bgImages[nextIndex]}')`);
 
-    // Update the CSS directly
+    // Update the CSS directly for .App::before
     const style = document.createElement('style');
     style.textContent = `
-      body::before {
+      .App::before {
         background-image: url('${bgImages[nextIndex]}') !important;
       }
     `;
@@ -292,28 +303,79 @@ const Toolbar = () => {
         />
         {currentUser && (
           <>
-            <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', marginLeft: '12px' }}>
-              {currentTreeName}
-            </span>
-            <span
-              style={{
-                fontSize: '11px',
-                marginLeft: '15px',
-                padding: '6px 12px',
-                borderRadius: '16px',
-                fontWeight: '600',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.3s ease',
-                whiteSpace: 'nowrap',
-                ...getCardCounterStyle()
-              }}
-              title={`You are using ${currentCards} out of ${maxCards} cards in your ${userPlan.name} plan`}
-            >
-              <span style={{ fontSize: '14px' }}>📊</span>
+            {/* Tree name removed - One tree per user policy */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: '12px' }}>
+              <button
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  borderRadius: '50%',
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: 'white',
+                  fontSize: '14px',
+                  transition: 'all 0.2s',
+                  position: 'relative'
+                }}
+                onMouseEnter={() => setShowInfoTooltip(true)}
+                onMouseLeave={() => setShowInfoTooltip(false)}
+                onClick={() => setShowInfoTooltip(!showInfoTooltip)}
+                title="About your family tree"
+              >
+                ℹ️
+                {showInfoTooltip && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '35px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: 'white',
+                      color: '#333',
+                      padding: '12px 16px',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                      fontSize: '12px',
+                      width: '280px',
+                      zIndex: 1001,
+                      textAlign: 'left',
+                      lineHeight: '1.5',
+                      fontWeight: '400'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <strong style={{ display: 'block', marginBottom: '6px', fontSize: '13px' }}>
+                      One Tree Per Account
+                    </strong>
+                    You have one comprehensive family tree. Upgrade your plan to add more family members (cards) to your tree.
+                  </div>
+                )}
+              </button>
+
+              <span
+                style={{
+                  fontSize: '11px',
+                  padding: '6px 12px',
+                  borderRadius: '16px',
+                  fontWeight: '600',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.3s ease',
+                  whiteSpace: 'nowrap',
+                  ...getCardCounterStyle()
+                }}
+                title={isUnlimited ? `Unlimited plan - ${currentCards} cards created` : `You are using ${currentCards} out of ${maxCards} cards in your ${userPlan.name} plan`}
+              >
+              <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
               <span>
-                {remainingCards === 0 ? (
+                {isUnlimited ? (
+                  <>{currentCards} cards (Unlimited)</>
+                ) : remainingCards === 0 ? (
                   <>Limit: {currentCards}/{maxCards} cards</>
                 ) : remainingCards <= 2 ? (
                   <>{remainingCards} left ({currentCards}/{maxCards})</>
@@ -321,12 +383,37 @@ const Toolbar = () => {
                   <>{currentCards}/{maxCards} cards</>
                 )}
               </span>
-              {usagePercentage >= 80 && (
+              {!isUnlimited && usagePercentage >= 80 && (
                 <span style={{ fontSize: '14px' }}>
                   {usagePercentage >= 100 ? '⚠️' : '⏰'}
                 </span>
               )}
             </span>
+
+            {/* Plan Expiry Warning */}
+            {expiryInfo && expiryInfo.isExpiringSoon && (
+              <span
+                style={{
+                  fontSize: '11px',
+                  marginLeft: '10px',
+                  padding: '6px 12px',
+                  borderRadius: '16px',
+                  fontWeight: '600',
+                  background: 'rgba(255, 152, 0, 0.9)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  color: 'white',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap'
+                }}
+                title={`Your ${userPlan.name} plan expires on ${new Date(userPlan.expiryDate).toLocaleDateString()}`}
+              >
+                <span style={{ fontSize: '14px' }}>⏰</span>
+                <span>Renew in {expiryInfo.daysRemaining} days</span>
+              </span>
+            )}
+            </div>
           </>
         )}
       </div>
@@ -344,15 +431,6 @@ const Toolbar = () => {
             <span className="toggle-slider"></span>
           </label>
         </div>
-
-        {/* Refresh Button - Hidden */}
-        <button
-          className="btn-refresh-toolbar"
-          onClick={handleRefresh}
-          title="Reset to single node"
-        >
-          Refresh
-        </button>
 
         {/* Background Change Button */}
         <button
