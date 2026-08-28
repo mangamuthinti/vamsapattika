@@ -723,6 +723,10 @@
     padding: 70px 0;
   }
 
+  .about {
+    overflow: hidden;
+  }
+
   .about-grid {
     grid-template-columns: 1fr;
 
@@ -739,9 +743,15 @@
 
     min-height: 285px;
 
+    margin-left: 0;
+
     justify-content: center;
 
     align-items: flex-start;
+
+    gap: 0;
+
+    overflow: visible;
   }
 
 
@@ -758,13 +768,39 @@
   .about-oldman {
     width: 200px;
     height: 265px;
+
+    margin-left: 0;
+
+    flex-shrink: 0;
+  }
+
+
+  /*
+     MOBILE OLD MAN FIX
+     Keep the transparent cutout inside the
+     phone width instead of using the desktop
+     -99px horizontal offset.
+  */
+
+  .about-oldman-image {
+    height: 265px;
+
+    max-width: 200px;
+
+    margin-top: -20px;
+
+    margin-left: 0;
   }
 
 
   .about-logo-text {
     font-size: 26px;
 
-    margin-left: 14px;
+    margin-left: 6px;
+
+    margin-top: 0;
+
+    flex-shrink: 0;
   }
 
 
@@ -772,6 +808,10 @@
 
   .about-content {
     max-width: 100%;
+
+    width: 100%;
+
+    min-width: 0;
   }
 
 
@@ -845,16 +885,30 @@
 
   .about-grid {
     width: calc(100% - 28px);
+
+    row-gap: 42px;
   }
 
 
   .about-vertical {
     min-height: 245px;
+
+    width: 100%;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    margin-left: 0;
   }
 
 
   .about-label {
     top: -30px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
 
     font-size: 20px;
 
@@ -867,16 +921,50 @@
   }
 
 
+  /*
+     SMALL MOBILE OLD MAN
+     Prevent the image from extending outside
+     the 375px / 390px / 414px screen.
+  */
+
   .about-oldman {
     width: 108px;
     height: 230px;
+
+    margin-left: 0;
+
+    flex-shrink: 0;
+  }
+
+
+  .about-oldman-image {
+    height: 230px;
+
+    max-width: 175px;
+
+    margin-top: -18px;
+
+    margin-left: 0;
   }
 
 
   .about-logo-text {
     font-size: 22px;
 
-    margin-left: 11px;
+    margin-left: 8px;
+
+    margin-top: 0;
+
+    line-height: 0.91;
+
+    flex-shrink: 0;
+  }
+
+
+  .about-content {
+    width: 100%;
+
+    min-width: 0;
   }
 
 
@@ -897,6 +985,10 @@
 
   .heritage-quote {
     padding: 12px 13px;
+
+    width: 100%;
+
+    box-sizing: border-box;
   }
 
 
@@ -914,8 +1006,727 @@
 
 
 /* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 375px) {
+
+  .about-grid {
+    width: calc(100% - 24px);
+
+    row-gap: 38px;
+  }
+
+
+  .about-vertical {
+    min-height: 225px;
+
+    justify-content: center;
+  }
+
+
+  .about-label {
+    top: -27px;
+
+    font-size: 20px;
+  }
+
+
+  .about-oldman {
+    width: 96px;
+    height: 215px;
+  }
+
+
+  .about-oldman-image {
+    height: 215px;
+
+    max-width: 160px;
+
+    margin-top: -15px;
+
+    margin-left: 0;
+  }
+
+
+  .about-logo-text {
+    font-size: 20px;
+
+    margin-left: 6px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 360px
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .about-grid {
+    width: calc(100% - 20px);
+  }
+
+
+  .about-vertical {
+    min-height: 215px;
+  }
+
+
+  .about-oldman {
+    width: 90px;
+    height: 205px;
+  }
+
+
+  .about-oldman-image {
+    height: 205px;
+
+    max-width: 150px;
+
+    margin-top: -12px;
+  }
+
+
+  .about-logo-text {
+    font-size: 19px;
+
+    margin-left: 5px;
+  }
+
+
+  .about-content h2 {
+    font-size: 31px;
+  }
+}
+
+
+/* =========================================================
    REDUCED MOTION
    Keep accessibility support
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-logo-text span {
+    transition: none;
+  }
+
+  .about-oldman-image {
+    animation: none;
+  }
+}
+
+/* =========================================================
+   MOBILE — OLD MAN POSITION
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .about-oldman {
+    width: 165px;
+    height: 265px;
+
+    margin: 12px 0 0 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex-shrink: 0;
+  }
+
+  .about-oldman-image {
+    height: 265px;
+    max-width: 190px;
+
+    margin: -8px 0 0 0;
+  }
+
+  /* INCREASE GAP BETWEEN OLD MAN & VAMSAPATTIKA */
+  .about-logo-text {
+    margin-left: 28px;
+    margin-top: 65px;
+
+    font-size: 19px;
+
+    flex-direction: row;
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 430px
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .about-oldman {
+    width: 115px;
+    height: 225px;
+
+    margin-top: 10px;
+  }
+
+  .about-oldman-image {
+    height: 225px;
+    max-width: 165px;
+
+    margin-top: -5px;
+  }
+
+  .about-logo-text {
+    margin-left: 22px;
+    margin-top: 62px;
+
+    font-size: 17px;
+
+    flex-direction: row;
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 375px
+========================================================= */
+
+@media (max-width: 375px) {
+
+  .about-oldman {
+    width: 100px;
+    height: 205px;
+
+    margin-top: 9px;
+  }
+
+  .about-oldman-image {
+    height: 205px;
+    max-width: 150px;
+
+    margin-top: -4px;
+  }
+
+  .about-logo-text {
+    margin-left: 18px;
+    margin-top: 57px;
+
+    font-size: 15px;
+
+    flex-direction: row;
+    white-space: nowrap;
+  }
+}
+
+
+/* =========================================================
+   360px MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .about-oldman {
+    width: 90px;
+    height: 195px;
+
+    margin-top: 8px;
+  }
+
+  .about-oldman-image {
+    height: 195px;
+    max-width: 142px;
+
+    margin-top: -3px;
+  }
+
+  .about-logo-text {
+    margin-left: 15px;
+    margin-top: 53px;
+
+    font-size: 14px;
+
+    flex-direction: row;
+    white-space: nowrap;
+  }
+}
+
+/* =========================================================
+   MOBILE VERSION — ABOUT SECTION
+   OLD MAN + VAMSAPATTIKA VERTICAL
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .about {
+    overflow: hidden;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    row-gap: 48px;
+    width: min(560px, calc(100% - 32px));
+  }
+
+  /* =======================================================
+     MOBILE LEFT AREA
+  ======================================================= */
+
+  .about-vertical {
+    width: 100%;
+    min-height: 310px;
+
+    margin-left: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 55px;
+
+    overflow: visible;
+
+    position: relative;
+  }
+
+  /* =======================================================
+     ABOUT LABEL
+  ======================================================= */
+
+  .about-label {
+    top: -35px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 24px;
+    letter-spacing: 1.8px;
+
+    white-space: nowrap;
+  }
+
+  .about-label::before {
+    height: 35px;
+  }
+
+  /* =======================================================
+     OLD MAN
+     MOVE SLIGHTLY DOWN
+  ======================================================= */
+
+  .about-oldman {
+    width: 145px;
+    height: 275px;
+
+    margin-left: 0;
+    margin-top: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    overflow: visible;
+  }
+
+  .about-oldman-image {
+    height: 270px;
+
+    max-width: 200px;
+
+    margin-top: 0;
+    margin-left: 0;
+
+    object-position: center top;
+
+    transform-origin: center bottom;
+
+    animation:
+      oldManJump 1.8s ease-in-out infinite;
+  }
+
+  /* =======================================================
+     VAMSAPATTIKA
+     VERTICAL LETTER BY LETTER
+  ======================================================= */
+
+  .about-logo-text {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 0;
+
+    margin-left: 15px;
+    margin-top: 25px;
+
+    font-size: 25px;
+
+    line-height: 0.92;
+
+    letter-spacing: 0;
+
+    flex-shrink: 0;
+  }
+
+  .about-logo-text span {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    line-height: 0.92;
+
+    margin: 0;
+    padding: 0;
+
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  .about-logo-text span:hover {
+    transform: translateX(3px);
+    opacity: 0.7;
+  }
+
+  /* =======================================================
+     CONTENT
+  ======================================================= */
+
+  .about-content {
+    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .about-content h2 {
+    max-width: 100%;
+
+    font-size: clamp(34px, 8vw, 45px);
+
+    line-height: 1.06;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 20px;
+  }
+
+  .about-content h2::after {
+    width: 48px;
+    margin-top: 17px;
+  }
+
+  .about-content .lead {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .about-content > p:not(.lead) {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .heritage-quote {
+    min-height: auto;
+
+    padding: 14px 17px;
+
+    margin-top: 20px;
+  }
+
+  .heritage-quote > span {
+    font-size: 36px;
+    margin-right: 11px;
+  }
+
+  .heritage-quote p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .about-grid {
+    width: calc(100% - 28px);
+    row-gap: 42px;
+  }
+
+  /* =======================================================
+     LEFT AREA
+  ======================================================= */
+
+  .about-vertical {
+    min-height: 270px;
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 48px;
+
+    margin-left: 0;
+  }
+
+  /* =======================================================
+     ABOUT
+  ======================================================= */
+
+  .about-label {
+    top: -30px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 20px;
+
+    letter-spacing: 1.5px;
+  }
+
+  .about-label::before {
+    height: 32px;
+  }
+
+  /* =======================================================
+     OLD MAN
+     SLIGHTLY DOWN
+  ======================================================= */
+
+  .about-oldman {
+    width: 105px;
+    height: 235px;
+
+    margin-left: 0;
+    margin-top: 22px;
+
+    flex-shrink: 0;
+
+    overflow: visible;
+  }
+
+  .about-oldman-image {
+    height: 235px;
+
+    max-width: 175px;
+
+    margin-top: 0;
+    margin-left: 0;
+
+    object-position: center top;
+  }
+
+  /* =======================================================
+     VAMSAPATTIKA VERTICAL
+  ======================================================= */
+
+  .about-logo-text {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 0;
+
+    margin-left: 14px;
+    margin-top: 20px;
+
+    font-size: 22px;
+
+    line-height: 0.91;
+
+    letter-spacing: 0;
+
+    flex-shrink: 0;
+  }
+
+  .about-logo-text span {
+    display: block;
+
+    line-height: 0.91;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  /* =======================================================
+     CONTENT
+  ======================================================= */
+
+  .about-content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .about-content h2 {
+    font-size: 31px;
+  }
+
+  .about-content .lead {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .about-content > p:not(.lead) {
+    font-size: 13.5px;
+  }
+
+  .heritage-quote {
+    padding: 12px 13px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .heritage-quote > span {
+    font-size: 32px;
+    margin-right: 9px;
+  }
+
+  .heritage-quote p {
+    font-size: 12.5px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 375px) {
+
+  .about-grid {
+    width: calc(100% - 24px);
+    row-gap: 38px;
+  }
+
+  .about-vertical {
+    min-height: 250px;
+
+    justify-content: center;
+
+    gap: 42px;
+  }
+
+  .about-label {
+    top: -27px;
+    font-size: 20px;
+  }
+
+  /* OLD MAN — DOWN */
+  .about-oldman {
+    width: 92px;
+    height: 220px;
+
+    margin-top: 20px;
+  }
+
+  .about-oldman-image {
+    height: 220px;
+
+    max-width: 160px;
+
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  /* VAMSAPATTIKA — VERTICAL */
+  .about-logo-text {
+    font-size: 20px;
+
+    margin-left: 12px;
+    margin-top: 18px;
+
+    line-height: 0.91;
+  }
+
+  .about-logo-text span {
+    line-height: 0.91;
+  }
+}
+
+
+/* =========================================================
+   360px MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .about-grid {
+    width: calc(100% - 20px);
+  }
+
+  .about-vertical {
+    min-height: 235px;
+
+    gap: 36px;
+
+    justify-content: center;
+  }
+
+  /* OLD MAN */
+  .about-oldman {
+    width: 86px;
+    height: 205px;
+
+    margin-top: 18px;
+  }
+
+  .about-oldman-image {
+    height: 205px;
+
+    max-width: 150px;
+
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  /* VAMSAPATTIKA */
+  .about-logo-text {
+    font-size: 19px;
+
+    margin-left: 10px;
+    margin-top: 16px;
+
+    line-height: 0.91;
+  }
+
+  .about-logo-text span {
+    line-height: 0.91;
+  }
+
+  .about-content h2 {
+    font-size: 31px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
