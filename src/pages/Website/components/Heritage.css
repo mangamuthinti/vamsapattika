@@ -73,7 +73,6 @@
 
   text-align: left;
 
-  /* IMPORTANT */
   margin-top: 0;
   padding-top: 0;
 }
@@ -162,10 +161,6 @@
 
   flex-shrink: 0;
 
-  /*
-    Start MEMORIES near title,
-    not lower down
-  */
   margin-top: 25px;
 
   font-family:
@@ -329,61 +324,1285 @@
 
   .heritage-strip {
     padding: 50px 0;
+
+    overflow: hidden;
   }
+
+
+  /* -----------------------------------------
+     MAIN MOBILE GRID
+     ----------------------------------------- */
+
+  .heritage-grid {
+    grid-template-columns: 1fr;
+
+    gap: 38px;
+
+    width: 100%;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     HERITAGE IMAGE
+     ----------------------------------------- */
+
+  .heritage-image-wrap {
+    width: 100%;
+
+    min-width: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+  }
+
+  .heritage-image-wrap img {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 320px;
+
+    max-width: 100%;
+
+    object-fit: cover;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     BADGE
+     ----------------------------------------- */
+
+  .image-badge {
+    left: 50%;
+
+    margin-left: 0;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+  }
+
+
+  /* -----------------------------------------
+     TEXT AREA
+     ----------------------------------------- */
+
+  .heritage-copy {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    margin-top: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+
+  /* -----------------------------------------
+     KICKER
+     ----------------------------------------- */
+
+  .heritage-copy .kicker {
+    margin-bottom: 8px;
+  }
+
+
+  /* -----------------------------------------
+     TITLE + MEMORIES
+     ----------------------------------------- */
+
+  .heritage-title {
+    width: 100%;
+
+    min-width: 0;
+
+    gap: 10px;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     MAIN TITLE
+     ----------------------------------------- */
 
   .heritage-main-title {
     font-size: 26px;
 
     white-space: normal;
+
+    min-width: 0;
+
+    max-width: calc(100% - 50px);
+
+    word-break: normal;
+
+    overflow-wrap: normal;
   }
+
+
+  /* -----------------------------------------
+     MEMORIES
+     ----------------------------------------- */
 
   .memories-vertical {
     font-size: 22px;
 
     margin-top: 15px;
+
+    flex-shrink: 0;
+
+    line-height: 0.93;
   }
 
+
+  /* -----------------------------------------
+     BODY PARAGRAPH
+     ----------------------------------------- */
+
   .heritage-copy > p {
+    width: 100%;
+
+    max-width: 100%;
+
+    margin: 0 0 30px 0;
+
     font-size: 14px;
+
+    line-height: 1.6;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     POINTS
+     ----------------------------------------- */
+
+  .heritage-points {
+    width: 100%;
+
+    max-width: 100%;
+
+    grid-template-columns: 1fr;
+
+    column-gap: 0;
+
+    row-gap: 16px;
+
+    box-sizing: border-box;
+  }
+
+  .heritage-points > div {
+    width: 100%;
+
+    min-width: 0;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------------------
+     HERITAGE TREE
+     ----------------------------------------- */
+
+  .heritage-tree-wrap {
+    width: 100%;
+
+    max-width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+  }
+
+  .heritage-tree-image {
+    width: 100%;
+
+    max-width: 560px;
+
+    height: auto;
+
+    display: block;
+  }
+
+
+  /* -----------------------------------------
+     FAMILY SLOGAN IMAGE
+     ----------------------------------------- */
+
+  .family-slogan-image {
+    width: 100%;
+
+    max-width: 480px;
+
+    height: auto;
+
+    display: block;
+
+    margin-top: -5px;
+
+    object-fit: contain;
+  }
+
+
+  /* -----------------------------------------
+     BUTTON
+     ----------------------------------------- */
+
+  .heritage-btn {
+    margin-top: -8px;
+
+    position: relative;
+
+    z-index: 2;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .heritage-strip {
+    padding: 45px 0;
+
+    overflow: hidden;
+  }
+
+
+  .heritage-grid {
+    width: calc(100% - 28px);
+
+    margin: 0 auto;
+
+    gap: 34px;
+  }
+
+
+  /* -----------------------------------------
+     IMAGE
+     ----------------------------------------- */
+
+  .heritage-image-wrap {
+    width: 100%;
 
     max-width: 100%;
   }
 
-  .heritage-points {
-    grid-template-columns: 1fr;
-  }
-
   .heritage-image-wrap img {
+    width: 100%;
+
     height: auto;
-    min-height: 320px;
+
+    min-height: 0;
+
+    max-width: 100%;
+
+    border-radius: 5px 70px 5px 70px;
+  }
+
+
+  /* -----------------------------------------
+     BADGE
+     ----------------------------------------- */
+
+  .image-badge {
+    bottom: -12px;
+
+    left: 50%;
+
+    margin-left: 0;
+
+    transform: translateX(-50%);
+
+    padding: 9px 13px;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  /* -----------------------------------------
+     TEXT
+     ----------------------------------------- */
+
+  .heritage-copy {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    overflow: hidden;
+  }
+
+
+  .heritage-copy .kicker {
+    font-size: 10px;
+  }
+
+
+  /* -----------------------------------------
+     TITLE
+     ----------------------------------------- */
+
+  .heritage-title {
+    width: 100%;
+
+    gap: 7px;
+  }
+
+
+  .heritage-main-title {
+    font-size: 26px;
+
+    max-width: calc(100% - 45px);
+
+    line-height: 1.05;
+
+    white-space: normal;
+  }
+
+
+  /* -----------------------------------------
+     MEMORIES
+     ----------------------------------------- */
+
+  .memories-vertical {
+    font-size: 22px;
+
+    margin-top: 12px;
+
+    flex-shrink: 0;
+  }
+
+
+  /* -----------------------------------------
+     PARAGRAPH
+     ----------------------------------------- */
+
+  .heritage-copy > p {
+    width: 100%;
+
+    max-width: 100%;
+
+    margin: 0 0 26px 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+
+
+  /* -----------------------------------------
+     POINTS
+     ----------------------------------------- */
+
+  .heritage-points {
+    width: 100%;
+
+    grid-template-columns: 1fr;
+
+    row-gap: 14px;
+  }
+
+
+  .heritage-points > div {
+    font-size: 13px;
+
+    gap: 9px;
+  }
+
+
+  .heritage-points > div > span {
+    font-size: 16px;
+
+    flex-shrink: 0;
+  }
+
+
+  /* -----------------------------------------
+     TREE
+     ----------------------------------------- */
+
+  .heritage-tree-wrap {
+    width: 100%;
+
+    max-width: 100%;
+  }
+
+  .heritage-tree-image {
+    width: 100%;
+
+    max-width: 100%;
+
+    height: auto;
+  }
+
+
+  /* -----------------------------------------
+     FAMILY SLOGAN
+     ----------------------------------------- */
+
+  .family-slogan-image {
+    width: 100%;
+
+    max-width: 100%;
+
+    height: auto;
+
+    margin-top: -5px;
   }
 }
 
-.heritage-tree-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+
+/* =========================================
+   VERY SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 375px) {
+
+  .heritage-strip {
+    padding: 40px 0;
+  }
+
+
+  .heritage-grid {
+    width: calc(100% - 22px);
+
+    gap: 30px;
+  }
+
+
+  .heritage-title {
+    gap: 5px;
+  }
+
+
+  .heritage-main-title {
+    font-size: 26px;
+
+    max-width: calc(100% - 42px);
+  }
+
+
+  .memories-vertical {
+    font-size: 22px;
+
+    margin-top: 10px;
+  }
+
+
+  .heritage-copy > p {
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    margin-bottom: 24px;
+  }
+
+
+  .heritage-points {
+    row-gap: 13px;
+  }
+
+
+  .heritage-points > div {
+    font-size: 13px;
+
+    gap: 8px;
+  }
+
+
+  .image-badge {
+    padding: 8px 11px;
+
+    font-size: 9px;
+
+    letter-spacing: 1.3px;
+  }
 }
 
-.heritage-tree-image {
-  width: 100%;
-  max-width: 560px;
-  height: auto;
-  display: block;
+
+/* =========================================
+   EXTRA SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 360px) {
+
+  .heritage-grid {
+    width: calc(100% - 18px);
+  }
+
+
+  .heritage-main-title {
+    font-size: 26px;
+
+    max-width: calc(100% - 40px);
+  }
+
+
+  .memories-vertical {
+    font-size: 22px;
+
+    margin-top: 9px;
+  }
+
+
+  .heritage-copy > p {
+    font-size: 14px;
+  }
+
+
+  .heritage-points > div {
+    font-size: 13px;
+  }
 }
 
-.family-slogan-image {
-  width: 100%;
-  max-width: 480px;
-  height: auto;
-  display: block;
-  margin-top: -5px;
-  object-fit: contain;
+/* =========================================
+   MOBILE — MOVE HERITAGE CONTENT UP
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  /* Move the tree + its border area upward */
+  .heritage-tree-wrap {
+    transform: translateY(-25px);
+  }
+
+  /* Move Memories upward */
+  .memories-vertical {
+    transform: translateY(-20px);
+  }
+
+  /* Move Heritage matter upward */
+  .heritage-copy > p {
+    transform: translateY(-20px);
+  }
+
+  /* Move points/matter upward together */
+  .heritage-points {
+    transform: translateY(-20px);
+  }
 }
 
-.heritage-btn {
-  margin-top: -8px;
-  position: relative;
-  z-index: 2;
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .heritage-tree-wrap {
+    transform: translateY(-30px);
+  }
+
+  .memories-vertical {
+    transform: translateY(-25px);
+  }
+
+  .heritage-copy > p {
+    transform: translateY(-25px);
+  }
+
+  .heritage-points {
+    transform: translateY(-25px);
+  }
+}
+
+
+/* =========================================
+   375px MOBILE
+   ========================================= */
+
+@media (max-width: 375px) {
+
+  .heritage-tree-wrap {
+    transform: translateY(-35px);
+  }
+
+  .memories-vertical {
+    transform: translateY(-12px);
+  }
+
+  .heritage-copy > p {
+    transform: translateY(-83px);
+  }
+
+  .heritage-points {
+    transform: translateY(-68px);
+  }
+}/* =========================================================
+   ABOUT — CLEAN MOBILE VERSION
+   SAME VERTICAL STYLE AS HERITAGE.CSS
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .about {
+    overflow: hidden;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+
+    row-gap: 38px;
+
+    width: min(560px, calc(100% - 32px));
+
+    margin: 0 auto;
+  }
+
+
+  /* =======================================================
+     ABOUT LEFT AREA
+  ======================================================= */
+
+  .about-vertical {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 325px;
+
+    margin-left: 0;
+
+    padding: 0;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    /* MORE SPACE BETWEEN OLD MAN + VAMSHAPATTIKA */
+    gap: 70px;
+
+    overflow: visible;
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     ABOUT LABEL
+  ======================================================= */
+
+  .about-label {
+    position: absolute;
+
+    top: -35px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 5;
+
+    font-size: 24px;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+  }
+
+
+  /* =======================================================
+     OLD MAN
+     MOVE SLIGHTLY DOWN
+  ======================================================= */
+
+  .about-oldman {
+    position: relative;
+
+    width: 150px;
+
+    height: 280px;
+
+    /* OLD MAN MOVED DOWN */
+    margin: 40px 0 0 0;
+
+    padding: 0;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    overflow: visible;
+
+    background: transparent;
+  }
+
+
+  .about-oldman-image {
+    display: block;
+
+    width: auto;
+
+    height: 275px;
+
+    max-width: 190px;
+
+    margin: 0;
+
+    object-position: center top;
+
+    background: transparent;
+
+    animation:
+      oldManJump 1.8s ease-in-out infinite;
+
+    transform-origin: center bottom;
+
+    will-change: transform;
+  }
+
+
+  /* =======================================================
+     VAMSHAPATTIKA
+     VERTICAL LIKE HERITAGE MEMORIES
+  ======================================================= */
+
+  .about-logo-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    flex-shrink: 0;
+
+    gap: 0;
+
+    /* MORE SEPARATION + SLIGHTLY DOWN */
+    margin: 42px 0 0 0;
+
+    padding: 0;
+
+    font-family:
+      "Cinzel",
+      Georgia,
+      serif;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    line-height: 0.93;
+
+    letter-spacing: 0;
+
+    user-select: none;
+  }
+
+
+  .about-logo-text span {
+    display: block;
+
+    margin: 0;
+
+    padding: 0;
+
+    line-height: 0.93;
+
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+
+  .about-logo-text span:hover {
+    transform: translateX(3px);
+
+    opacity: 0.7;
+  }
+
+
+  /* =======================================================
+     ABOUT CONTENT
+  ======================================================= */
+
+  .about-content {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    padding: 0;
+  }
+
+
+  .about-content h2 {
+    max-width: 100%;
+
+    margin: 0 0 20px;
+
+    font-size: clamp(34px, 8vw, 45px);
+
+    line-height: 1.06;
+
+    letter-spacing: -1px;
+  }
+
+
+  .about-content h2::after {
+    width: 48px;
+
+    margin-top: 17px;
+  }
+
+
+  .about-content .lead {
+    max-width: 100%;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+
+  .about-content > p:not(.lead) {
+    max-width: 100%;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+  }
+
+
+  .heritage-quote {
+    width: 100%;
+
+    min-height: auto;
+
+    margin-top: 20px;
+
+    padding: 14px 17px;
+
+    box-sizing: border-box;
+  }
+
+
+  .heritage-quote > span {
+    font-size: 36px;
+
+    margin-right: 11px;
+  }
+
+
+  .heritage-quote p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 430px
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .section {
+    padding: 60px 0;
+  }
+
+
+  .about-grid {
+    width: calc(100% - 28px);
+
+    row-gap: 34px;
+  }
+
+
+  /* =======================================================
+     LEFT AREA
+  ======================================================= */
+
+  .about-vertical {
+    min-height: 295px;
+
+    width: 100%;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    /* INCREASE GAP */
+    gap: 55px;
+
+    margin-left: 0;
+
+    overflow: visible;
+  }
+
+
+  /* =======================================================
+     ABOUT LABEL
+  ======================================================= */
+
+  .about-label {
+    top: -30px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 20px;
+
+    letter-spacing: 1.5px;
+  }
+
+
+  .about-label::before {
+    height: 35px;
+  }
+
+
+  /* =======================================================
+     OLD MAN — MOVE DOWN
+  ======================================================= */
+
+  .about-oldman {
+    width: 125px;
+
+    height: 250px;
+
+    margin-top: 32px;
+
+    margin-left: 0;
+
+    flex-shrink: 0;
+  }
+
+
+  .about-oldman-image {
+    height: 250px;
+
+    max-width: 175px;
+
+    margin-top: 0;
+
+    margin-left: 0;
+  }
+
+
+  /* =======================================================
+     VAMSHAPATTIKA — VERTICAL
+  ======================================================= */
+
+  .about-logo-text {
+    font-size: 22px;
+
+    /* MORE GAP + DOWN */
+    margin-top: 38px;
+
+    margin-left: 0;
+
+    line-height: 0.93;
+
+    flex-shrink: 0;
+  }
+
+
+  .about-logo-text span {
+    line-height: 0.93;
+  }
+
+
+  /* =======================================================
+     CONTENT
+  ======================================================= */
+
+  .about-content {
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    overflow: visible;
+  }
+
+
+  .about-content h2 {
+    font-size: 31px;
+
+    line-height: 1.06;
+  }
+
+
+  .about-content .lead {
+    font-size: 15px;
+
+    line-height: 1.7;
+  }
+
+
+  .about-content > p:not(.lead) {
+    font-size: 13.5px;
+
+    line-height: 1.75;
+  }
+
+
+  .heritage-quote {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    box-sizing: border-box;
+  }
+
+
+  .heritage-quote > span {
+    font-size: 32px;
+
+    margin-right: 9px;
+  }
+
+
+  .heritage-quote p {
+    font-size: 12.5px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 375px
+========================================================= */
+
+@media (max-width: 375px) {
+
+  .about-grid {
+    width: calc(100% - 22px);
+
+    row-gap: 30px;
+  }
+
+
+  .about-vertical {
+    min-height: 275px;
+
+    /* KEEP GOOD GAP */
+    gap: 46px;
+
+    justify-content: center;
+  }
+
+
+  .about-label {
+    top: -27px;
+
+    font-size: 20px;
+  }
+
+
+  /* =======================================================
+     OLD MAN
+  ======================================================= */
+
+  .about-oldman {
+    width: 108px;
+
+    height: 235px;
+
+    /* MOVE DOWN */
+    margin-top: 28px;
+  }
+
+
+  .about-oldman-image {
+    height: 235px;
+
+    max-width: 165px;
+
+    margin-top: 0;
+
+    margin-left: 0;
+  }
+
+
+  /* =======================================================
+     VAMSHAPATTIKA
+  ======================================================= */
+
+  .about-logo-text {
+    font-size: 20px;
+
+    /* MORE SPACE FROM OLD MAN */
+    margin-top: 34px;
+
+    line-height: 0.93;
+  }
+
+
+  .about-logo-text span {
+    line-height: 0.93;
+  }
+
+
+  .about-content h2 {
+    font-size: 30px;
+  }
+
+
+  .about-content .lead {
+    font-size: 15px;
+  }
+
+
+  .about-content > p:not(.lead) {
+    font-size: 13.5px;
+  }
+
+
+  .heritage-quote {
+    padding: 11px 12px;
+  }
+
+
+  .heritage-quote > span {
+    font-size: 31px;
+  }
+
+
+  .heritage-quote p {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE — 360px
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .about-grid {
+    width: calc(100% - 18px);
+
+    row-gap: 28px;
+  }
+
+
+  .about-vertical {
+    min-height: 260px;
+
+    /* KEEP OLD MAN + TEXT SEPARATED */
+    gap: 40px;
+  }
+
+
+  .about-label {
+    top: -25px;
+
+    font-size: 19px;
+  }
+
+
+  /* =======================================================
+     OLD MAN
+  ======================================================= */
+
+  .about-oldman {
+    width: 100px;
+
+    height: 220px;
+
+    margin-top: 25px;
+  }
+
+
+  .about-oldman-image {
+    height: 220px;
+
+    max-width: 155px;
+
+    margin-top: 0;
+  }
+
+
+  /* =======================================================
+     VAMSHAPATTIKA
+  ======================================================= */
+
+  .about-logo-text {
+    font-size: 19px;
+
+    /* MORE GAP */
+    margin-top: 31px;
+
+    line-height: 0.93;
+  }
+
+
+  .about-logo-text span {
+    line-height: 0.93;
+  }
+
+
+  .about-content h2 {
+    font-size: 29px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-logo-text span {
+    transition: none;
+  }
+
+  .about-oldman-image {
+    animation: none;
+  }
 }
