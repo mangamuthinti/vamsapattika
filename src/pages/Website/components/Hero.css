@@ -1135,11 +1135,10 @@
       );
   }
 
-  .hero-grid {
-    padding: 55px 20px 70px;
-    gap: 10px;
-  }
-
+ .hero-grid {
+  padding: 55px 20px 95px;
+  gap: 28px;
+}
   .eyebrow {
     gap: 8px;
     margin-bottom: 18px;
@@ -1189,9 +1188,9 @@
   }
 
   .hero-tree {
-    min-height: 430px;
-    margin-top: 5px;
-  }
+  min-height: 500px;
+  margin-top: 25px;
+}
 
   .tree-visual {
     width: 350px;
@@ -1907,7 +1906,7 @@
 
 @media (max-width: 600px) {
   .time-visual {
-    top: -2px;
+    top: -75px;
     right: 5%;
 
     width: 92px;
@@ -1928,7 +1927,7 @@
 
 @media (max-width: 420px) {
   .time-visual {
-    top: -2px;
+    top: 56px;
     right: 3%;
 
     width: 78px;
@@ -1949,7 +1948,7 @@
 
 @media (max-width: 360px) {
   .time-visual {
-    top: -3px;
+    top: -55px;
     right: 2%;
 
     width: 68px;
@@ -1976,5 +1975,548 @@
   .moon-stars {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* =========================================================
+   MOBILE HERO — TREE BUTTON / LABEL POSITIONING
+   GENERATIONS + ROOTS RUN DEEP + MEMORIES
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  /* ---------------------------------------------------------
+     HERO
+     --------------------------------------------------------- */
+
+  .hero {
+    min-height: auto;
+    overflow: hidden;
+
+    background:
+      radial-gradient(
+        circle at 80% 25%,
+        rgba(18, 157, 165, 0.13),
+        transparent 32%
+      ),
+      linear-gradient(
+        145deg,
+        #ffffff,
+        #f8f5ef
+      );
+  }
+
+  /* ---------------------------------------------------------
+     HERO GRID
+     --------------------------------------------------------- */
+
+  .hero-grid {
+    padding: 45px 20px 55px;
+    gap: 5px;
+  }
+
+  /* ---------------------------------------------------------
+     HERO TEXT
+     --------------------------------------------------------- */
+
+  .eyebrow {
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 9px;
+    letter-spacing: 1.8px;
+  }
+
+  .eyebrow span {
+    width: 28px;
+  }
+
+  .hero h1 {
+    margin-bottom: 20px;
+    font-size: 42px;
+    line-height: 1.01;
+    letter-spacing: -1.8px;
+  }
+
+  .hero h1 em {
+    letter-spacing: -1px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 27px;
+  }
+
+  /* ---------------------------------------------------------
+     MAIN START BUTTON
+     --------------------------------------------------------- */
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    min-height: 52px;
+    justify-content: center;
+  }
+
+  /* ---------------------------------------------------------
+     HIDE OLD VALUES FROM PUSHING THE TREE
+     --------------------------------------------------------- */
+
+  .hero-values {
+    display: none;
+  }
+
+  /* ---------------------------------------------------------
+     TREE AREA
+     --------------------------------------------------------- */
+
+  .hero-tree {
+    position: relative;
+    min-height: 445px;
+    margin-top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------------------------------------------------------
+     TREE CIRCLE
+     --------------------------------------------------------- */
+
+  .tree-visual {
+    width: 350px;
+    height: 350px;
+    max-width: 82%;
+
+    box-shadow:
+      0 18px 42px rgba(26, 43, 76, 0.08),
+      0 0 0 8px rgba(255, 255, 255, 0.70),
+      0 0 0 16px rgba(18, 157, 165, 0.18),
+      0 0 0 26px rgba(115, 184, 42, 0.15),
+      0 0 0 36px rgba(255, 151, 45, 0.12),
+      0 0 0 48px rgba(107, 43, 159, 0.08);
+  }
+
+  .tree-visual::before {
+    inset: -20px;
+  }
+
+  .tree-visual::after {
+    inset: 8px;
+  }
+
+  .tree-visual img {
+    width: 92%;
+    height: 92%;
+  }
+
+  .tree-card {
+    width: 350px;
+    height: 350px;
+  }
+
+  /* =======================================================
+     GENERATIONS
+     Upper-right side of tree
+     ======================================================= */
+
+  .floating-note.note-top {
+    top: 52px;
+    right: 2px;
+
+    z-index: 20;
+
+    padding: 7px 12px;
+
+    font-size: 7px;
+    letter-spacing: 1px;
+
+    box-shadow:
+      0 8px 20px rgba(26, 43, 76, 0.10);
+
+    transform: none;
+  }
+
+  .floating-note.note-top::before {
+    font-size: 11px;
+  }
+
+  /* =======================================================
+     MEMORIES
+     Lower-left side of tree
+     ======================================================= */
+
+  .floating-note.note-bottom {
+    left: 2px;
+    bottom: 63px;
+
+    z-index: 20;
+
+    padding: 7px 12px;
+
+    font-size: 7px;
+    letter-spacing: 1px;
+
+    box-shadow:
+      0 8px 20px rgba(26, 43, 76, 0.10);
+
+    transform: none;
+  }
+
+  .floating-note.note-bottom::before {
+    font-size: 11px;
+  }
+
+  /* =======================================================
+     ROOTS RUN DEEP
+     Place directly over the lower part of tree
+     ======================================================= */
+
+  .tree-slogan {
+    position: absolute;
+
+    z-index: 25;
+
+    left: 50%;
+    bottom: 92px;
+
+    transform: translateX(-50%);
+
+    width: auto;
+    min-width: 225px;
+    max-width: 72%;
+
+    padding: 7px 12px;
+
+    gap: 9px;
+
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+      0 10px 25px rgba(26, 43, 76, 0.12);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .tree-slogan-icon {
+    width: 23px;
+    height: 23px;
+
+    font-size: 13px;
+  }
+
+  .tree-slogan-text strong {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+  }
+
+  .tree-slogan-text small {
+    font-size: 8px;
+    margin-top: 2px;
+  }
+
+  /* ---------------------------------------------------------
+     SUN / MOON
+     Keep it above the tree on mobile
+     --------------------------------------------------------- */
+
+  .time-visual {
+    top: -18px;
+    right: 4%;
+
+    width: 92px;
+    height: 92px;
+
+    z-index: 30;
+  }
+
+  .time-sun,
+  .time-moon {
+    width: 88px;
+    height: 88px;
+  }
+
+  /* ---------------------------------------------------------
+     DECORATIVE DOTS
+     --------------------------------------------------------- */
+
+  .glow-one {
+    left: 8%;
+  }
+
+  .glow-two {
+    right: 8%;
+  }
+
+  /* ---------------------------------------------------------
+     BUTTON HOVER
+     --------------------------------------------------------- */
+
+  .primary-btn:hover,
+  .secondary-btn:hover {
+    transform: translateY(-3px) rotate(0deg);
+  }
+
+  .tree-visual:hover {
+    transform:
+      translateY(-4px)
+      scale(1.005);
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .hero-grid {
+    padding: 40px 16px 45px;
+  }
+
+  .hero h1 {
+    font-size: 37px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-text {
+    font-size: 14px;
+  }
+
+  .hero-tree {
+    min-height: 405px;
+    margin-top: 0;
+  }
+
+  .tree-visual {
+    width: 310px;
+    height: 310px;
+    max-width: 82%;
+  }
+
+  .tree-card {
+    width: 310px;
+    height: 310px;
+  }
+
+  /* GENERATIONS */
+
+  .floating-note.note-top {
+    top: 98px;
+    right: -2px;
+
+    padding: 6px 10px;
+
+    font-size: 6.5px;
+  }
+
+  /* MEMORIES */
+
+  .floating-note.note-bottom {
+    left: -2px;
+    bottom: 98px;
+
+    padding: 6px 10px;
+
+    font-size: 6.5px;
+  }
+
+  /* ROOTS RUN DEEP */
+
+  .tree-slogan {
+    bottom: 82px;
+
+    min-width: 205px;
+    max-width: 73%;
+
+    padding: 6px 21px;
+    gap: 7px;
+  }
+
+  .tree-slogan-icon {
+    width: 21px;
+    height: 21px;
+    font-size: 12px;
+  }
+
+  .tree-slogan-text strong {
+    font-size: 6.5px;
+    letter-spacing: 1.3px;
+  }
+
+  .tree-slogan-text small {
+    font-size: 7.5px;
+  }
+
+  /* SUN / MOON */
+
+  .time-visual {
+    top: -12px;
+    right: 2%;
+
+    width: 78px;
+    height: 78px;
+  }
+
+  .time-sun,
+  .time-moon {
+    width: 74px;
+    height: 74px;
+  }
+
+  .tree-visual::before {
+    inset: -16px;
+  }
+
+  .tree-visual::after {
+    inset: 7px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+  }
+
+  .hero-tree {
+    min-height: 370px;
+  }
+
+  .tree-visual {
+    width: 275px;
+    height: 275px;
+  }
+
+  .tree-card {
+    width: 275px;
+    height: 275px;
+  }
+
+  /* GENERATIONS */
+
+  .floating-note.note-top {
+    top: 55px;
+    right: -4px;
+
+    padding: 5px 8px;
+
+    font-size: 6px;
+  }
+
+  /* MEMORIES */
+
+  .floating-note.note-bottom {
+    left: -4px;
+    bottom: 52px;
+
+    padding: 5px 8px;
+
+    font-size: 6px;
+  }
+
+  /* ROOTS RUN DEEP */
+
+  .tree-slogan {
+    bottom: 75px;
+
+    min-width: 190px;
+
+    padding: 5px 9px;
+    gap: 6px;
+  }
+
+  .tree-slogan-icon {
+    width: 19px;
+    height: 19px;
+    font-size: 11px;
+  }
+
+  .tree-slogan-text strong {
+    font-size: 6px;
+    letter-spacing: 1.1px;
+  }
+
+  .tree-slogan-text small {
+    font-size: 7px;
+  }
+
+  /* SUN / MOON */
+
+  .time-visual {
+    top: -8px;
+    right: 1%;
+
+    width: 68px;
+    height: 68px;
+  }
+
+  .time-sun,
+  .time-moon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .hero-tree::before {
+    width: 275px;
+    height: 275px;
+
+    box-shadow:
+      0 0 0 21px rgba(190, 229, 235, 0.20),
+      0 0 0 42px rgba(190, 229, 235, 0.145),
+      0 0 0 63px rgba(190, 229, 235, 0.095),
+      0 0 0 84px rgba(190, 229, 235, 0.055);
+  }
+
+  .hero-tree::after {
+    width: 275px;
+    height: 275px;
+  }
+
+  .tree-visual::before {
+    inset: -13px;
+  }
+}
+
+@media (max-width: 600px) {
+  .time-visual {
+    top: 5px;              /* move moon slightly DOWN */
+    right: 14%;
+    width: 78px;
+    height: 78px;
+    z-index: 2;            /* moon behind tree */
+  }
+
+  .time-sun,
+  .time-moon {
+    width: 74px;
+    height: 74px;
+  }
+
+  .tree-card {
+    position: relative;
+    z-index: 5;            /* tree stays IN FRONT of moon */
   }
 }
