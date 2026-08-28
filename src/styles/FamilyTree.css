@@ -3162,3 +3162,66 @@ body {
     color: #1976d2;
     font-weight: 500;
 }
+
+/* Vamsapattika React language selector */
+.vamsapattika-language {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 38px;
+    min-width: 132px;
+    margin-right: 10px;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.30);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.10);
+    box-sizing: border-box;
+    transition: background .2s ease, border-color .2s ease;
+}
+.vamsapattika-language:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.50);
+}
+.vamsapattika-language-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 7px;
+    border: 1px solid rgba(255,255,255,.65);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+}
+.vamsapattika-language-select {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    padding: 0 20px 0 0;
+    border: 0;
+    outline: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    color: #fff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.vamsapattika-language-select option {
+    background: #fff;
+    color: #222;
+}
+.vamsapattika-language-arrow {
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-55%);
+    color: #fff;
+    font-size: 14px;
+    pointer-events: none;
+}
+

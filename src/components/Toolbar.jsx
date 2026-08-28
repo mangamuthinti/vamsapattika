@@ -5,6 +5,7 @@ import { exportAsImage, exportAsPDF, printTree } from '../utils/exportUtils';
 import UserDropdown from './UserDropdown';
 import CustomConfirm from './CustomConfirm';
 import CustomAlert from './CustomAlert';
+import LanguageSelector from './LanguageSelector';
 
 const Toolbar = () => {
   const { globalShowPhotos, setGlobalShowPhotos, familyData, userPlan, importData } = useFamilyTree();
@@ -287,220 +288,223 @@ const Toolbar = () => {
         onClose={() => setAlertState({ isOpen: false, message: '' })}
       />
       <div className="top-toolbar">
-      <div className="toolbar-left">
-        <img
-          src="/images/logo.jpeg"
-          alt="Family Tree Logo"
-          style={{
-            height: '50px',
-            width: '100px',
-            marginRight: '10px',
-            objectFit: 'contain',
-            borderRadius: '4px',
-            backgroundColor: 'white',
-            padding: '3px'
-          }}
-        />
-        {currentUser && (
-          <>
-            {/* Tree name removed - One tree per user policy */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: '12px' }}>
-              <button
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  borderRadius: '50%',
-                  width: '24px',
-                  height: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: 'white',
-                  fontSize: '14px',
-                  transition: 'all 0.2s',
-                  position: 'relative'
-                }}
-                onMouseEnter={() => setShowInfoTooltip(true)}
-                onMouseLeave={() => setShowInfoTooltip(false)}
-                onClick={() => setShowInfoTooltip(!showInfoTooltip)}
-                title="About your family tree"
-              >
-                ℹ️
-                {showInfoTooltip && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '35px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      background: 'white',
-                      color: '#333',
-                      padding: '12px 16px',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                      fontSize: '12px',
-                      width: '280px',
-                      zIndex: 1001,
-                      textAlign: 'left',
-                      lineHeight: '1.5',
-                      fontWeight: '400'
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <strong style={{ display: 'block', marginBottom: '6px', fontSize: '13px' }}>
-                      One Tree Per Account
-                    </strong>
-                    You have one comprehensive family tree. Upgrade your plan to add more family members (cards) to your tree.
-                  </div>
-                )}
-              </button>
+        <div className="toolbar-left">
+          <img
+            src="/images/logo.jpeg"
+            alt="Family Tree Logo"
+            style={{
+              height: '50px',
+              width: '100px',
+              marginRight: '10px',
+              objectFit: 'contain',
+              borderRadius: '4px',
+              backgroundColor: 'white',
+              padding: '3px'
+            }}
+          />
+          {currentUser && (
+            <>
+              {/* Tree name removed - One tree per user policy */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: '12px' }}>
+                <button
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '50%',
+                    width: '24px',
+                    height: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    color: 'white',
+                    fontSize: '14px',
+                    transition: 'all 0.2s',
+                    position: 'relative'
+                  }}
+                  onMouseEnter={() => setShowInfoTooltip(true)}
+                  onMouseLeave={() => setShowInfoTooltip(false)}
+                  onClick={() => setShowInfoTooltip(!showInfoTooltip)}
+                  title="About your family tree"
+                >
+                  ℹ️
+                  {showInfoTooltip && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '35px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        background: 'white',
+                        color: '#333',
+                        padding: '12px 16px',
+                        borderRadius: '8px',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                        fontSize: '12px',
+                        width: '280px',
+                        zIndex: 1001,
+                        textAlign: 'left',
+                        lineHeight: '1.5',
+                        fontWeight: '400'
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <strong style={{ display: 'block', marginBottom: '6px', fontSize: '13px' }}>
+                        One Tree Per Account
+                      </strong>
+                      You have one comprehensive family tree. Upgrade your plan to add more family members (cards) to your tree.
+                    </div>
+                  )}
+                </button>
 
-              <span
-                style={{
-                  fontSize: '11px',
-                  padding: '6px 12px',
-                  borderRadius: '16px',
-                  fontWeight: '600',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  transition: 'all 0.3s ease',
-                  whiteSpace: 'nowrap',
-                  ...getCardCounterStyle()
-                }}
-                title={isUnlimited ? `Unlimited plan - ${currentCards} cards created` : `You are using ${currentCards} out of ${maxCards} cards in your ${userPlan.name} plan`}
-              >
-              <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
-              <span>
-                {isUnlimited ? (
-                  <>{currentCards} cards (Unlimited)</>
-                ) : remainingCards === 0 ? (
-                  <>Limit: {currentCards}/{maxCards} cards</>
-                ) : remainingCards <= 2 ? (
-                  <>{remainingCards} left ({currentCards}/{maxCards})</>
-                ) : (
-                  <>{currentCards}/{maxCards} cards</>
-                )}
-              </span>
-              {!isUnlimited && usagePercentage >= 80 && (
-                <span style={{ fontSize: '14px' }}>
-                  {usagePercentage >= 100 ? '⚠️' : '⏰'}
+                <span
+                  style={{
+                    fontSize: '11px',
+                    padding: '6px 12px',
+                    borderRadius: '16px',
+                    fontWeight: '600',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.3s ease',
+                    whiteSpace: 'nowrap',
+                    ...getCardCounterStyle()
+                  }}
+                  title={isUnlimited ? `Unlimited plan - ${currentCards} cards created` : `You are using ${currentCards} out of ${maxCards} cards in your ${userPlan.name} plan`}
+                >
+                  <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
+                  <span>
+                    {isUnlimited ? (
+                      <>{currentCards} cards (Unlimited)</>
+                    ) : remainingCards === 0 ? (
+                      <>Limit: {currentCards}/{maxCards} cards</>
+                    ) : remainingCards <= 2 ? (
+                      <>{remainingCards} left ({currentCards}/{maxCards})</>
+                    ) : (
+                      <>{currentCards}/{maxCards} cards</>
+                    )}
+                  </span>
+                  {!isUnlimited && usagePercentage >= 80 && (
+                    <span style={{ fontSize: '14px' }}>
+                      {usagePercentage >= 100 ? '⚠️' : '⏰'}
+                    </span>
+                  )}
                 </span>
-              )}
-            </span>
 
-            {/* Plan Expiry Warning */}
-            {expiryInfo && expiryInfo.isExpiringSoon && (
-              <span
-                style={{
-                  fontSize: '11px',
-                  marginLeft: '10px',
-                  padding: '6px 12px',
-                  borderRadius: '16px',
-                  fontWeight: '600',
-                  background: 'rgba(255, 152, 0, 0.9)',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
-                  color: 'white',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  whiteSpace: 'nowrap'
-                }}
-                title={`Your ${userPlan.name} plan expires on ${new Date(userPlan.expiryDate).toLocaleDateString()}`}
-              >
-                <span style={{ fontSize: '14px' }}>⏰</span>
-                <span>Renew in {expiryInfo.daysRemaining} days</span>
-              </span>
-            )}
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="toolbar-right">
-        {/* Photo Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '12px' }}>
-          <span style={{ fontSize: '12px', color: 'white', fontWeight: '500' }}>Add Photo</span>
-          <label className="toggle-switch" style={{ width: '42px', height: '20px' }}>
-            <input
-              type="checkbox"
-              checked={globalShowPhotos}
-              onChange={(e) => setGlobalShowPhotos(e.target.checked)}
-            />
-            <span className="toggle-slider"></span>
-          </label>
+                {/* Plan Expiry Warning */}
+                {expiryInfo && expiryInfo.isExpiringSoon && (
+                  <span
+                    style={{
+                      fontSize: '11px',
+                      marginLeft: '10px',
+                      padding: '6px 12px',
+                      borderRadius: '16px',
+                      fontWeight: '600',
+                      background: 'rgba(255, 152, 0, 0.9)',
+                      border: '1px solid rgba(255, 255, 255, 0.5)',
+                      color: 'white',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      whiteSpace: 'nowrap'
+                    }}
+                    title={`Your ${userPlan.name} plan expires on ${new Date(userPlan.expiryDate).toLocaleDateString()}`}
+                  >
+                    <span style={{ fontSize: '14px' }}>⏰</span>
+                    <span>Renew in {expiryInfo.daysRemaining} days</span>
+                  </span>
+                )}
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Background Change Button */}
-        <button
-          className="btn-export-toolbar"
-          onClick={changeBackground}
-          title="Change background image"
-        >
-          <span style={{ fontSize: '18px', marginRight: '8px' }}>🖼️</span>
-          Change BG
-        </button>
-
-
-        {/* Export Button */}
-        <button className="btn-export-toolbar" onClick={toggleExportMenu}>
-          Get Your Tree
-        </button>
-        {exportMenuOpen && (
-          <div className="export-dropdown" id="exportMenu">
-            <button onClick={handleExportImage}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>🖼️</span>
-              Download as PNG
-            </button>
-            <button onClick={handleExportPDF}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>📄</span>
-              Download as PDF
-            </button>
-            <button onClick={handlePrint}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>🖨️</span>
-              Print / Save as PDF
-            </button>
+        <div className="toolbar-right">
+          {/* Photo Toggle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginRight: '12px' }}>
+            <span style={{ fontSize: '12px', color: 'white', fontWeight: '500' }}>Add Photo</span>
+            <label className="toggle-switch" style={{ width: '42px', height: '20px' }}>
+              <input
+                type="checkbox"
+                checked={globalShowPhotos}
+                onChange={(e) => setGlobalShowPhotos(e.target.checked)}
+              />
+              <span className="toggle-slider"></span>
+            </label>
           </div>
-        )}
 
-        {/* Share Button */}
-        <button className="btn-share-toolbar" onClick={toggleShareMenu}>
-          Share
-        </button>
+          {/* Vamsapattika Language Selector */}
+          <LanguageSelector />
 
-        {/* User Dropdown */}
-        <UserDropdown />
+          {/* Background Change Button */}
+          <button
+            className="btn-export-toolbar"
+            onClick={changeBackground}
+            title="Change background image"
+          >
+            <span style={{ fontSize: '18px', marginRight: '8px' }}>🖼️</span>
+            Change BG
+          </button>
 
-        {/* Google Translate - Hidden */}
-        <div id="google_translate_element" style={{ display: 'none' }}></div>
 
-        {shareMenuOpen && (
-          <div className="export-dropdown" id="shareMenu">
-            <button onClick={shareToWhatsApp}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>📱</span>
-              WhatsApp
-            </button>
-            <button onClick={shareToFacebook}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>👥</span>
-              Facebook
-            </button>
-            <button onClick={shareToInstagram}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>📷</span>
-              Instagram
-            </button>
-            <button onClick={shareToTwitter}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>🐦</span>
-              Twitter
-            </button>
-            <button onClick={copyShareLink}>
-              <span style={{ fontSize: '18px', marginRight: '10px' }}>🔗</span>
-              Copy Link
-            </button>
-          </div>
-        )}
+          {/* Export Button */}
+          <button className="btn-export-toolbar" onClick={toggleExportMenu}>
+            Get Your Tree
+          </button>
+          {exportMenuOpen && (
+            <div className="export-dropdown" id="exportMenu">
+              <button onClick={handleExportImage}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>🖼️</span>
+                Download as PNG
+              </button>
+              <button onClick={handleExportPDF}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>📄</span>
+                Download as PDF
+              </button>
+              <button onClick={handlePrint}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>🖨️</span>
+                Print / Save as PDF
+              </button>
+            </div>
+          )}
+
+          {/* Share Button */}
+          <button className="btn-share-toolbar" onClick={toggleShareMenu}>
+            Share
+          </button>
+
+          {/* User Dropdown */}
+          <UserDropdown />
+
+          {/* Google Translate - Hidden */}
+          <div id="google_translate_element" style={{ display: 'none' }}></div>
+
+          {shareMenuOpen && (
+            <div className="export-dropdown" id="shareMenu">
+              <button onClick={shareToWhatsApp}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>📱</span>
+                WhatsApp
+              </button>
+              <button onClick={shareToFacebook}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>👥</span>
+                Facebook
+              </button>
+              <button onClick={shareToInstagram}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>📷</span>
+                Instagram
+              </button>
+              <button onClick={shareToTwitter}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>🐦</span>
+                Twitter
+              </button>
+              <button onClick={copyShareLink}>
+                <span style={{ fontSize: '18px', marginRight: '10px' }}>🔗</span>
+                Copy Link
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 };

@@ -5,6 +5,7 @@ import { AlertProvider } from './context/AlertContext';
 import Auth from './components/Auth';
 import WebsitePage from './pages/Website/WebsitePage';
 import FamilyTreePage from './pages/FamilyTree/FamilyTreePage';
+import { LanguageProvider } from './context/LanguageContext';
 
 function ProtectedRoute({ children }) {
   const { currentUser } = useAuth();
@@ -28,6 +29,7 @@ function ScrollToTop() {
 
 function App() {
   return (
+    <LanguageProvider>
     <AuthProvider>
       <AlertProvider>
         <ScrollToTop />
@@ -45,6 +47,7 @@ function App() {
         </Routes>
       </AlertProvider>
     </AuthProvider>
+    </LanguageProvider>
   );
 }
 

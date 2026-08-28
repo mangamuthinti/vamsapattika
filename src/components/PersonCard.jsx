@@ -4,16 +4,22 @@ import { useFamilyTree } from '../context/FamilyTreeContext';
 import FloatingTextToolbar from './FloatingTextToolbar';
 import CustomAlert from './CustomAlert';
 import CustomConfirm from './CustomConfirm';
+import { useLanguage } from '../context/LanguageContext';
 
 const PersonCard = ({ personId }) => {
   const { familyData, globalShowPhotos, updatePerson, removePerson, setModalState, setSelectedPerson, textToolbarState, setTextToolbarState } = useFamilyTree();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { language, translateDynamic, translateName } = useLanguage();
+  const person = familyData[personId];
+  const [displayName, setDisplayName] = useState(person?.name || '');
+  const [displayOccupation, setDisplayOccupation] = useState(person?.occupation || '');
+
   const cardRef = useRef(null);
   const activeTextElementRef = useRef(null);
   const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
   const [confirmState, setConfirmState] = useState({ isOpen: false, message: '', onConfirm: null });
 
-  const person = familyData[personId];
+
   if (!person) return null;
 
   // Debug: Log person data on render
@@ -32,6 +38,45 @@ const PersonCard = ({ personId }) => {
   };
 
   console.log(`PersonCard ${personId} style:`, cardStyle);
+
+  useEffect(() => {
+    if (!person) return undefined;
+
+    let cancelled = false;
+    setDisplayName(person.name || '');
+
+    translateName(person.name || '').then((name) => {
+      if (!cancelled) setDisplayName(name || person.name || '');
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [person?.name, language, translateName]);
+
+  useEffect(() => {
+    if (!person) return undefined;
+
+    let cancelled = false;
+
+    // IMPORTANT:
+    // A family member's occupation is translated by meaning.
+    // The person's name is handled separately by transliteration.
+    if (!person.occupation) {
+      setDisplayOccupation('');
+      return undefined;
+    }
+
+    translateDynamic(person.occupation).then((occupation) => {
+      if (!cancelled) {
+        setDisplayOccupation(occupation || person.occupation || '');
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [person?.occupation, language, translateDynamic]);
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -185,8 +230,8 @@ const PersonCard = ({ personId }) => {
 
     // If clicking on text elements, show text toolbar instead
     if (e.target.classList.contains('name') ||
-        e.target.classList.contains('dates') ||
-        e.target.classList.contains('occupation')) {
+      e.target.classList.contains('dates') ||
+      e.target.classList.contains('occupation')) {
       return; // Text click handler will take care of this
     }
 
@@ -245,108 +290,108 @@ const PersonCard = ({ personId }) => {
         style={cardStyle}
         onClick={handleCardClick}
       >
-      <button className="card-menu-btn" onClick={toggleMenu}>⋮</button>
+        <button className="card-menu-btn" onClick={toggleMenu}>⋮</button>
 
-      {/* Render menu in portal, centered on screen */}
-      {menuOpen && ReactDOM.createPortal(
-        <div className="card-menu-overlay" onClick={() => setMenuOpen(false)}>
-          <div
-            className="card-menu show"
-            onClick={(e) => e.stopPropagation()}
-          >
-          <button className="menu-item" onClick={handleEdit}>
-            <span className="menu-icon">✏️</span>
-            <span>Edit Info</span>
-          </button>
+        {/* Render menu in portal, centered on screen */}
+        {menuOpen && ReactDOM.createPortal(
+          <div className="card-menu-overlay" onClick={() => setMenuOpen(false)}>
+            <div
+              className="card-menu show"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="menu-item" onClick={handleEdit}>
+                <span className="menu-icon">✏️</span>
+                <span>Edit Info</span>
+              </button>
 
-          {/* Show "Add Spouse" only if no spouse */}
-          {!person.spouse && (
-            <button className="menu-item" onClick={handleAddSpouse}>
-              <span className="menu-icon">💑</span>
-              <span>Add Spouse</span>
-            </button>
-          )}
+              {/* Show "Add Spouse" only if no spouse */}
+              {!person.spouse && (
+                <button className="menu-item" onClick={handleAddSpouse}>
+                  <span className="menu-icon">💑</span>
+                  <span>Add Spouse</span>
+                </button>
+              )}
 
-          {/* Show "Add Child" only if has spouse */}
-          {person.spouse && (
-            <button className="menu-item" onClick={handleAddChild}>
-              <span className="menu-icon">👶</span>
-              <span>Add Child</span>
-            </button>
-          )}
+              {/* Show "Add Child" only if has spouse */}
+              {person.spouse && (
+                <button className="menu-item" onClick={handleAddChild}>
+                  <span className="menu-icon">👶</span>
+                  <span>Add Child</span>
+                </button>
+              )}
 
-          {/* Hide Remove for root node (id=1) */}
-          {personId !== 1 && (
-            <button className="menu-item menu-item-danger" onClick={handleRemove}>
-              <span className="menu-icon">🗑️</span>
-              <span>Remove</span>
-            </button>
-          )}
+              {/* Hide Remove for root node (id=1) */}
+              {personId !== 1 && (
+                <button className="menu-item menu-item-danger" onClick={handleRemove}>
+                  <span className="menu-icon">🗑️</span>
+                  <span>Remove</span>
+                </button>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
+
+        {globalShowPhotos && person.photo !== '' && (
+          <div className={`photo-container ${!person.photo ? 'empty' : ''} ${person.photoShape ? `photo-shape-${person.photoShape}` : 'photo-shape-circle'}`}>
+            {person.photo ? (
+              <img
+                src={person.photo}
+                alt={person.name}
+                className="person-photo"
+              />
+            ) : null}
           </div>
-        </div>,
-        document.body
-      )}
+        )}
 
-      {globalShowPhotos && person.photo !== '' && (
-        <div className={`photo-container ${!person.photo ? 'empty' : ''} ${person.photoShape ? `photo-shape-${person.photoShape}` : 'photo-shape-circle'}`}>
-          {person.photo ? (
-            <img
-              src={person.photo}
-              alt={person.name}
-              className="person-photo"
-            />
-          ) : null}
+        <div
+          className="name"
+          style={{
+            ...person.textStyles?.name,
+          }}
+          onClick={(e) => handleTextClick(e, 'name')}
+        >
+          {displayName}
         </div>
-      )}
+        <div className="gender-badge">{genderSymbol[person.gender]}</div>
+        {(person.birthDate || person.deathDate) && (
+          <div
+            className="dates"
+            style={{
+              ...person.textStyles?.dates,
+            }}
+            onClick={(e) => handleTextClick(e, 'dates')}
+          >
+            {person.birthDate && new Date(person.birthDate).getFullYear()}
+            {person.birthDate && person.deathDate && '-'}
+            {person.deathDate && new Date(person.deathDate).getFullYear()}
+          </div>
+        )}
+        {person.occupation && (
+          <div
+            className="occupation"
+            style={{
+              ...person.textStyles?.occupation,
+            }}
+            onClick={(e) => handleTextClick(e, 'occupation')}
+          >
+            {displayOccupation}
+          </div>
+        )}
+        {person.link && <div className="link-badge">🔗</div>}
 
-      <div
-        className="name"
-        style={{
-          ...person.textStyles?.name,
-        }}
-        onClick={(e) => handleTextClick(e, 'name')}
-      >
-        {person.name}
+        {/* Render toolbar in portal only if this card's text is being edited */}
+        {textToolbarState.isOpen && textToolbarState.personId === personId && ReactDOM.createPortal(
+          <FloatingTextToolbar
+            isOpen={true}
+            position={textToolbarState.position}
+            onClose={closeTextToolbar}
+            onFormat={handleFormatText}
+            currentStyles={person.textStyles?.[textToolbarState.field]}
+          />,
+          document.body
+        )}
       </div>
-      <div className="gender-badge">{genderSymbol[person.gender]}</div>
-      {(person.birthDate || person.deathDate) && (
-        <div
-          className="dates"
-          style={{
-            ...person.textStyles?.dates,
-          }}
-          onClick={(e) => handleTextClick(e, 'dates')}
-        >
-          {person.birthDate && new Date(person.birthDate).getFullYear()}
-          {person.birthDate && person.deathDate && '-'}
-          {person.deathDate && new Date(person.deathDate).getFullYear()}
-        </div>
-      )}
-      {person.occupation && (
-        <div
-          className="occupation"
-          style={{
-            ...person.textStyles?.occupation,
-          }}
-          onClick={(e) => handleTextClick(e, 'occupation')}
-        >
-          {person.occupation}
-        </div>
-      )}
-      {person.link && <div className="link-badge">🔗</div>}
-
-      {/* Render toolbar in portal only if this card's text is being edited */}
-      {textToolbarState.isOpen && textToolbarState.personId === personId && ReactDOM.createPortal(
-        <FloatingTextToolbar
-          isOpen={true}
-          position={textToolbarState.position}
-          onClose={closeTextToolbar}
-          onFormat={handleFormatText}
-          currentStyles={person.textStyles?.[textToolbarState.field]}
-        />,
-        document.body
-      )}
-    </div>
     </>
   );
 };
