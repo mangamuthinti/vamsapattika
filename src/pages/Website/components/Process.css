@@ -36,24 +36,34 @@
 }
 
 /* =========================================
-   STEPS CONTAINER & CARDS
+   STEPS CONTAINER
    ========================================= */
 
 .steps {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* =========================================
+   STEP CARD
+   ========================================= */
+
 .step {
   position: relative;
+
   padding: 40px 24px;
+
   border-right: 1px solid rgba(0, 0, 0, 0.08);
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   overflow: hidden;
+
   z-index: 1;
 }
 
@@ -61,124 +71,60 @@
   border-right: none;
 }
 
-/* Base Watermark Layer */
+/* =========================================
+   WATERMARK
+   ========================================= */
+
 .step::before {
   content: "";
+
   position: absolute;
   inset: 0;
+
   background-image: var(--watermark-image);
   background-repeat: no-repeat;
   background-position: center 60%;
   background-size: 85%;
+
   mix-blend-mode: multiply;
+
   pointer-events: none;
+
   z-index: 2;
+
   transition: opacity 0.3s ease;
 }
 
 /* =========================================
-   ALTERNATING WATERMARK OPACITIES
+   WATERMARK OPACITY
    ========================================= */
 
-/* Steps 1, 3, 5 -> VISIBLE DARK WATERMARK */
 .step:nth-child(odd)::before {
   opacity: 0.28;
 }
 
-/* Steps 2, 4 -> LIGHT WATERMARK */
 .step:nth-child(even)::before {
   opacity: 0.08;
 }
 
-/* Hover Enhancement */
 .step:hover::before {
   opacity: 0.40;
 }
 
 /* =========================================
-   STEP CONTENT & TYPOGRAPHY
+   STEP CONTENT
    ========================================= */
-
-.step-number {
-  position: relative;
-  z-index: 3;
-
-  color: var(--navy, #1a2b4c);
-
-  font-size: 14px;
-
-  font-weight: 800;
-
-  margin: 0;
-
-  flex-shrink: 0;
-}
 
 .step-content {
   position: relative;
 
   z-index: 3;
-}
 
-/* Number + heading beside each other */
-.step-content h3 {
-  display: inline;
-
-  color: var(--navy, #1a2b4c);
-
-  font-size: 16px;
-
-  font-weight: 800;
-
-  margin: 0;
-
-  line-height: 1.3;
-
-  text-shadow:
-    0 1px 3px rgba(253, 251, 247, 0.9);
-}
-
-.step-content p {
-  color: #2c3e50;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.5;
-  margin: 0;
-  text-shadow:
-    0 1px 2px rgba(253, 251, 247, 0.85);
+  width: 100%;
 }
 
 /* =========================================
-   RESPONSIVE LAYOUT
-   ========================================= */
-
-@media (max-width: 1024px) {
-  .steps {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .step:nth-child(3) {
-    border-right: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .steps {
-    grid-template-columns: 1fr;
-  }
-
-  .step {
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  }
-
-  .step:last-child {
-    border-bottom: none;
-  }
-}
-
-/* =========================================
-   NUMBER + HEADING BESIDE EACH OTHER
+   TITLE ROW
    ========================================= */
 
 .step-title-row {
@@ -189,14 +135,20 @@
   gap: 10px;
 
   margin-bottom: 12px;
+
+  width: 100%;
 }
+
+/* =========================================
+   STEP NUMBER
+   ========================================= */
 
 .step-title-row .step-number {
   position: relative;
 
   z-index: 3;
 
-  flex-shrink: 0;
+  flex: 0 0 auto;
 
   color: #575bd3;
 
@@ -209,20 +161,50 @@
   margin: 0;
 }
 
+/* =========================================
+   STEP HEADING
+   ========================================= */
+
 .step-title-row h3 {
+  position: relative;
+
+  z-index: 3;
+
+  flex: 1;
+
+  min-width: 0;
+
   margin: 0;
+
   color: var(--navy, #1a2b4c);
+
   font-size: 18px;
+
   font-weight: bold;
+
   line-height: 1.3;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
+
   text-shadow:
     0 1px 3px rgba(253, 251, 247, 0.9);
 }
+
 /* =========================================
-   DESCRIPTION
+   DESCRIPTION / MATTER
    ========================================= */
 
 .step-content p {
+  position: relative;
+
+  z-index: 3;
+
+  width: 100%;
+
+  margin: 0;
+
   color: #2c3e50;
 
   font-size: 15px;
@@ -231,15 +213,18 @@
 
   line-height: 1.5;
 
-  margin: 0;
+  word-break: normal;
+
+  overflow-wrap: break-word;
+
+  white-space: normal;
 
   text-shadow:
     0 1px 2px rgba(253, 251, 247, 0.85);
 }
 
-
 /* =========================================
-   TEXT HOVER COLOR
+   TEXT HOVER
    ========================================= */
 
 .step-content h3:hover {
@@ -248,4 +233,627 @@
 
 .step-title-row .step-number:hover {
   color: var(--pink, #df217d);
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1024px) {
+
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .step:nth-child(3) {
+    border-right: none;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .process {
+    width: 100%;
+
+    padding: 60px 0;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+  /* =========================================
+     MOBILE MAIN HEADING
+     ========================================= */
+
+  .center-heading {
+    width: 100%;
+
+    margin: 0 auto 35px;
+
+    padding: 0 18px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+  }
+
+  .section-label {
+    font-size: 10px;
+
+    letter-spacing: 1.8px;
+
+    margin-bottom: 10px;
+  }
+
+  .center-heading h2 {
+    width: 100%;
+
+    font-size: 28px;
+
+    line-height: 1.2;
+
+    letter-spacing: 0;
+
+    word-break: normal;
+
+    overflow-wrap: normal;
+  }
+
+  /* =========================================
+     MOBILE STEPS
+     ========================================= */
+
+  .steps {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    box-sizing: border-box;
+  }
+
+  /* =========================================
+     MOBILE CARD
+     ========================================= */
+
+  .step {
+    width: 100%;
+
+    min-height: 0;
+
+    height: auto;
+
+    padding: 30px 24px;
+
+    box-sizing: border-box;
+
+    border-right: none;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    overflow: hidden;
+  }
+
+  .step:last-child {
+    border-bottom: none;
+  }
+
+  /* =========================================
+     MOBILE WATERMARK
+     ========================================= */
+
+  .step::before {
+    background-position: center center;
+
+    background-size: 62%;
+  }
+
+  .step:nth-child(odd)::before {
+    opacity: 0.24;
+  }
+
+  .step:nth-child(even)::before {
+    opacity: 0.07;
+  }
+
+  /* =========================================
+     MOBILE CONTENT
+     ========================================= */
+
+  .step-content {
+    position: relative;
+
+    z-index: 3;
+
+    width: 100%;
+
+    min-width: 0;
+
+    height: auto;
+  }
+
+  /* =========================================
+     MOBILE TITLE
+     ========================================= */
+
+  .step-title-row {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    width: 100%;
+
+    gap: 9px;
+
+    margin-bottom: 12px;
+
+    box-sizing: border-box;
+  }
+
+  .step-title-row .step-number {
+    flex: 0 0 auto;
+
+    font-size: 13px;
+
+    line-height: 1.35;
+
+    white-space: nowrap;
+  }
+
+  .step-title-row h3 {
+    flex: 1 1 auto;
+
+    min-width: 0;
+
+    max-width: none;
+
+    margin: 0;
+
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    /* IMPORTANT:
+       Heading is NOT hidden */
+    display: block;
+
+    height: auto;
+
+    max-height: none;
+
+    overflow: visible;
+
+    white-space: normal;
+
+    word-break: normal;
+
+    overflow-wrap: break-word;
+  }
+
+  /* =========================================
+     MOBILE MATTER
+     ========================================= */
+
+  .step-content p {
+    position: relative;
+
+    z-index: 3;
+
+    display: block;
+
+    width: 100%;
+
+    max-width: none;
+
+    height: auto;
+
+    max-height: none;
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    font-weight: 600;
+
+    /* IMPORTANT:
+       Matter is NOT hidden */
+    overflow: visible;
+
+    white-space: normal;
+
+    word-break: normal;
+
+    overflow-wrap: break-word;
+  }
+
+  /* Disable hover color changes on touch */
+  .step-content h3:hover {
+    color: var(--navy, #1a2b4c);
+  }
+
+  .step-title-row .step-number:hover {
+    color: #575bd3;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE — 430px
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .process {
+    padding: 50px 0;
+  }
+
+  .center-heading {
+    margin-bottom: 30px;
+
+    padding: 0 16px;
+  }
+
+  .section-label {
+    font-size: 10px;
+
+    letter-spacing: 1.6px;
+  }
+
+  .center-heading h2 {
+    font-size: 27px;
+
+    line-height: 1.2;
+  }
+
+  .step {
+    padding: 28px 20px;
+
+    min-height: 0;
+
+    height: auto;
+  }
+
+  .step::before {
+    background-size: 60%;
+  }
+
+  .step-title-row {
+    gap: 9px;
+
+    margin-bottom: 11px;
+  }
+
+  .step-title-row .step-number {
+    font-size: 13px;
+  }
+
+  .step-title-row h3 {
+    font-size: 17px;
+
+    line-height: 1.3;
+  }
+
+  .step-content p {
+    font-size: 13.5px;
+
+    line-height: 1.5;
+  }
+}
+
+/* =========================================
+   375px MOBILE
+   ========================================= */
+
+@media (max-width: 375px) {
+
+  .process {
+    padding: 45px 0;
+  }
+
+  .center-heading {
+    margin-bottom: 28px;
+
+    padding: 0 14px;
+  }
+
+  .center-heading h2 {
+    font-size: 25px;
+
+    line-height: 1.2;
+  }
+
+  .step {
+    padding: 26px 18px;
+
+    min-height: 0;
+
+    height: auto;
+  }
+
+  .step::before {
+    background-size: 58%;
+  }
+
+  .step-title-row {
+    gap: 8px;
+
+    margin-bottom: 10px;
+  }
+
+  .step-title-row .step-number {
+    font-size: 12px;
+  }
+
+  .step-title-row h3 {
+    font-size: 16px;
+
+    line-height: 1.3;
+  }
+
+  .step-content p {
+    font-size: 13px;
+
+    line-height: 1.5;
+  }
+}
+
+/* =========================================
+   VERY SMALL MOBILE — 360px
+   ========================================= */
+
+@media (max-width: 360px) {
+
+  .process {
+    padding: 42px 0;
+  }
+
+  .center-heading {
+    padding: 0 12px;
+  }
+
+  .center-heading h2 {
+    font-size: 24px;
+
+    line-height: 1.2;
+  }
+
+  .step {
+    padding: 24px 16px;
+
+    min-height: 0;
+
+    height: auto;
+  }
+
+  .step::before {
+    background-size: 55%;
+  }
+
+  .step-title-row {
+    gap: 7px;
+  }
+
+  .step-title-row h3 {
+    font-size: 15.5px;
+
+    line-height: 1.3;
+  }
+
+  .step-content p {
+    font-size: 12.5px;
+
+    line-height: 1.5;
+  }
+}
+
+/* =========================================
+   MOBILE — FINAL TEXT WIDTH ADJUSTMENT
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .step {
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 28px 20px !important;
+  }
+
+  .step-content {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* NUMBER + HEADING */
+  .step-title-row {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 10px 0;
+    box-sizing: border-box;
+  }
+
+  /* NUMBER */
+  .step-title-row .step-number {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap;
+  }
+
+  /* HEADING */
+  .step-title-row h3 {
+    display: block !important;
+
+    flex: 0 1 auto !important;
+
+    width: auto !important;
+
+    /* Gives heading enough room for proper 2-line wrapping */
+    max-width: 210px !important;
+
+    min-width: 0 !important;
+
+    margin: 0 !important;
+
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+    font-weight: 700 !important;
+
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* DESCRIPTION / MATTER */
+  .step-content p {
+    display: block !important;
+
+    width: 100% !important;
+
+    max-width: 270px !important;
+
+    min-width: 0 !important;
+
+    margin: 0 !important;
+
+    font-size: 13.5px !important;
+
+    line-height: 1.45 !important;
+
+    font-weight: 600 !important;
+
+    white-space: normal !important;
+
+    word-break: normal !important;
+
+    overflow-wrap: normal !important;
+
+    /* IMPORTANT — do not hide matter */
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+
+    display: block !important;
+  }
+
+  /* Keep watermark behind text */
+  .step::before {
+    z-index: 2;
+    background-position: center center;
+    background-size: 60%;
+  }
+
+  .step-content,
+  .step-title-row,
+  .step-title-row h3,
+  .step-content p {
+    position: relative;
+    z-index: 3;
+  }
+}
+
+
+/* =========================================
+   430px
+   ========================================= */
+
+@media (max-width: 430px) {
+
+  .step {
+    padding: 26px 18px !important;
+  }
+
+  .step-title-row {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .step-title-row h3 {
+    max-width: 200px !important;
+    font-size: 17px !important;
+    line-height: 1.25 !important;
+  }
+
+  .step-content p {
+    max-width: 270px !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+
+/* =========================================
+   375px
+   ========================================= */
+
+@media (max-width: 375px) {
+
+  .step {
+    padding: 24px 16px !important;
+  }
+
+  .step-title-row {
+    gap: 7px;
+  }
+
+  .step-title-row h3 {
+    max-width: 185px !important;
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+  }
+
+  .step-content p {
+    max-width: 245px !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+}
+
+
+/* =========================================
+   360px
+   ========================================= */
+
+@media (max-width: 360px) {
+
+  .step {
+    padding: 22px 15px !important;
+  }
+
+  .step-title-row h3 {
+    max-width: 175px !important;
+    font-size: 15.5px !important;
+  }
+
+  .step-content p {
+    max-width: 230px !important;
+    font-size: 12.5px !important;
+  }
 }
