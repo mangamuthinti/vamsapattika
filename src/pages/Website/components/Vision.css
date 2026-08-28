@@ -199,6 +199,13 @@
 /* =========================================================
    HORIZONTAL LINE
    ========================================================= */
+/* =========================================================
+   ENTIRE PROGRESS LINE — GREEN ONLY
+   ========================================================= */
+
+/* =========================================================
+   PROGRESS LINE — PINK → GREEN → BLUE
+   ========================================================= */
 
 .vision-progress-line {
   position: absolute;
@@ -214,17 +221,27 @@
 
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(
+    90deg,
+    #e85d9e 0%,
+    #e85d9e 33%,
+    #10643f 50%,
+    #10643f 66%,
+    #3b82f6 100%
+  );
 
   z-index: 1;
 }
 
 
-/* =========================================================
-   GOLD DASHES
-   ========================================================= */
-
+/* REMOVE OLD DASHES */
 .vision-progress-line::before {
+  content: none;
+}
+
+
+/* SOFT LOADING GLOW */
+.vision-progress-line::after {
   content: "";
 
   position: absolute;
@@ -232,22 +249,23 @@
   left: 0;
   right: 0;
 
-  top: 50%;
+  top: -2px;
 
-  height: 2px;
-
-  transform: translateY(-50%);
-
-  background:
-    repeating-linear-gradient(
-      90deg,
-      #c49a45 0 20px,
-      transparent 20px 34px
-    );
+  height: 10px;
 
   border-radius: 999px;
-}
 
+  background: linear-gradient(
+    90deg,
+    rgba(232, 93, 158, 0.35),
+    rgba(16, 100, 63, 0.35),
+    rgba(59, 130, 246, 0.35)
+  );
+
+  filter: blur(4px);
+
+  z-index: -1;
+}
 
 /* =========================================================
    LINE GLOW
@@ -298,7 +316,7 @@
 
   border-radius: 50%;
 
-  background: #c49a45;
+  background: #06d143;
 
   box-shadow:
     0 0 0 7px rgba(196, 154, 69, 0.12),
@@ -399,7 +417,7 @@
    ========================================================= */
 
 .person-4 img {
-  transform: scale(1.12);
+  transform: scale(1.23);
   transform-origin: bottom center;
 }
 
@@ -430,7 +448,7 @@
 .person-4,
 .person-5,
 .person-6 {
-  animation-duration: 24s;
+  animation-duration: 16s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -718,6 +736,23 @@
 
 .person-5 {
   animation-name: familyFiveMove;
+
+}
+/* =========================================================
+   PERSON 5 — CHILD BOY SIZE
+   DECREASE BOY HEIGHT ONLY
+   ========================================================= */
+
+.person-5 {
+  width: 75px;
+  height: 145px;
+}
+
+.person-5 img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-top: 10px;
 }
 
 @keyframes familyFiveMove {
@@ -1265,7 +1300,6 @@
     top: 42px;
   }
 
-
   /* =======================================================
      MOBILE GRANDFATHER
      ======================================================= */
@@ -1715,4 +1749,30 @@
 
 .family-person img {
   vertical-align: bottom;
+}
+
+
+
+
+/* =========================================================
+   MOBILE — RED DRESS PERSON (PERSON 4)
+   INCREASE SIZE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .person-4 {
+    width: 68px;
+    height: 100px;
+    top: 14px;
+    margin-left: -12px;
+  }
+
+  .person-4 img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: scale(1.18);
+    transform-origin: bottom center;
+  }
 }
