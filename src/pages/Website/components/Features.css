@@ -758,6 +758,9 @@
 /* =========================================================
    MOBILE
 ========================================================= */
+/* =========================================================
+   MOBILE VERSION
+   ========================================================= */
 
 @media (max-width: 620px) {
 
@@ -767,61 +770,44 @@
       75px;
   }
 
-
   .center-heading {
     margin-bottom: 38px;
   }
 
-
   .center-heading h2 {
     font-size: 28px;
-
     letter-spacing: 1.5px;
   }
 
-
   .center-heading p {
     padding: 0 8px;
-
     font-size: 13px;
-
     line-height: 1.7;
   }
 
-
   .feature-grid {
     grid-template-columns: 1fr;
-
     gap: 14px;
   }
 
-
   .feature-card {
     min-height: 225px;
-
     padding: 25px 22px;
-
     border-radius: 13px;
   }
-
 
   .feature-card h3 {
     font-size: 18px;
   }
 
-
   .feature-card p {
     font-size: 13px;
-
     max-width: 88%;
   }
 
-
   .feature-card::after {
     font-size: 90px;
-
     right: 5px;
-
     bottom: -10px;
   }
 
@@ -832,9 +818,7 @@
 
   .card-arrow {
     top: auto;
-
     right: 19px;
-
     bottom: 18px;
 
     width: 30px;
@@ -842,7 +826,6 @@
 
     transform: none;
   }
-
 
   .card-arrow span {
     transform: rotate(90deg);
@@ -872,11 +855,9 @@
       0 3px 10px rgba(181, 139, 66, 0.08);
   }
 
-
   .feature-card:has(.card-arrow:hover) + .feature-card::before {
     transform: scaleX(1);
   }
-
 
   .feature-card:has(.card-arrow:hover) + .feature-card::after {
     color:
@@ -887,236 +868,60 @@
       scale(1.04);
   }
 
-
   .feature-card:has(.card-arrow:hover) + .feature-card .feature-icon::after {
     width: 38px;
   }
 
 
-  /* Last card has no arrow */
+  /* =====================================================
+     CARD 6 — TROPHY
+     SAME POSITION AS ARROW
+     ===================================================== */
 
   .feature-card:nth-child(6) .card-arrow {
+    display: flex;
+
+    top: auto;
+    right: 19px;
+    bottom: 18px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    color: #a8792e;
+
+    transform: none;
+  }
+
+  .feature-card:nth-child(6) .card-arrow span {
     display: none;
   }
-}
 
+  .feature-card:nth-child(6) .card-arrow::before {
+    content: "🏆";
 
-/* =========================================================
-   VERY SMALL DEVICES
-========================================================= */
+    display: block;
 
-@media (max-width: 380px) {
+    font-size: 28px;
 
-  .features {
-    padding-left: 12px;
+    line-height: 1;
 
-    padding-right: 12px;
+    transform: none;
   }
 
+  .feature-card:nth-child(6) .card-arrow:hover {
+    background: transparent;
+    border: none;
+    box-shadow: none;
 
-  .feature-card {
-    min-height: 215px;
+    color: #a8792e;
 
-    padding:
-      23px 20px;
+    transform: scale(1.08);
   }
-
-
-  .feature-card h3 {
-    font-size: 17px;
-  }
-
-
-  .feature-card p {
-    font-size: 12.5px;
-  }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-.feature-card:focus-visible {
-  outline:
-    2px solid #b58b42;
-
-  outline-offset: 4px;
-}
-
-
-.card-arrow:focus-visible {
-  outline:
-    2px solid #203244;
-
-  outline-offset: 4px;
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .feature-card,
-  .feature-card::before,
-  .feature-card::after,
-  .feature-card img,
-  .feature-icon::after,
-  .card-arrow {
-    transition: none !important;
-  }
-}
-
-/* =========================================================
-   ONLY ICON + TEXT ALIGNMENT
-   ALL ORIGINAL STYLES REMAIN UNCHANGED
-========================================================= */
-
-/* =========================================================
-   CARD 1 — ICON LEFT + TEXT LEFT
-========================================================= */
-
-.feature-card:nth-child(1) {
-  text-align: left;
-}
-
-.feature-card:nth-child(1) .feature-icon {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.feature-card:nth-child(1) h3,
-.feature-card:nth-child(1) p {
-  text-align: left;
-}
-
-
-/* =========================================================
-   CARD 2 — ICON CENTER + TEXT CENTER
-========================================================= */
-
-.feature-card:nth-child(2) {
-  text-align: center;
-}
-
-.feature-card:nth-child(2) .feature-icon {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.feature-card:nth-child(2) .feature-icon::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.feature-card:nth-child(2) h3,
-.feature-card:nth-child(2) p {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* =========================================================
-   CARD 3 — ICON RIGHT + TEXT RIGHT
-========================================================= */
-
-.feature-card:nth-child(3) {
-  text-align: right;
-}
-
-.feature-card:nth-child(3) .feature-icon {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-.feature-card:nth-child(3) .feature-icon::after {
-  left: auto;
-  right: 0;
-}
-
-.feature-card:nth-child(3) h3,
-.feature-card:nth-child(3) p {
-  text-align: right;
-  margin-left: auto;
-  margin-right: 0;
-}
-
-
-/* =========================================================
-   CARD 4 — ICON LEFT + TEXT LEFT
-========================================================= */
-
-.feature-card:nth-child(4) {
-  text-align: left;
-}
-
-.feature-card:nth-child(4) .feature-icon {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-}
-
-.feature-card:nth-child(4) h3,
-.feature-card:nth-child(4) p {
-  text-align: left;
-}
-
-
-/* =========================================================
-   CARD 5 — ICON CENTER + TEXT CENTER
-========================================================= */
-
-.feature-card:nth-child(5) {
-  text-align: center;
-}
-
-.feature-card:nth-child(5) .feature-icon {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.feature-card:nth-child(5) .feature-icon::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.feature-card:nth-child(5) h3,
-.feature-card:nth-child(5) p {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* =========================================================
-   CARD 6 — ICON RIGHT + TEXT RIGHT
-========================================================= */
-
-.feature-card:nth-child(6) {
-  text-align: right;
-}
-
-.feature-card:nth-child(6) .feature-icon {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
-
-.feature-card:nth-child(6) .feature-icon::after {
-  left: auto;
-  right: 0;
-}
-
-.feature-card:nth-child(6) h3,
-.feature-card:nth-child(6) p {
-  text-align: right;
-  margin-left: auto;
-  margin-right: 0;
 }
