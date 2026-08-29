@@ -1,0 +1,54 @@
+[
+  {
+    "model": "payments.plan",
+    "pk": 1,
+    "fields": {
+      "name": "FREE",
+      "display_name": "Free",
+      "max_cards": 4,
+      "price": "0.00",
+      "description": "Get started",
+      "validity_days": 365,
+      "is_active": true
+    }
+  },
+  {
+    "model": "payments.plan",
+    "pk": 2,
+    "fields": {
+      "name": "SILVER",
+      "display_name": "Silver",
+      "max_cards": 10,
+      "price": "499.00",
+      "description": "For small families",
+      "validity_days": 365,
+      "is_active": true
+    }
+  },
+  {
+    "model": "payments.plan",
+    "pk": 3,
+    "fields": {
+      "name": "GOLD",
+      "display_name": "Gold",
+      "max_cards": 18,
+      "price": "999.00",
+      "description": "For growing families",
+      "validity_days": 365,
+      "is_active": true
+    }
+  },
+  {
+    "model": "payments.plan",
+    "pk": 4,
+    "fields": {
+      "name": "DIAMOND",
+      "display_name": "Diamond",
+      "max_cards": 999999,
+      "price": "1499.00",
+      "description": "Unlimited cards",
+      "validity_days": 365,
+      "is_active": true
+    }
+  }
+]
