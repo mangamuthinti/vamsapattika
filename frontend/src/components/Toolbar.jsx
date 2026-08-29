@@ -485,9 +485,6 @@ const Toolbar = () => {
           {/* User Dropdown */}
           <UserDropdown />
 
-          {/* Google Translate - Hidden */}
-          <div id="google_translate_element" style={{ display: 'none' }}></div>
-
           {shareMenuOpen && (
             <div className="export-dropdown" id="shareMenu">
               <button onClick={shareToWhatsApp}>
