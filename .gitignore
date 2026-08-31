@@ -1,77 +1,26 @@
-# ==========================================
-# BACKEND (Django/Python)
-# ==========================================
 # Python
-*.py[cod]
-*$py.class
-__pycache__/
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-
-# Virtual Environment
 backend/venv/
-backend/env/
+backend/__pycache__/
+backend/*/__pycache__/
+backend/*/*/__pycache__/
+*.pyc
 
-# Django
-backend/staticfiles/
-backend/media/
-backend/*.sqlite3
-backend/*.db
-backend/db.sqlite3-journal
-
-# Environment Variables
+# Environment / secrets
+.env
 backend/.env
-backend/.env.local
-backend/.env.production
 
-# Logs
-backend/*.log
-
-# ==========================================
-# FRONTEND (React/Node)
-# ==========================================
-# Dependencies
+# Node
+node_modules/
 frontend/node_modules/
 
-# Build Output
+# Vite build
+dist/
 frontend/dist/
-frontend/dist-ssr/
-frontend/build/
-
-# Environment Variables
-frontend/.env
-frontend/.env.local
-frontend/.env.production
-
-# Testing
-frontend/coverage/
-
-# Vite
-frontend/.vite/
-
-# ==========================================
-# GENERAL
-# ==========================================
-# OS Files
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
 
 # IDE
 .vscode/
 .idea/
-*.code-workspace
 
-# Logs
-*.log
-npm-debug.log*
-
-# Firebase (we're removing this)
-.firebase/
-firebase-debug.log
-firebase-adminsdk-key.json
+# OS
+Thumbs.db
+.DS_Store
