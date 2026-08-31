@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import FamilyTree
-
+import uuid
 
 class FamilyTreeSerializer(serializers.ModelSerializer):
     """Family tree serializer"""
@@ -12,6 +12,14 @@ class FamilyTreeSerializer(serializers.ModelSerializer):
         model = FamilyTree
         fields = ['id', 'tree_id', 'name', 'family_data', 'next_id', 'card_count', 'max_cards', 'created_at', 'last_updated']
         read_only_fields = ['id', 'tree_id', 'card_count', 'max_cards', 'created_at', 'last_updated']
+
+    def create(self, validated_data):
+        """Create tree with auto-generated tree_id"""
+        # Generate unique tree_id if not provided
+        if 'tree_id' not in validated_data or not validated_data.get('tree_id'):
+            validated_data['tree_id'] = str(uuid.uuid4())
+
+        return super().create(validated_data)
 
     def update(self, instance, validated_data):
         """Update tree - tree_id cannot be changed"""
