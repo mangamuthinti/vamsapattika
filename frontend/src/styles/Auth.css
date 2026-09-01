@@ -508,19 +508,19 @@ html:has(.auth-container) {
 
 .forgot-password-modal {
     background: white;
-    border-radius: 12px;
-    padding: 30px;
-    max-width: 450px;
+    border-radius: 14px;
+    padding: 24px;
+    max-width: 380px;
     width: 100%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     position: relative;
-    animation: slideDown 0.3s ease-out;
+    animation: slideDown 0.25s ease-out;
 }
 
 @keyframes slideDown {
     from {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -530,15 +530,15 @@ html:has(.auth-container) {
 
 .modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 12px;
+    right: 12px;
     background: none;
     border: none;
-    font-size: 28px;
+    font-size: 24px;
     color: #999;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -547,86 +547,89 @@ html:has(.auth-container) {
 }
 
 .modal-close:hover {
-    background: #f0f0f0;
+    background: #f5f5f5;
     color: #333;
 }
 
 .forgot-password-modal h2 {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     color: #064468;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
 .forgot-password-modal p {
-    font-size: 13px;
+    font-size: 12px;
     color: #666;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     line-height: 1.5;
 }
 
 .forgot-password-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .forgot-password-form label {
     display: block;
     font-size: 12px;
     font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
+    color: #444;
+    margin-bottom: 6px;
 }
 
 .forgot-password-form input {
     width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
+    padding: 9px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
     font-size: 13px;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .forgot-password-form input:focus {
     outline: none;
-    border-color: #009444;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
 .modal-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 16px;
 }
 
 .modal-buttons .btn-cancel {
     flex: 1;
-    padding: 10px;
-    background: #f0f0f0;
-    color: #333;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
+    padding: 8px;
+    background: #f5f5f5;
+    color: #666;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .modal-buttons .btn-cancel:hover {
-    background: #e0e0e0;
+    background: #e8e8e8;
+    color: #333;
 }
 
 .modal-buttons .btn-submit {
     flex: 1;
-    padding: 10px;
+    padding: 8px;
     margin-top: 0;
+    font-size: 12px;
 }
 
 .success-message {
-    background: #e8f5e9;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8f4);
     color: #2e7d32;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 13px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 12px;
     text-align: center;
-    border-left: 4px solid #4caf50;
+    border: 1.5px solid #81c784;
     font-weight: 600;
 }

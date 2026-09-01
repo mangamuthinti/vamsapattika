@@ -17,9 +17,9 @@ const Toolbar = () => {
 
   // Calculate remaining cards and style based on usage
   const currentCards = Object.keys(familyData).length;
-  const maxCards = userPlan?.maxCards || 4;
+  const maxCards = parseInt(userPlan?.maxCards) || 4;
   const isUnlimited = maxCards === Infinity || maxCards >= 999999;
-  const remainingCards = isUnlimited ? Infinity : maxCards - currentCards;
+  const remainingCards = isUnlimited ? Infinity : Math.max(0, maxCards - currentCards);
   const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
 
   const getCardCounterStyle = () => {
@@ -209,13 +209,15 @@ const Toolbar = () => {
   };
 
   const shareToWhatsApp = () => {
-    const text = 'Check out my Vamsapattika!';
+    const appUrl = 'https://vamsapattika.com';
+    const text = `Check out my Vamsapattika! ${appUrl}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     setShareMenuOpen(false);
   };
 
   const shareToFacebook = () => {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+    const appUrl = 'https://vamsapattika.com';
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(appUrl), '_blank');
     setShareMenuOpen(false);
   };
 
@@ -229,13 +231,15 @@ const Toolbar = () => {
   };
 
   const shareToTwitter = () => {
-    const text = 'Check out my Vamsapattika!';
+    const appUrl = 'https://vamsapattika.com';
+    const text = `Check out my Vamsapattika! ${appUrl}`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
     setShareMenuOpen(false);
   };
 
   const copyShareLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const appUrl = 'https://vamsapattika.com';
+    navigator.clipboard.writeText(appUrl);
     setAlertState({
       isOpen: true,
       message: 'Link copied to clipboard!'

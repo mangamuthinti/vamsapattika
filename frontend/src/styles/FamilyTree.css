@@ -1506,10 +1506,12 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    animation: fadeIn 0.3s;
+    background-color: rgba(0, 0, 0, 0.65);
+    animation: fadeIn 0.2s;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(2px);
+    padding: 20px;
 }
 
 @keyframes fadeIn {
@@ -1523,23 +1525,23 @@ body {
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 3% auto;
+    background-color: #ffffff;
+    margin: 0 auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: none;
     width: 90%;
-    max-width: 500px;
-    max-height: 90vh;
-    border-radius: 15px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: slideDown 0.3s;
+    max-width: 450px;
+    max-height: 85vh;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.25s;
     overflow-y: auto;
     position: relative;
 }
 
 @keyframes slideDown {
     from {
-        transform: translateY(-50px);
+        transform: translateY(-30px);
         opacity: 0;
     }
 
@@ -1551,28 +1553,35 @@ body {
 
 .modal-content h2 {
     color: #333;
-    margin-bottom: 25px;
+    margin-bottom: 18px;
     margin-top: 0;
     text-align: center;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 700;
 }
 
 .close {
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 16px;
+    top: 16px;
     color: #999;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 300;
     cursor: pointer;
     line-height: 1;
-    transition: color 0.2s;
+    transition: all 0.2s;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .close:hover,
 .close:focus {
-    color: #666;
+    color: #333;
+    background: #f5f5f5;
 }
 
 .form-group {
@@ -1750,21 +1759,36 @@ body {
 
     .export-controls,
     .instructions,
-    .actions {
+    .actions,
+    .footer-disclaimer {
         display: none !important;
     }
 
     .tree-container {
         box-shadow: none;
         padding: 20px;
+        page-break-after: avoid;
     }
 
     body {
         background: white;
+        margin: 0;
+        height: auto;
     }
 
     .person:hover .actions {
         display: none !important;
+    }
+
+    /* Prevent empty pages */
+    html, body {
+        height: auto;
+        overflow: visible;
+    }
+
+    @page {
+        margin: 0.5cm;
+        size: auto;
     }
 
     /* Force all colors to print */
@@ -2298,6 +2322,9 @@ body {
 @media print {
     body {
         background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        height: auto;
     }
 
     body::before {
@@ -2325,7 +2352,8 @@ body {
     .btn-export,
     .btn-export-toolbar,
     .btn-share-toolbar,
-    .export-dropdown {
+    .export-dropdown,
+    .footer-disclaimer {
         display: none !important;
     }
 
@@ -2334,10 +2362,23 @@ body {
         padding: 20px;
         position: relative;
         z-index: 1;
+        page-break-after: auto;
     }
 
     .tree {
         page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+
+    /* Prevent empty pages */
+    html, body {
+        height: auto;
+        overflow: visible;
+    }
+
+    @page {
+        margin: 0.5cm;
+        size: auto;
     }
 
     /* Force all colors to print */

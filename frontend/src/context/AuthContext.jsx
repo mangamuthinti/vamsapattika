@@ -315,9 +315,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Reset password (placeholder - needs email implementation)
+  // Reset password - request reset email
   const resetPassword = async (email) => {
-    throw new Error('Password reset not yet implemented with Django backend');
+    try {
+      const response = await authAPI.requestPasswordReset(email);
+      return response;
+    } catch (error) {
+      console.error('Password reset error:', error);
+      throw error;
+    }
+  };
+
+  // Confirm password reset with token
+  const confirmPasswordReset = async (uid, token, newPassword) => {
+    try {
+      const response = await authAPI.confirmPasswordReset(uid, token, newPassword);
+      return response;
+    } catch (error) {
+      console.error('Password reset confirmation error:', error);
+      throw error;
+    }
   };
 
   const value = {
@@ -326,6 +343,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     resetPassword,
+    confirmPasswordReset,
     saveFamilyTree,
     loadFamilyTree,
     getAllTrees,

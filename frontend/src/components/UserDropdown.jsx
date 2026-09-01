@@ -149,8 +149,9 @@ const UserDropdown = () => {
   };
 
   const getUserInitials = () => {
-    if (currentUser?.displayName) {
-      return currentUser.displayName.charAt(0).toUpperCase();
+    const name = currentUser?.displayName || currentUser?.display_name;
+    if (name) {
+      return name.charAt(0).toUpperCase();
     }
     if (currentUser?.email) {
       return currentUser.email.charAt(0).toUpperCase();
@@ -184,7 +185,7 @@ const UserDropdown = () => {
           <div className="user-dropdown-header">
             <div className="user-avatar-large">{getUserInitials()}</div>
             <div className="user-info">
-              <div className="user-name">{currentUser?.displayName || 'User'}</div>
+              <div className="user-name">{currentUser?.displayName || currentUser?.display_name || 'User'}</div>
               <div className="user-email">{currentUser?.email}</div>
             </div>
           </div>
@@ -193,30 +194,20 @@ const UserDropdown = () => {
 
           {/* Trees menu removed - One tree per user policy */}
 
-          <button className="dropdown-item" onClick={() => { setShowPricingPage(true); setIsOpen(false); }}>
-            <span className="dropdown-icon">💳</span>
-            Pricing
-          </button>
-
           <button className="dropdown-item" onClick={() => { setShowProfileModal(true); setIsOpen(false); }}>
             <span className="dropdown-icon">👤</span>
             Profile
+          </button>
+
+          <button className="dropdown-item" onClick={() => { setShowPricingPage(true); setIsOpen(false); }}>
+            <span className="dropdown-icon">💳</span>
+            Pricing
           </button>
 
           <button className="dropdown-item" onClick={() => { setShowFeedbackModal(true); setIsOpen(false); }}>
             <span className="dropdown-icon">💬</span>
             Feedback
           </button>
-
-          <a
-            href="mailto:support@vamsapattika.com"
-            className="dropdown-item"
-            onClick={() => setIsOpen(false)}
-            style={{ textDecoration: 'none', color: 'inherit' }}
-          >
-            <span className="dropdown-icon">📧</span>
-            Help & Support
-          </a>
 
           <div className="dropdown-divider"></div>
 

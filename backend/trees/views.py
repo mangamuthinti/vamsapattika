@@ -28,6 +28,25 @@ class FamilyTreeViewSet(viewsets.ModelViewSet):
         """Return trees only for current user"""
         return FamilyTree.objects.filter(user=self.request.user)
 
+    def get_object(self):
+        """
+        Override to handle 'default' as a special tree_id
+        Returns the user's most recently updated tree when tree_id='default'
+        """
+        tree_id = self.kwargs.get('tree_id')
+
+        if tree_id == 'default':
+            # Get the most recently updated tree for the user
+            queryset = self.get_queryset()
+            obj = queryset.first()  # Already ordered by -last_updated
+            if not obj:
+                from django.http import Http404
+                raise Http404("No trees found for this user")
+            return obj
+
+        # Normal lookup by tree_id
+        return super().get_object()
+
     def perform_create(self, serializer):
         """Auto-assign current user when creating tree"""
         serializer.save(user=self.request.user)

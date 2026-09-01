@@ -7,7 +7,7 @@ import CustomConfirm from './CustomConfirm';
 import { useLanguage } from '../context/LanguageContext';
 
 const PersonCard = ({ personId }) => {
-  const { familyData, globalShowPhotos, updatePerson, removePerson, setModalState, setSelectedPerson, textToolbarState, setTextToolbarState } = useFamilyTree();
+  const { familyData, globalShowPhotos, updatePerson, removePerson, setModalState, setSelectedPerson, textToolbarState, setTextToolbarState, canAddCard, userPlan, setShowPricingModal } = useFamilyTree();
   const [menuOpen, setMenuOpen] = useState(false);
   const { language, translateDynamic, translateName } = useLanguage();
   const person = familyData[personId];
@@ -16,7 +16,7 @@ const PersonCard = ({ personId }) => {
 
   const cardRef = useRef(null);
   const activeTextElementRef = useRef(null);
-  const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
+  const [alertState, setAlertState] = useState({ isOpen: false, message: '', onCloseCallback: null });
   const [confirmState, setConfirmState] = useState({ isOpen: false, message: '', onConfirm: null });
 
 
@@ -113,15 +113,43 @@ const PersonCard = ({ personId }) => {
     if (person.spouse) {
       setAlertState({
         isOpen: true,
-        message: 'This person already has a spouse. Please remove the existing spouse first.'
+        message: 'This person already has a spouse. Please remove the existing spouse first.',
+        onCloseCallback: null
       });
       return;
     }
+
+    // Check card limit before allowing to add spouse
+    if (!canAddCard()) {
+      setMenuOpen(false);
+      const currentCards = Object.keys(familyData).length;
+      const maxCards = userPlan?.maxCards || 4;
+      setAlertState({
+        isOpen: true,
+        message: `Card limit reached! You have ${currentCards} out of ${maxCards} cards. Upgrade your plan to add more family members.`,
+        onCloseCallback: () => setShowPricingModal(true)
+      });
+      return;
+    }
+
     setModalState({ isOpen: true, mode: 'spouse', parentId: personId });
     setMenuOpen(false);
   };
 
   const handleAddChild = () => {
+    // Check card limit before allowing to add child
+    if (!canAddCard()) {
+      setMenuOpen(false);
+      const currentCards = Object.keys(familyData).length;
+      const maxCards = userPlan?.maxCards || 4;
+      setAlertState({
+        isOpen: true,
+        message: `Card limit reached! You have ${currentCards} out of ${maxCards} cards. Upgrade your plan to add more family members.`,
+        onCloseCallback: () => setShowPricingModal(true)
+      });
+      return;
+    }
+
     setModalState({ isOpen: true, mode: 'add', parentId: personId });
     setMenuOpen(false);
   };
@@ -248,7 +276,11 @@ const PersonCard = ({ personId }) => {
       <CustomAlert
         isOpen={alertState.isOpen}
         message={alertState.message}
-        onClose={() => setAlertState({ isOpen: false, message: '' })}
+        onClose={() => {
+          const callback = alertState.onCloseCallback;
+          setAlertState({ isOpen: false, message: '', onCloseCallback: null });
+          if (callback) callback();
+        }}
       />
       <CustomConfirm
         isOpen={confirmState.isOpen}

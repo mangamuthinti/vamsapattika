@@ -17,4 +17,8 @@ urlpatterns = [
 
     # Feedback
     path('feedback/', views.send_feedback, name='send_feedback'),
+
+    # Password Reset
+    path('password-reset/', views.password_reset_request, name='password_reset_request'),
+    path('password-reset/confirm/', views.password_reset_confirm, name='password_reset_confirm'),
 ]

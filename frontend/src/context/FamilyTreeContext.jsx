@@ -45,7 +45,7 @@ export const FamilyTreeProvider = ({ children }) => {
   const { showAlert } = useAlert();
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentTreeId, setCurrentTreeId] = useState('null');
+  const [currentTreeId, setCurrentTreeId] = useState('default');
   const [currentTreeName, setCurrentTreeName] = useState('My Vamsapattika');
   const [currentTreeCreatedAt, setCurrentTreeCreatedAt] = useState(null);
 
@@ -154,7 +154,7 @@ export const FamilyTreeProvider = ({ children }) => {
 
         if (subscriptionData && subscriptionData.plan_details) {
           const newPlan = {
-            maxCards: subscriptionData.plan_details.max_cards === 999999 ? Infinity : subscriptionData.plan_details.max_cards,
+            maxCards: subscriptionData.plan_details.max_cards === 999999 ? Infinity : parseInt(subscriptionData.plan_details.max_cards),
             price: parseFloat(subscriptionData.plan_details.price),
             name: subscriptionData.plan_details.display_name,
             purchaseDate: subscriptionData.purchase_date,
