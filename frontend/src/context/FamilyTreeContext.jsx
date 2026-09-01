@@ -45,7 +45,7 @@ export const FamilyTreeProvider = ({ children }) => {
   const { showAlert } = useAlert();
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentTreeId, setCurrentTreeId] = useState('default');
+  const [currentTreeId, setCurrentTreeId] = useState('null');
   const [currentTreeName, setCurrentTreeName] = useState('My Vamsapattika');
   const [currentTreeCreatedAt, setCurrentTreeCreatedAt] = useState(null);
 
