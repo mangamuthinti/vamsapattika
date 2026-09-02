@@ -16,11 +16,16 @@ const Toolbar = () => {
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
 
   // Calculate remaining cards and style based on usage
-  const currentCards = Object.keys(familyData).length;
+  const currentCards = Object.keys(familyData || {}).length;
   const maxCards = parseInt(userPlan?.maxCards) || 4;
   const isUnlimited = maxCards === Infinity || maxCards >= 999999;
   const remainingCards = isUnlimited ? Infinity : Math.max(0, maxCards - currentCards);
   const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
+
+  // Debug: Log when card count changes
+  useEffect(() => {
+    console.log('🔢 Card count updated:', { currentCards, maxCards, remainingCards });
+  }, [currentCards, maxCards, remainingCards]);
 
   const getCardCounterStyle = () => {
     if (isUnlimited) {
@@ -385,15 +390,14 @@ const Toolbar = () => {
                     <>
                       <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
                       <span>
-                        {isUnlimited ? (
-                          <>{currentCards} cards (Unlimited)</>
-                        ) : remainingCards === 0 ? (
-                          <>Limit: {currentCards}/{maxCards} cards</>
-                        ) : remainingCards <= 2 ? (
-                          <>{remainingCards} left ({currentCards}/{maxCards})</>
-                        ) : (
-                          <>{currentCards}/{maxCards} cards</>
-                        )}
+                        {isUnlimited
+                          ? `${currentCards} cards (Unlimited)`
+                          : remainingCards === 0
+                            ? `Limit: ${currentCards}/${maxCards} cards`
+                            : remainingCards <= 2
+                              ? `${remainingCards} left (${currentCards}/${maxCards})`
+                              : `${currentCards}/${maxCards} cards`
+                        }
                       </span>
                       {!isUnlimited && usagePercentage >= 80 && (
                         <span style={{ fontSize: '14px' }}>

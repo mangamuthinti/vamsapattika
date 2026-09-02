@@ -395,11 +395,39 @@ export const FamilyTreeProvider = ({ children }) => {
         }
       }
 
+      // Collect all children from BOTH the person and their spouse before removing
+      const getAllChildrenIds = (id) => {
+        const p = updated[id];
+        if (!p) return [];
+
+        const personChildren = Array.isArray(p.children) ? p.children : [];
+        const spouseChildren = [];
+
+        // Also get children from spouse if exists
+        if (p.spouse && updated[p.spouse]) {
+          const spouse = updated[p.spouse];
+          const spouseChildrenArray = Array.isArray(spouse.children) ? spouse.children : [];
+          spouseChildren.push(...spouseChildrenArray);
+        }
+
+        // Merge and deduplicate
+        return [...new Set([...personChildren, ...spouseChildren])];
+      };
+
+      // Get all children that need to be removed (from both person and spouse)
+      const childrenToRemove = getAllChildrenIds(personId);
+      console.log(`Children to remove from person ${personId}:`, childrenToRemove);
+
       // Remove spouse connection
       if (person.spouse) {
         const spouse = updated[person.spouse];
         if (spouse) {
-          updated[person.spouse] = { ...spouse, spouse: null };
+          // Clear spouse's children array too, since we're removing all children
+          updated[person.spouse] = {
+            ...spouse,
+            spouse: null,
+            children: []
+          };
         }
       }
 
@@ -415,7 +443,15 @@ export const FamilyTreeProvider = ({ children }) => {
         }
       };
 
+      // Remove the person first
       removeDescendants(personId);
+
+      // Then remove all children that were identified earlier
+      childrenToRemove.forEach(childId => {
+        if (updated[childId]) {
+          removeDescendants(childId);
+        }
+      });
 
       // Verify root person still exists
       const rootExists = Object.values(updated).some(p => p && p.level === 1 && !p.parent);
