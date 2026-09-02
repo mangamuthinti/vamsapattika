@@ -142,14 +142,33 @@ export const FamilyTreeProvider = ({ children }) => {
   useEffect(() => {
     const fetchSubscription = async () => {
       if (!currentUser) {
+        console.log('⚠️ No user logged in - setting planLoading to false');
         setPlanLoading(false);
         return;
       }
+
+      console.log('🔄 Fetching subscription for user:', currentUser.email);
+
+      // Set a 5-second timeout to prevent infinite loading
+      const timeoutId = setTimeout(() => {
+        console.warn('⏱️ Subscription fetch timeout after 5 seconds - using Free plan');
+        setUserPlan({
+          maxCards: 4,
+          price: 0,
+          name: 'Free',
+          purchaseDate: null,
+          expiryDate: null,
+          loaded: true
+        });
+        setPlanLoading(false);
+      }, 5000);
 
       try {
         setPlanLoading(true);
         const { paymentsAPI } = await import('../api/payments');
         const subscriptionData = await paymentsAPI.getSubscription();
+        clearTimeout(timeoutId); // Clear timeout on success
+
         console.log('📦 Fetched subscription from backend:', subscriptionData);
 
         if (subscriptionData && subscriptionData.plan_details) {
@@ -164,6 +183,7 @@ export const FamilyTreeProvider = ({ children }) => {
           console.log('✅ Setting user plan to:', newPlan);
           setUserPlan(newPlan);
         } else {
+          console.log('ℹ️ No subscription found - using Free plan');
           // No subscription found - set Free plan as default
           setUserPlan({
             maxCards: 4,
@@ -175,7 +195,9 @@ export const FamilyTreeProvider = ({ children }) => {
           });
         }
       } catch (error) {
-        console.error('Error fetching subscription:', error);
+        clearTimeout(timeoutId); // Clear timeout on error
+        console.error('❌ Error fetching subscription:', error);
+        console.error('Error details:', error.message);
         // Set Free plan as default on error
         setUserPlan({
           maxCards: 4,
@@ -186,6 +208,7 @@ export const FamilyTreeProvider = ({ children }) => {
           loaded: true
         });
       } finally {
+        console.log('✅ Subscription fetch complete - setting planLoading to FALSE');
         setPlanLoading(false);
       }
     };

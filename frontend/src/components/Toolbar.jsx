@@ -15,28 +15,17 @@ const Toolbar = () => {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
 
-  // Calculate remaining cards and style based on usage
+  // Simple card counter - just show the numbers
   const currentCards = Object.keys(familyData || {}).length;
   const maxCards = parseInt(userPlan?.maxCards) || 4;
   const isUnlimited = maxCards === Infinity || maxCards >= 999999;
-  const remainingCards = isUnlimited ? Infinity : Math.max(0, maxCards - currentCards);
-  const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
 
-  // Debug: Log when card count changes
-  useEffect(() => {
-    console.log('🔢 Card count updated:', { currentCards, maxCards, remainingCards });
-  }, [currentCards, maxCards, remainingCards]);
+  const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
 
   const getCardCounterStyle = () => {
     if (isUnlimited) {
       return {
         background: 'rgba(76, 175, 80, 0.9)',
-        border: '1px solid rgba(255, 255, 255, 0.5)',
-        color: 'white'
-      };
-    } else if (usagePercentage >= 100) {
-      return {
-        background: 'rgba(244, 67, 54, 0.9)',
         border: '1px solid rgba(255, 255, 255, 0.5)',
         color: 'white'
       };
@@ -367,6 +356,7 @@ const Toolbar = () => {
                 </button>
 
                 <span
+                  key={`${currentCards}-${maxCards}`}
                   style={{
                     fontSize: '11px',
                     padding: '6px 12px',
@@ -379,33 +369,12 @@ const Toolbar = () => {
                     whiteSpace: 'nowrap',
                     ...getCardCounterStyle()
                   }}
-                  title={planLoading ? 'Loading plan...' : (isUnlimited ? `Unlimited plan - ${currentCards} cards created` : `You are using ${currentCards} out of ${maxCards} cards in your ${userPlan?.name || 'Free'} plan`)}
+                  title={isUnlimited ? `Unlimited plan - ${currentCards} cards` : `${currentCards} out of ${maxCards} cards`}
                 >
-                  {planLoading ? (
-                    <>
-                      <span style={{ fontSize: '14px' }}>⏳</span>
-                      <span>Loading...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
-                      <span>
-                        {isUnlimited
-                          ? `${currentCards} cards (Unlimited)`
-                          : remainingCards === 0
-                            ? `Limit: ${currentCards}/${maxCards} cards`
-                            : remainingCards <= 2
-                              ? `${remainingCards} left (${currentCards}/${maxCards})`
-                              : `${currentCards}/${maxCards} cards`
-                        }
-                      </span>
-                      {!isUnlimited && usagePercentage >= 80 && (
-                        <span style={{ fontSize: '14px' }}>
-                          {usagePercentage >= 100 ? '⚠️' : '⏰'}
-                        </span>
-                      )}
-                    </>
-                  )}
+                  <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
+                  <span>
+                    {currentCards}/{maxCards} cards
+                  </span>
                 </span>
 
                 {/* Plan Expiry Warning */}
