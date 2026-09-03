@@ -1,692 +1,458 @@
-/* =========================================================
-   VAMSAPATTIKA FOOTER
-   DESKTOP HEIGHT: 173px
-========================================================= */
+/* =====================================================
+   FOOTER
+   REFERENCE DESIGN
+   HEIGHT: 180px
+===================================================== */
 
 .footer {
-  margin-top: 8px;
-
   width: 100%;
-
-  height: 173px;
-  min-height: 173px;
-  max-height: 173px;
+  height: 180px;
 
   background: #ffffff;
+  color: #111111;
 
-  color: #082f3b;
-
-  border-top: none;
-
-  overflow: hidden;
-
-  box-sizing: border-box;
-}
-
-
-/* =========================================================
-   MAIN FOOTER
-========================================================= */
-
-.footer-main {
-  width: 94%;
-  max-width: 1350px;
-
-  height: 125px;
-
-  margin: 0 auto;
-
-  display: grid;
-
-  /*
-     LOGO | EXPLORE | CONTACT | VISITORS
-  */
-
-  grid-template-columns:
-    1.6fr
-    1fr
-    1.5fr
-    0.9fr;
-
-  column-gap: 65px;
-
-  align-items: center;
-
+  margin: 0;
   padding: 0;
 
   box-sizing: border-box;
+
+  overflow: hidden;
 }
 
 
-/* =========================================================
-   BRAND / LOGO
-========================================================= */
+/* =====================================================
+   FOOTER MAIN
+===================================================== */
 
-.footer-brand {
-  display: flex;
+.footer-main {
+  width: 100%;
+  max-width: 1060px;
+
+  height: 145px;
+
+  margin: 0 auto;
+  padding: 0;
+
+  display: grid;
+
+  grid-template-columns: 290px 210px 320px 160px;
 
   align-items: center;
 
-  justify-content: flex-start;
+  column-gap: 20px;
+
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.footer-brand {
+  width: 210px;
+  height: 125px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
-
-  user-select: none;
 }
-
-
-/* Logo focus */
-
-.footer-brand:focus-visible {
-  outline: 2px solid #c49a45;
-
-  outline-offset: 5px;
-
-  border-radius: 4px;
-}
-
-
-/* Logo */
 
 .footer-logo {
-  width: 230px;
-
+  width: 205px;
   height: auto;
-
-  object-fit: contain;
 
   display: block;
 
-  transition:
-    transform 0.25s ease;
+  object-fit: contain;
 }
 
 
-/* Logo hover */
-
-.footer-brand:hover .footer-logo {
-  transform: scale(1.03);
-}
-
-
-/* =========================================================
-   COMMON FOOTER COLUMNS
-========================================================= */
+/* =====================================================
+   FOOTER COLUMNS
+===================================================== */
 
 .footer-col {
   display: flex;
-
   flex-direction: column;
 
   align-items: flex-start;
-
   justify-content: center;
+
+  box-sizing: border-box;
 }
 
 
-/* =========================================================
-   SECTION HEADINGS
-========================================================= */
+/* =====================================================
+   FOOTER HEADINGS
+===================================================== */
 
 .footer-col h4 {
-  margin: 0 0 11px;
+  margin: 0 0 12px 0;
 
-  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  line-height: 1;
 
-  font-size: 16px;
+  font-weight: 800;
 
-  font-weight: 700;
+  color: #111111;
 
-  color: #082f3b;
-
-  line-height: 1.2;
-
-  white-space: nowrap;
+  letter-spacing: 0.3px;
 }
 
 
-/* Number beside heading */
-
-.footer-col h4 span {
-  margin-left: 5px;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 10px;
-
-  font-weight: 600;
-
-  color: #c49a45;
-
-  vertical-align: middle;
-}
-
-
-/* =========================================================
+/* =====================================================
    EXPLORE
-========================================================= */
+===================================================== */
 
 .explore-col button {
   border: none;
-
   outline: none;
 
   background: transparent;
 
   padding: 0;
+  margin: 0 0 6px 0;
 
-  margin: 0 0 5px;
+  font-family: inherit;
 
-  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.25;
 
-  font-size: 13px;
+  font-weight: 700;
 
-  font-weight: 500;
-
-  line-height: 1.3;
-
-  color: #38545d;
+  color: #222222;
 
   cursor: pointer;
 
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
-}
+  text-align: left;
 
+  transition: all 0.25s ease;
+}
 
 .explore-col button:hover {
-  color: #c49a45;
-
-  transform: translateX(4px);
-}
-
-
-/* =========================================================
-   CONTACT US
-========================================================= */
-
-.contact-col {
-  align-items: flex-start;
-}
-
-
-/* Contact items */
-
-.contact-item {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  margin-bottom: 5px;
-
-  color: #38545d;
-
-  text-decoration: none;
-
-  font-family: Arial, sans-serif;
-
-  font-size: 13px;
-
-  font-weight: 500;
-
-  line-height: 1.3;
-
-  white-space: nowrap;
-
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-
-.contact-item:hover {
-  color: #c49a45;
+  color: #000000;
 
   transform: translateX(3px);
 }
 
 
-/* =========================================================
-   CONTACT ICONS
-========================================================= */
+/* =====================================================
+   CONTACT US
+===================================================== */
+
+.contact-col {
+  min-width: 300px;
+}
+
+
+/* =====================================================
+   CONTACT ITEMS
+===================================================== */
+
+.contact-item {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 0 6px 0;
+
+  color: #222222;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  transition: all 0.25s ease;
+}
+
+.contact-item:hover {
+  color: #000000;
+
+  transform: translateX(3px);
+}
+
+
+/* =====================================================
+   CONTACT ICON
+===================================================== */
 
 .contact-icon {
-  width: 22px;
+  width: 20px;
+  height: 20px;
 
-  height: 22px;
+  min-width: 20px;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
-
-  flex-shrink: 0;
 
   border-radius: 50%;
 
-  background: #eef4f1;
+  background: #eef3f0;
 
-  color: #10643f;
+  color: #222222;
 
   font-size: 11px;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
+  font-weight: 800;
 }
 
 
-.contact-item:hover .contact-icon {
-  background: #c49a45;
+/* =====================================================
+   WEBSITE
+===================================================== */
 
-  color: #ffffff;
+.contact-col a:first-of-type {
+  color: #24517f;
 }
 
 
-/* =========================================================
-   VISITORS COLUMN
-========================================================= */
+/* =====================================================
+   VISITORS
+===================================================== */
 
 .visitors-col {
   align-items: flex-start;
+
+  padding-left: 0;
 }
 
 
-/* =========================================================
-   GOLD VISITOR BOX
-========================================================= */
+/* =====================================================
+   VISITOR BOX
+===================================================== */
 
 .visitor-box {
-  min-width: 125px;
-
-  min-height: 55px;
-
-  padding: 8px 14px;
+  width: 114px;
+  height: 49px;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
-  gap: 7px;
+  gap: 9px;
 
-  background: #fffaf0;
+  background: #ffffff;
 
-  border: 2px solid #c49a45;
+  border: 1px solid #d69b21;
 
   border-radius: 10px;
 
   box-sizing: border-box;
 
-  box-shadow:
-    0 4px 12px rgba(196, 154, 69, 0.12);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 }
 
 
-.visitor-box:hover {
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 6px 16px rgba(196, 154, 69, 0.2);
-}
-
-
-/* Eye */
+/* =====================================================
+   VISITOR EYE
+===================================================== */
 
 .visitor-eye {
-  font-size: 17px;
+  font-size: 13px;
 
   line-height: 1;
+
+  color: #111111;
 }
 
 
-/* Number */
-
-.visitor-number {
-  font-family: Arial, sans-serif;
-
-  font-size: 16px;
-
-  font-weight: 700;
-
-  color: #082f3b;
-
-  line-height: 1;
-}
-
-
-/* Visitors label */
+/* =====================================================
+   VISITOR LABEL
+===================================================== */
 
 .visitor-label {
-  font-family: Arial, sans-serif;
-
-  font-size: 11px;
-
-  font-weight: 500;
-
-  color: #38545d;
-
-  line-height: 1;
+  display: none;
 }
 
 
-/* =========================================================
-   COPYRIGHT
-========================================================= */
+/* =====================================================
+   VISITOR NUMBER
+===================================================== */
+
+.visitor-number {
+  font-size: 14px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: #111111;
+}
+
+
+/* =====================================================
+   FOOTER BOTTOM
+===================================================== */
 
 .footer-bottom {
-  width: 94%;
+  width: 100%;
 
-  max-width: 1350px;
+  height: 35px;
 
-  height: 48px;
-
-  margin: 0 auto;
-
-  border-top: none;
+  border-top: 2px solid #c99a32;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
-  text-align: center;
-
   box-sizing: border-box;
-}
 
-
-.footer-bottom span {
-  font-family: Arial, sans-serif;
-
-  font-size: 14px;
-
-  font-weight: 500;
-
-  line-height: 1.4;
-
-  letter-spacing: 0.2px;
-
-  color: #6b7c82;
+  padding: 0 20px;
 
   text-align: center;
 
-  white-space: nowrap;
+  color: #555555;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  line-height: 1;
 }
 
 
-/* =========================================================
+/* =====================================================
+   PROVEGAA TECH HUB
+===================================================== */
+
+.provegaa-link {
+  color: #174f9b;
+
+  font-weight: 800;
+
+  text-decoration: underline;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.provegaa-link:hover {
+  color: #0b2f63;
+}
+
+
+/* =====================================================
    TABLET
-========================================================= */
+===================================================== */
 
-@media (max-width: 1100px) {
-
-  .footer-main {
-    width: 92%;
-
-    column-gap: 35px;
-
-    grid-template-columns:
-      1.4fr
-      1fr
-      1.4fr
-      0.8fr;
-  }
-
-
-  .footer-logo {
-    width: 200px;
-  }
-
-
-  .footer-col h4 {
-    font-size: 15px;
-  }
-
-
-  .explore-col button,
-  .contact-item {
-    font-size: 12px;
-  }
-
-
-  .visitor-box {
-    min-width: 110px;
-
-    padding: 7px 10px;
-  }
-
-
-  .visitor-number {
-    font-size: 14px;
-  }
-
-
-  .visitor-label {
-    font-size: 10px;
-  }
-
-}
-
-
-/* =========================================================
-   SMALL TABLET
-========================================================= */
-
-@media (max-width: 850px) {
+@media (max-width: 1000px) {
 
   .footer-main {
-    column-gap: 20px;
+    max-width: 900px;
 
-    grid-template-columns:
-      1.3fr
-      1fr
-      1.4fr
-      0.8fr;
+    grid-template-columns: 220px 170px 280px 140px;
+
+    column-gap: 15px;
   }
-
 
   .footer-logo {
     width: 175px;
   }
 
-
-  .contact-item {
-    font-size: 11px;
-  }
-
-
-  .explore-col button {
-    font-size: 11px;
-  }
-
-
-  .visitor-box {
-    min-width: 100px;
-
-    min-height: 50px;
-
-    padding: 6px 8px;
-
-    gap: 5px;
-  }
-
 }
 
 
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
 
   .footer {
     height: auto;
 
-    min-height: 173px;
-
-    max-height: none;
-
-    overflow: visible;
+    min-height: 180px;
   }
-
 
   .footer-main {
-    width: 88%;
-
     height: auto;
 
-    display: flex;
+    min-height: 145px;
 
-    flex-direction: column;
+    padding: 15px 20px;
 
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
 
-    gap: 22px;
+    row-gap: 20px;
 
-    padding: 24px 0;
-
-    box-sizing: border-box;
+    column-gap: 20px;
   }
-
-
-  /* Logo */
 
   .footer-brand {
-    justify-content: center;
-
-    align-items: center;
+    display: none;
   }
 
-
-  .footer-logo {
-    width: 190px;
+  .contact-col {
+    min-width: 0;
   }
-
-
-  /* Columns */
-
-  .footer-col,
-  .explore-col,
-  .contact-col,
-  .visitors-col {
-    align-items: center;
-
-    text-align: center;
-  }
-
 
   .footer-col h4 {
-    font-size: 17px;
+    font-size: 13px;
   }
 
-
-  .footer-col h4 span {
-    font-size: 10px;
-  }
-
-
-  .explore-col button {
-    font-size: 12px;
-
-    text-align: center;
-  }
-
-
+  .explore-col button,
   .contact-item {
-    justify-content: center;
-
-    font-size: 12px;
-
-    text-align: left;
-  }
-
-
-  /* Visitor box */
-
-  .visitor-box {
-    min-width: 140px;
-
-    min-height: 58px;
-
-    padding: 9px 14px;
-  }
-
-
-  .visitor-number {
-    font-size: 16px;
-  }
-
-
-  .visitor-label {
     font-size: 11px;
   }
 
-
-  /* Copyright */
-
-  .footer-bottom {
-    width: 88%;
-
-    height: auto;
-
-    min-height: 50px;
-
-    padding: 10px;
-
-    border-top: none;
+  .visitor-box {
+    width: 105px;
+    height: 45px;
   }
 
+  .footer-bottom {
+    height: 35px;
 
-  .footer-bottom span {
-    font-size: 12px;
+    font-size: 10px;
 
-    white-space: normal;
-
-    line-height: 1.5;
+    padding: 0 10px;
   }
 
 }
 
 
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
 
   .footer-main {
-    gap: 18px;
+    grid-template-columns: 1fr 1fr;
+
+    padding-left: 12px;
+    padding-right: 12px;
+
+    column-gap: 10px;
   }
 
-
-  .footer-logo {
-    width: 175px;
+  .footer-col h4 {
+    font-size: 12px;
   }
 
+  .explore-col button,
+  .contact-item {
+    font-size: 10px;
+  }
 
   .visitor-box {
-    min-width: 130px;
+    width: 95px;
+    height: 42px;
   }
-
 
   .visitor-number {
-    font-size: 15px;
-  }
-
-
-  .footer-bottom span {
-    font-size: 11px;
+    font-size: 13px;
   }
 
 }
