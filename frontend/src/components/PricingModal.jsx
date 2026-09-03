@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { paymentsAPI } from '../api/payments';
 import '../styles/PricingModal.css';
 
 const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgrade, userPlan }) => {
-  if (!isOpen) return null;
+  const [pricingTiers, setPricingTiers] = useState([]);
+  const [plansLoading, setPlansLoading] = useState(false);
 
-  // PRODUCTION PRICING: Actual prices
-  // All packages valid for 1 year, renewal required after expiry
-  // IDs match the backend Plan model
-  const pricingTiers = [
-    { id: 1, max: 4, price: 0, name: 'Free', description: 'Get started' },
-    { id: 2, max: 10, price: 499, name: 'Silver', description: 'For small families' },
-    { id: 3, max: 18, price: 999, name: 'Gold', description: 'For growing families' },
-    { id: 4, max: Infinity, price: 1499, name: 'Diamond', description: 'Unlimited cards' }
-  ];
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const loadPlans = async () => {
+      setPlansLoading(true);
+      try {
+        const plans = await paymentsAPI.getPlans();
+        setPricingTiers(plans.map((plan) => ({
+          id: plan.id,
+          max: plan.max_cards >= 999999 ? Infinity : Number(plan.max_cards),
+          price: Number(plan.price),
+          name: plan.display_name || plan.name,
+          description: plan.description || '',
+          validityDays: plan.validity_days,
+        })));
+      } catch (error) {
+        console.error('Failed to load pricing plans:', error);
+        setPricingTiers([]);
+      } finally {
+        setPlansLoading(false);
+      }
+    };
+
+    loadPlans();
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   // Use actual userPlan to determine current tier
   // Handle 999999 as Infinity for comparison
-  const currentMaxCards = userPlan?.maxCards >= 999999 ? Infinity : userPlan?.maxCards;
-  const currentTier = userPlan || { max: 4, price: 0, name: 'Free' };
+  const currentMaxCards = userPlan?.maxCards >= 999999 ? Infinity : (userPlan?.maxCards ?? 4);
+  const currentTier = userPlan || { maxCards: 4, price: 0, name: 'Free' };
   const nextTier = pricingTiers.find(tier => tier.max > currentMaxCards && tier.price > currentTier.price);
 
   return (
@@ -39,7 +59,8 @@ const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgra
         </div>
 
         <div className="pricing-tiers">
-          {pricingTiers.map((tier, index) => {
+          {plansLoading && <p>Loading plans...</p>}
+          {!plansLoading && pricingTiers.map((tier, index) => {
             const isCurrentTier = (tier.max === Infinity && currentMaxCards === Infinity) ||
                                  (tier.max === currentTier.maxCards && tier.name === currentTier.name);
             const isRecommended = tier.max > currentMaxCards && (!nextTier || tier.price === nextTier.price);
@@ -52,7 +73,7 @@ const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgra
                 {isRecommended && <div className="recommended-badge">Recommended</div>}
 
                 <div className="pricing-card-icon">
-                  {tier.max === 4 ? '👥' : tier.max === 10 ? '🌱' : tier.max === 15 ? '🌳' : '💎'}
+                  {tier.max === 4 ? '👥' : tier.max <= 10 ? '🌱' : tier.max >= 999999 || tier.max === Infinity ? '💎' : '🌳'}
                 </div>
 
                 <h3 className="pricing-card-name">{tier.name}</h3>
@@ -67,7 +88,7 @@ const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgra
                   ) : (
                     <>
                       <span className="price-amount">₹{tier.price}</span>
-                      <span className="price-period">Valid for 1 year</span>
+                      <span className="price-period">Valid for {tier.validityDays ? `${Math.round(tier.validityDays / 365)} year${tier.validityDays === 365 ? '' : 's'}` : '1 year'}</span>
                     </>
                   )}
                 </div>

@@ -18,7 +18,13 @@ const FeedbackModal = ({ isOpen, onClose }) => {
   // Auto-fill name and email from logged-in user
   useEffect(() => {
     if (currentUser) {
-      setName(currentUser.displayName || '');
+      setName(
+        currentUser.displayName ||
+        currentUser.display_name ||
+        [currentUser.firstName || currentUser.first_name, currentUser.lastName || currentUser.last_name]
+          .filter(Boolean)
+          .join(' ')
+      );
       setEmail(currentUser.email || '');
     }
   }, [currentUser]);

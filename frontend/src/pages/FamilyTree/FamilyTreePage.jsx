@@ -67,6 +67,7 @@ function FamilyTreePageContent() {
       setAlertState({ isOpen: false, message: '' });
 
       // Initialize Razorpay checkout
+      let paymentStatusPoll;
       const options = {
         key: orderData.key,
         amount: orderData.amount,
@@ -75,6 +76,7 @@ function FamilyTreePageContent() {
         description: `${orderData.plan_name} Plan`,
         order_id: orderData.order_id,
         handler: async function (response) {
+          clearInterval(paymentStatusPoll);
           console.log('Payment successful:', response);
 
           try {
@@ -125,6 +127,7 @@ function FamilyTreePageContent() {
         },
         modal: {
           ondismiss: function() {
+            clearInterval(paymentStatusPoll);
             console.log('Payment cancelled by user');
             setAlertState({
               isOpen: true,
@@ -136,6 +139,28 @@ function FamilyTreePageContent() {
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+      let pollAttempts = 0;
+      paymentStatusPoll = setInterval(async () => {
+        pollAttempts += 1;
+        try {
+          const paymentStatus = await paymentsAPI.getPaymentStatus(orderData.order_id);
+          if (paymentStatus.status === 'SUCCESS') {
+            clearInterval(paymentStatusPoll);
+            setAlertState({
+              isOpen: true,
+              message: `Payment successful! You are now on the ${tier.name} plan.`
+            });
+            setTimeout(() => {
+              window.location.href = window.location.href;
+            }, 1500);
+          }
+        } catch (error) {
+          console.error('Payment status check failed:', error);
+        }
+        if (pollAttempts >= 150) {
+          clearInterval(paymentStatusPoll);
+        }
+      }, 2000);
     } catch (error) {
       console.error('❌ Error creating payment order:', error);
       setAlertState({

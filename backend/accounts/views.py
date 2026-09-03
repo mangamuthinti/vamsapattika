@@ -130,8 +130,13 @@ def send_feedback(request):
     # Get feedback data
     rating = request.data.get('rating', '')
     feedback_text = request.data.get('feedback', '')
-    user_name = request.data.get('user_name', 'Anonymous')
-    user_email = request.data.get('user_email', 'unknown@example.com')
+    user_name = (
+        request.user.display_name or
+        request.user.get_full_name() or
+        request.user.email or
+        'Anonymous'
+    )
+    user_email = request.user.email or 'unknown@example.com'
 
     # Validate required fields
     if not rating or not feedback_text:
@@ -144,7 +149,7 @@ def send_feedback(request):
         # Prepare email content
         subject = f'Vamsapattika Feedback: {rating} - {user_name}'
         message = f"""
-New Feedback Received from User
+New Feedback Received from {user_name}
 
 Rating: {rating}
 User: {user_name}

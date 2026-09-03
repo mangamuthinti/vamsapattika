@@ -32,4 +32,10 @@ export const paymentsAPI = {
     const response = await api.post('/payments/verify-payment/', paymentData);
     return response.data;
   },
+
+  // Reconcile QR payments when Razorpay does not deliver the checkout callback
+  getPaymentStatus: async (orderId) => {
+    const response = await api.get(`/payments/payment-status/${orderId}/`);
+    return response.data;
+  },
 };

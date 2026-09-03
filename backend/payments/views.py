@@ -107,6 +107,55 @@ def create_payment_order(request):
     }, status=status.HTTP_201_CREATED)
 
 
+def _activate_transaction(transaction, payment_id, payment_signature=''):
+    """Mark a paid transaction successful and activate its subscription."""
+    transaction.razorpay_payment_id = payment_id
+    if payment_signature:
+        transaction.razorpay_signature = payment_signature
+    transaction.status = 'SUCCESS'
+    transaction.completed_at = transaction.completed_at or timezone.now()
+    transaction.save()
+
+    subscription, created = UserSubscription.objects.get_or_create(user=transaction.user)
+    if not created and subscription.plan != transaction.plan:
+        subscription.previous_plan = subscription.plan.name
+    subscription.plan = transaction.plan
+    subscription.purchase_date = transaction.completed_at
+    subscription.expiry_date = transaction.completed_at + timedelta(days=transaction.plan.validity_days)
+    subscription.is_active = True
+    subscription.save()
+    return subscription
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def payment_status(request, order_id):
+    """Reconcile a QR payment whose checkout callback was not delivered."""
+    try:
+        transaction = PaymentTransaction.objects.get(
+            razorpay_order_id=order_id,
+            user=request.user
+        )
+    except PaymentTransaction.DoesNotExist:
+        return Response({'error': 'Transaction not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if transaction.status == 'SUCCESS':
+        return Response({'status': 'SUCCESS'})
+
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    payments = client.order.payments(order_id).get('items', [])
+    captured_payment = next(
+        (payment for payment in payments if payment.get('status') == 'captured'),
+        None
+    )
+
+    if not captured_payment:
+        return Response({'status': transaction.status})
+
+    _activate_transaction(transaction, captured_payment['id'])
+    return Response({'status': 'SUCCESS'})
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def verify_payment(request):
@@ -148,25 +197,7 @@ def verify_payment(request):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    # Update transaction
-    transaction.razorpay_payment_id = razorpay_payment_id
-    transaction.razorpay_signature = razorpay_signature
-    transaction.status = 'SUCCESS'
-    transaction.completed_at = timezone.now()
-    transaction.save()
-
-    # Update or create subscription
-    subscription, created = UserSubscription.objects.get_or_create(user=request.user)
-
-    # Store previous plan before updating
-    if not created and subscription.plan != transaction.plan:
-        subscription.previous_plan = subscription.plan.name
-
-    subscription.plan = transaction.plan
-    subscription.purchase_date = timezone.now()
-    subscription.expiry_date = timezone.now() + timedelta(days=transaction.plan.validity_days)
-    subscription.is_active = True
-    subscription.save()
+    subscription = _activate_transaction(transaction, razorpay_payment_id, razorpay_signature)
 
     return Response({
         'message': 'Payment verified successfully',
