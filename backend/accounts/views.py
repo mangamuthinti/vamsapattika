@@ -144,7 +144,7 @@ def send_feedback(request):
         # Prepare email content
         subject = f'Vamsapattika Feedback: {rating} - {user_name}'
         message = f"""
-New Feedback Received from Vamsapattika
+New Feedback Received from User
 
 Rating: {rating}
 User: {user_name}
