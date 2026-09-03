@@ -173,7 +173,7 @@
   justify-content: center;
 
   background: rgba(223, 33, 125, 0.08); /* Soft pink pill */
-  color: var(--pink, #df217d);
+  color: var( #f0e6eb);
 
   font-size: 18px;
   font-weight: 700;
@@ -182,9 +182,9 @@
 }
 
 .faq-question:hover .faq-icon {
-  background: var(--pink, #df217d);
+  background: var(--, #cfcecf);
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(223, 33, 125, 0.3);
+  box-shadow: 0 4px 12px rgba(230, 225, 227, 0.3);
 }
 
 /* ========================================
