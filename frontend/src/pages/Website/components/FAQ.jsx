@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./FAQ.css";
 
-import faqWatermark from "../assets/faq-watermark.png";
+import faqWatermark from "../../../../public/images/faq-watermark.png";
 
 const faqs = [
   {
