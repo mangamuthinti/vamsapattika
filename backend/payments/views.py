@@ -8,6 +8,7 @@ from datetime import timedelta
 import razorpay
 import hmac
 import hashlib
+import json
 
 from .models import Plan, UserSubscription, PaymentTransaction
 from .serializers import (
@@ -154,6 +155,40 @@ def payment_status(request, order_id):
 
     _activate_transaction(transaction, captured_payment['id'])
     return Response({'status': 'SUCCESS'})
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def razorpay_webhook(request):
+    """Activate payments reported by Razorpay independently of the browser."""
+    signature = request.headers.get('X-Razorpay-Signature', '')
+    expected_signature = hmac.new(
+        settings.RAZORPAY_WEBHOOK_SECRET.encode(),
+        request.body,
+        hashlib.sha256
+    ).hexdigest()
+
+    if not signature or not hmac.compare_digest(expected_signature, signature):
+        return Response({'error': 'Invalid webhook signature'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        payload = json.loads(request.body)
+        payment = payload['payload']['payment']['entity']
+        order_id = payment.get('order_id')
+        payment_id = payment.get('id')
+    except (ValueError, KeyError, TypeError):
+        return Response({'error': 'Invalid webhook payload'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if payload.get('event') not in ('payment.captured', 'order.paid'):
+        return Response({'status': 'ignored'})
+
+    try:
+        transaction = PaymentTransaction.objects.get(razorpay_order_id=order_id)
+    except PaymentTransaction.DoesNotExist:
+        return Response({'status': 'ignored'})
+
+    _activate_transaction(transaction, payment_id)
+    return Response({'status': 'success'})
 
 
 @api_view(['POST'])

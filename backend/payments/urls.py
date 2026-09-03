@@ -19,5 +19,6 @@ urlpatterns = [
     # Payment flow
     path('create-order/', views.create_payment_order, name='create_payment_order'),
     path('payment-status/<str:order_id>/', views.payment_status, name='payment_status'),
+    path('webhook/razorpay/', views.razorpay_webhook, name='razorpay_webhook'),
     path('verify-payment/', views.verify_payment, name='verify_payment'),
 ]
