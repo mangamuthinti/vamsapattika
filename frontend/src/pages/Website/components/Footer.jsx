@@ -84,7 +84,7 @@ export default function Footer({ scrollTo }) {
         <div className="footer-col explore-col">
 
           <h4>
-            EXPLORE 
+            EXPLORE
           </h4>
 
           <button onClick={() => scrollTo("about")}>
@@ -108,40 +108,20 @@ export default function Footer({ scrollTo }) {
 
         {/* =================================================
             CONTACT US 02
+            ORDER:
+            WEBSITE
+            EMAIL
+            ADDRESS
         ================================================= */}
 
         <div className="footer-col contact-col">
 
           <h4>
-            CONTACT US 
+            CONTACT US
           </h4>
 
-          <a
-            href="mailto:support@vamsapattika.com"
-            className="contact-item"
-          >
-            <span className="contact-icon">
-              ✉
-            </span>
 
-            <span>
-              support@vamsapattika.com
-            </span>
-          </a>
-
-
-          <div className="contact-item">
-
-            <span className="contact-icon">
-              ⌖
-            </span>
-
-            <span>
-              Hyderabad, India
-            </span>
-
-          </div>
-
+          {/* WEBSITE FIRST */}
 
           <a
             href="https://www.vamsapattika.com"
@@ -160,6 +140,39 @@ export default function Footer({ scrollTo }) {
 
           </a>
 
+
+          {/* EMAIL SECOND */}
+
+          <a
+            href="mailto:support@vamsapattika.com"
+            className="contact-item"
+          >
+
+            <span className="contact-icon">
+              ✉
+            </span>
+
+            <span>
+              support@vamsapattika.com
+            </span>
+
+          </a>
+
+
+          {/* ADDRESS THIRD */}
+
+          <div className="contact-item">
+
+            <span className="contact-icon">
+              ⌖
+            </span>
+
+            <span>
+              Hyderabad, India
+            </span>
+
+          </div>
+
         </div>
 
 
@@ -169,14 +182,9 @@ export default function Footer({ scrollTo }) {
 
         <div className="footer-col visitors-col">
 
-          {/* HEADING FIRST */}
-
           <h4>
-            VISITORS 
+            VISITORS
           </h4>
-
-
-          {/* NUMBER BELOW HEADING */}
 
           <div className="visitor-box">
 
@@ -184,18 +192,17 @@ export default function Footer({ scrollTo }) {
               👁
             </span>
 
-            
-
             <span className="visitor-label">
-              Visitors
             </span>
-<span className="visitor-number">
+
+            <span className="visitor-number">
 
               {visitorCount !== null
                 ? visitorCount.toLocaleString()
                 : "0"}
 
             </span>
+
           </div>
 
         </div>
@@ -210,7 +217,18 @@ export default function Footer({ scrollTo }) {
       <div className="container footer-bottom">
 
         <span>
-          © 2026 Vamsapattika. All Rights Reserved @Provegaa Tech Hub.
+          © 2026 Vamsapattika. All Rights Reserved @{" "}
+
+          <a
+            href="https://provegaa.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="provegaa-link"
+          >
+            Provegaa Tech Hub
+          </a>
+
+          .
         </span>
 
       </div>
