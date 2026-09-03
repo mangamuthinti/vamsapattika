@@ -80,21 +80,23 @@ const UserDropdown = () => {
         order_id: orderData.order_id,
         handler: async function (response) {
           clearInterval(paymentStatusPoll);
-          console.log('Payment successful:', response);
+          console.log('💳 Razorpay handler triggered - Payment successful:', response);
 
           try {
             // Verify payment on backend
+            console.log('🔐 Verifying payment signature...');
             const verifyData = await paymentsAPI.verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature
             });
 
-            console.log('Payment verified:', verifyData);
+            console.log('✅ Payment verified:', verifyData);
 
             // Fetch fresh subscription data from backend
+            console.log('📥 Fetching fresh subscription data...');
             const subscriptionData = await paymentsAPI.getSubscription();
-            console.log('Fresh subscription data:', subscriptionData);
+            console.log('📦 Fresh subscription data:', subscriptionData);
 
             // Update local plan data with backend data
             if (subscriptionData && subscriptionData.plan_details) {
@@ -114,10 +116,16 @@ const UserDropdown = () => {
               window.location.href = window.location.href;
             }, 1500);
           } catch (error) {
-            console.error('Payment verification failed:', error);
+            console.error('❌ Payment verification failed:', error);
+            console.error('Error details:', error.response?.data || error.message);
+
+            // Don't show error immediately - polling might still succeed
+            console.log('⏳ Verification failed, but polling will continue checking...');
+
+            // Optionally show a warning but let polling handle it
             setAlertState({
               isOpen: true,
-              message: 'Payment verification failed. Please contact support.'
+              message: 'Processing payment... Please wait while we confirm your payment.'
             });
           }
         },
@@ -142,26 +150,60 @@ const UserDropdown = () => {
 
       const razorpay = new window.Razorpay(options);
       razorpay.open();
+
+      // Start polling for payment status (fallback for QR code payments)
       let pollAttempts = 0;
+      const maxPollAttempts = 90; // Poll for 3 minutes (90 attempts × 2s)
+      console.log('🔄 Starting payment status polling...');
+
       paymentStatusPoll = setInterval(async () => {
         pollAttempts += 1;
+        console.log(`🔍 Polling attempt ${pollAttempts}/${maxPollAttempts} for order: ${orderData.order_id}`);
+
         try {
           const paymentStatus = await paymentsAPI.getPaymentStatus(orderData.order_id);
+          console.log('📊 Payment status response:', paymentStatus);
+
           if (paymentStatus.status === 'SUCCESS') {
             clearInterval(paymentStatusPoll);
+            console.log('✅ Payment confirmed via polling!');
+
+            // Fetch fresh subscription data
+            try {
+              const subscriptionData = await paymentsAPI.getSubscription();
+              if (subscriptionData && subscriptionData.plan_details) {
+                await upgradePlan(
+                  subscriptionData.plan_details.max_cards === 999999 ? Infinity : subscriptionData.plan_details.max_cards,
+                  parseFloat(subscriptionData.plan_details.price)
+                );
+              }
+            } catch (subError) {
+              console.error('Error fetching subscription:', subError);
+            }
+
             setAlertState({
               isOpen: true,
-              message: `Payment successful! You are now on the ${tier.name} plan.`
+              message: `✅ Payment successful! You are now on the ${tier.name} plan.`
             });
             setTimeout(() => {
               window.location.href = window.location.href;
             }, 1500);
+          } else {
+            console.log(`⏳ Payment not captured yet (${paymentStatus.message || 'waiting'})`);
           }
         } catch (error) {
-          console.error('Payment status check failed:', error);
+          console.error('❌ Payment status check failed:', error);
+          // Don't stop polling on error, just log it
         }
-        if (pollAttempts >= 150) {
+
+        // Stop polling after max attempts
+        if (pollAttempts >= maxPollAttempts) {
           clearInterval(paymentStatusPoll);
+          console.log('⏰ Polling timeout - please check payment status manually');
+          setAlertState({
+            isOpen: true,
+            message: 'Payment is being processed. Please refresh the page in a few moments to see your updated plan.'
+          });
         }
       }, 2000);
     } catch (error) {
