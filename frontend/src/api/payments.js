@@ -4,7 +4,7 @@ export const paymentsAPI = {
   // Get all pricing plans
   getPlans: async () => {
     const response = await api.get('/payments/plans/');
-    return response.data;
+    return response.data.results || response.data;
   },
 
   // Get current user's subscription
