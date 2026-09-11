@@ -36,4 +36,10 @@ export const treesAPI = {
     const response = await api.get(`/trees/${treeId}/check_limit/`);
     return response.data;
   },
+
+  // Get all photos from tree
+  getPhotos: async (treeId) => {
+    const response = await api.get(`/trees/${treeId}/photos/`);
+    return response.data;
+  },
 };

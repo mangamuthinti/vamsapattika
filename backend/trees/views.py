@@ -104,3 +104,30 @@ class FamilyTreeViewSet(viewsets.ModelViewSet):
             'is_within_limit': card_count <= max_cards,
             'remaining_cards': max(0, max_cards - card_count)
         })
+
+    @action(detail=True, methods=['get'], url_path='photos')
+    def get_photos(self, request, tree_id=None):
+        """Get all photos from the family tree"""
+        tree = self.get_object()
+        photos = []
+
+        if tree.family_data:
+            for person_id, person_data in tree.family_data.items():
+                photo = person_data.get('photo', '')
+                if photo and photo != '':
+                    photos.append({
+                        'id': person_id,
+                        'name': person_data.get('name', 'Unknown'),
+                        'photo': photo,
+                        'gender': person_data.get('gender', 'other'),
+                        'birthDate': person_data.get('birthDate', ''),
+                        'deathDate': person_data.get('deathDate', ''),
+                        'occupation': person_data.get('occupation', '')
+                    })
+
+        return Response({
+            'tree_id': tree.tree_id,
+            'tree_name': tree.name,
+            'photo_count': len(photos),
+            'photos': photos
+        })

@@ -8,6 +8,7 @@ import PricingModal from './PricingModal';
 import CustomAlert from './CustomAlert';
 import CustomConfirm from './CustomConfirm';
 import FeedbackModal from './FeedbackModal';
+import PhotoGallery from './PhotoGallery';
 
 const UserDropdown = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPricingPage, setShowPricingPage] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showPhotoGallery, setShowPhotoGallery] = useState(false);
   const dropdownRef = useRef(null);
   const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
   const [confirmState, setConfirmState] = useState({ isOpen: false, message: '', onConfirm: null });
@@ -276,6 +278,11 @@ const UserDropdown = () => {
             Feedback
           </button>
 
+          <button className="dropdown-item" onClick={() => { setShowPhotoGallery(true); setIsOpen(false); }}>
+            <span className="dropdown-icon">📷</span>
+            Photo Gallery
+          </button>
+
           <div className="dropdown-divider"></div>
 
           <button className="dropdown-item logout" onClick={handleLogout}>
@@ -296,6 +303,12 @@ const UserDropdown = () => {
       <FeedbackModal
         isOpen={showFeedbackModal}
         onClose={() => setShowFeedbackModal(false)}
+      />
+
+      <PhotoGallery
+        isOpen={showPhotoGallery}
+        onClose={() => setShowPhotoGallery(false)}
+        treeId="default"
       />
     </div>
     </>

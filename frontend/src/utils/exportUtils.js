@@ -37,9 +37,14 @@ export const exportAsImage = async () => {
   }
 
   try {
-    // Hide menu buttons before export
+    // Hide menu buttons and scale badge before export
     const menuBtns = document.querySelectorAll('.card-menu-btn');
     menuBtns.forEach(btn => btn.style.display = 'none');
+
+    // Hide the scale badge if present
+    const scaleBadge = document.querySelector('[style*="scale"]');
+    const originalBadgeDisplay = scaleBadge ? scaleBadge.style.display : null;
+    if (scaleBadge) scaleBadge.style.display = 'none';
 
     // Get current background image from body::before or dynamic style
     const dynamicStyle = document.getElementById('dynamic-bg-style');
@@ -49,7 +54,7 @@ export const exportAsImage = async () => {
       if (match) bgImageUrl = match[1];
     }
 
-    // Store original styles
+    // Store original container styles
     const originalContainerStyles = {
       position: treeContainer.style.position,
       overflow: treeContainer.style.overflow,
@@ -61,21 +66,15 @@ export const exportAsImage = async () => {
       bottom: treeContainer.style.bottom,
     };
 
-    // Temporarily adjust container to show all content
-    treeContainer.style.position = 'relative';
-    treeContainer.style.overflow = 'visible';
-    treeContainer.style.height = 'auto';
-    treeContainer.style.width = 'auto';
-    treeContainer.style.top = 'auto';
-    treeContainer.style.left = 'auto';
-    treeContainer.style.right = 'auto';
-    treeContainer.style.bottom = 'auto';
-
-    // Create a wrapper with background for export
+    // Create a temporary wrapper for rendering the full tree
     const wrapper = document.createElement('div');
-    wrapper.style.position = 'relative';
+    wrapper.style.position = 'absolute';
+    wrapper.style.left = '-9999px';
+    wrapper.style.top = '0';
     wrapper.style.backgroundColor = '#f5f5f5';
     wrapper.style.padding = '20px';
+    wrapper.style.width = 'max-content';
+    wrapper.style.height = 'max-content';
 
     // Create background layer with low opacity
     const bgLayer = document.createElement('div');
@@ -91,19 +90,30 @@ export const exportAsImage = async () => {
     bgLayer.style.opacity = '0.08';
     bgLayer.style.pointerEvents = 'none';
 
-    // Clone the tree container content
-    const treeClone = treeContainer.cloneNode(true);
+    // Clone the family tree directly (not the container)
+    const treeClone = familyTree.cloneNode(true);
     treeClone.style.position = 'relative';
     treeClone.style.zIndex = '1';
+    treeClone.style.width = 'max-content';
+    treeClone.style.height = 'max-content';
+
+    // Remove any hidden elements from the clone
+    const hiddenElements = treeClone.querySelectorAll('.card-menu-btn');
+    hiddenElements.forEach(el => el.remove());
 
     wrapper.appendChild(bgLayer);
     wrapper.appendChild(treeClone);
     document.body.appendChild(wrapper);
 
+    // Wait for rendering to complete
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     // Use modern-screenshot for excellent clip-path support
     const dataUrl = await domToPng(wrapper, {
       scale: 2,
-      backgroundColor: '#f5f5f5'
+      backgroundColor: '#f5f5f5',
+      width: wrapper.scrollWidth,
+      height: wrapper.scrollHeight
     });
 
     // Remove wrapper
@@ -116,12 +126,17 @@ export const exportAsImage = async () => {
 
     // Show buttons again
     menuBtns.forEach(btn => btn.style.display = '');
+    if (scaleBadge && originalBadgeDisplay !== null) {
+      scaleBadge.style.display = originalBadgeDisplay;
+    }
 
     // Download image
     const link = document.createElement('a');
     link.download = 'vamsapattika.png';
     link.href = dataUrl;
     link.click();
+
+    showGlobalAlert('Tree exported successfully!');
   } catch (error) {
     console.error('Export error:', error);
 
@@ -156,9 +171,14 @@ export const exportAsPDF = async () => {
   }
 
   try {
-    // Hide menu buttons before export
+    // Hide menu buttons and scale badge before export
     const menuBtns = document.querySelectorAll('.card-menu-btn');
     menuBtns.forEach(btn => btn.style.display = 'none');
+
+    // Hide the scale badge if present
+    const scaleBadge = document.querySelector('[style*="scale"]');
+    const originalBadgeDisplay = scaleBadge ? scaleBadge.style.display : null;
+    if (scaleBadge) scaleBadge.style.display = 'none';
 
     // Get current background image from body::before or dynamic style
     const dynamicStyle = document.getElementById('dynamic-bg-style');
@@ -168,7 +188,7 @@ export const exportAsPDF = async () => {
       if (match) bgImageUrl = match[1];
     }
 
-    // Store original styles
+    // Store original container styles
     const originalContainerStyles = {
       position: treeContainer.style.position,
       overflow: treeContainer.style.overflow,
@@ -180,21 +200,15 @@ export const exportAsPDF = async () => {
       bottom: treeContainer.style.bottom,
     };
 
-    // Temporarily adjust container to show all content
-    treeContainer.style.position = 'relative';
-    treeContainer.style.overflow = 'visible';
-    treeContainer.style.height = 'auto';
-    treeContainer.style.width = 'auto';
-    treeContainer.style.top = 'auto';
-    treeContainer.style.left = 'auto';
-    treeContainer.style.right = 'auto';
-    treeContainer.style.bottom = 'auto';
-
-    // Create a wrapper with background for export
+    // Create a temporary wrapper for rendering the full tree
     const wrapper = document.createElement('div');
-    wrapper.style.position = 'relative';
+    wrapper.style.position = 'absolute';
+    wrapper.style.left = '-9999px';
+    wrapper.style.top = '0';
     wrapper.style.backgroundColor = '#f5f5f5';
     wrapper.style.padding = '20px';
+    wrapper.style.width = 'max-content';
+    wrapper.style.height = 'max-content';
 
     // Create background layer with low opacity
     const bgLayer = document.createElement('div');
@@ -210,19 +224,30 @@ export const exportAsPDF = async () => {
     bgLayer.style.opacity = '0.08';
     bgLayer.style.pointerEvents = 'none';
 
-    // Clone the tree container content
-    const treeClone = treeContainer.cloneNode(true);
+    // Clone the family tree directly (not the container)
+    const treeClone = familyTree.cloneNode(true);
     treeClone.style.position = 'relative';
     treeClone.style.zIndex = '1';
+    treeClone.style.width = 'max-content';
+    treeClone.style.height = 'max-content';
+
+    // Remove any hidden elements from the clone
+    const hiddenElements = treeClone.querySelectorAll('.card-menu-btn');
+    hiddenElements.forEach(el => el.remove());
 
     wrapper.appendChild(bgLayer);
     wrapper.appendChild(treeClone);
     document.body.appendChild(wrapper);
 
+    // Wait for rendering to complete
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     // Use modern-screenshot for excellent clip-path support
     const canvas = await domToCanvas(wrapper, {
       scale: 2,
-      backgroundColor: '#f5f5f5'
+      backgroundColor: '#f5f5f5',
+      width: wrapper.scrollWidth,
+      height: wrapper.scrollHeight
     });
 
     // Remove wrapper
@@ -235,6 +260,9 @@ export const exportAsPDF = async () => {
 
     // Show buttons again
     menuBtns.forEach(btn => btn.style.display = '');
+    if (scaleBadge && originalBadgeDisplay !== null) {
+      scaleBadge.style.display = originalBadgeDisplay;
+    }
 
     const imgData = canvas.toDataURL('image/png');
     const pdf = new jsPDF({
@@ -245,6 +273,8 @@ export const exportAsPDF = async () => {
 
     pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
     pdf.save('vamsapattika.pdf');
+
+    showGlobalAlert('Tree exported as PDF successfully!');
   } catch (error) {
     console.error('Export error:', error);
 
