@@ -14,11 +14,21 @@ const Toolbar = () => {
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [showInfoTooltip, setShowInfoTooltip] = useState(false);
+  const [localPlanLoading, setLocalPlanLoading] = useState(planLoading);
+
+  // Force update local state when planLoading changes
+  useEffect(() => {
+    console.log('📊 Toolbar - planLoading changed to:', planLoading);
+    setLocalPlanLoading(planLoading);
+  }, [planLoading]);
 
   // Simple card counter - just show the numbers
   const currentCards = Object.keys(familyData || {}).length;
-  const maxCards = parseInt(userPlan?.maxCards) || 4;
+  const maxCards = userPlan?.maxCards === Infinity ? Infinity : (parseInt(userPlan?.maxCards) || 4);
   const isUnlimited = maxCards === Infinity || maxCards >= 999999;
+
+  // Debug logging
+  console.log('📊 Toolbar render - localPlanLoading:', localPlanLoading, 'planLoading:', planLoading, 'maxCards:', maxCards);
 
   const usagePercentage = isUnlimited ? 0 : (currentCards / maxCards) * 100;
 
@@ -46,7 +56,7 @@ const Toolbar = () => {
 
   // Calculate plan expiry
   const getPlanExpiryInfo = () => {
-    if (!userPlan.expiryDate || userPlan.price === 0) return null;
+    if (!userPlan || !userPlan.expiryDate || userPlan.price === 0) return null;
 
     const expiryDate = new Date(userPlan.expiryDate);
     const now = new Date();
@@ -134,13 +144,15 @@ const Toolbar = () => {
     setExportMenuOpen(false);
   };
 
-  const handleExportImage = () => {
-    exportAsImage();
+  const handleExportImage = async () => {
+    console.log('📸 Starting PNG export...');
+    await exportAsImage();
     setExportMenuOpen(false);
   };
 
-  const handleExportPDF = () => {
-    exportAsPDF();
+  const handleExportPDF = async () => {
+    console.log('📄 Starting PDF export...');
+    await exportAsPDF();
     setExportMenuOpen(false);
   };
 
@@ -369,11 +381,11 @@ const Toolbar = () => {
                     whiteSpace: 'nowrap',
                     ...getCardCounterStyle()
                   }}
-                  title={isUnlimited ? `Unlimited plan - ${currentCards} cards` : `${currentCards} out of ${maxCards} cards`}
+                  title={planLoading ? 'Loading subscription...' : (isUnlimited ? `Unlimited plan - ${currentCards} cards` : `${currentCards} out of ${maxCards} cards`)}
                 >
-                  <span style={{ fontSize: '14px' }}>{isUnlimited ? '💎' : '📊'}</span>
+                  <span style={{ fontSize: '14px' }}>{localPlanLoading ? '⏳' : (isUnlimited ? '💎' : '📊')}</span>
                   <span>
-                    {currentCards}/{maxCards} cards
+                    {localPlanLoading ? 'Loading...' : (isUnlimited ? `${currentCards} cards (Unlimited)` : `${currentCards}/${maxCards} cards`)}
                   </span>
                 </span>
 

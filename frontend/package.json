@@ -8,7 +8,7 @@
     "dom-to-image-more": "^3.10.2",
     "firebase": "^12.17.0",
     "html2canvas": "^1.4.1",
-    "jspdf": "^4.2.1",
+    "jspdf": "^2.5.2",
     "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

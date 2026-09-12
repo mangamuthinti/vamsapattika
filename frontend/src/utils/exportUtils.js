@@ -31,8 +31,17 @@ export const exportAsImage = async () => {
   const treeContainer = document.getElementById('treeContainer');
   const familyTree = document.getElementById('familyTree');
 
+  console.log('🌳 PNG Export - treeContainer:', treeContainer);
+  console.log('🌳 PNG Export - familyTree:', familyTree);
+  console.log('🌳 PNG Export - familyTree children:', familyTree?.children.length);
+
   if (!treeContainer || !familyTree) {
     showGlobalAlert('Tree container not found');
+    return;
+  }
+
+  if (familyTree.children.length === 0) {
+    showGlobalAlert('Tree is empty - nothing to export');
     return;
   }
 
@@ -90,30 +99,43 @@ export const exportAsImage = async () => {
     bgLayer.style.opacity = '0.08';
     bgLayer.style.pointerEvents = 'none';
 
-    // Clone the family tree directly (not the container)
+    // Clone the family tree directly (not the container) with deep copy
     const treeClone = familyTree.cloneNode(true);
+
+    // Apply styles to cloned tree
     treeClone.style.position = 'relative';
     treeClone.style.zIndex = '1';
     treeClone.style.width = 'max-content';
     treeClone.style.height = 'max-content';
+    treeClone.style.display = 'block';
+    treeClone.style.visibility = 'visible';
 
     // Remove any hidden elements from the clone
     const hiddenElements = treeClone.querySelectorAll('.card-menu-btn');
     hiddenElements.forEach(el => el.remove());
 
+    console.log('📸 Tree clone created with', treeClone.children.length, 'children');
+
     wrapper.appendChild(bgLayer);
     wrapper.appendChild(treeClone);
     document.body.appendChild(wrapper);
 
-    // Wait for rendering to complete
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Wait for rendering to complete and ensure all styles are applied
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    console.log('📸 Capturing screenshot - wrapper size:', wrapper.scrollWidth, 'x', wrapper.scrollHeight);
+    console.log('📸 Tree clone children:', treeClone.children.length);
 
     // Use modern-screenshot for excellent clip-path support
     const dataUrl = await domToPng(wrapper, {
       scale: 2,
       backgroundColor: '#f5f5f5',
       width: wrapper.scrollWidth,
-      height: wrapper.scrollHeight
+      height: wrapper.scrollHeight,
+      style: {
+        transform: 'scale(1)',
+        transformOrigin: 'top left'
+      }
     });
 
     // Remove wrapper
@@ -135,8 +157,6 @@ export const exportAsImage = async () => {
     link.download = 'vamsapattika.png';
     link.href = dataUrl;
     link.click();
-
-    showGlobalAlert('Tree exported successfully!');
   } catch (error) {
     console.error('Export error:', error);
 
@@ -165,8 +185,17 @@ export const exportAsPDF = async () => {
   const treeContainer = document.getElementById('treeContainer');
   const familyTree = document.getElementById('familyTree');
 
+  console.log('🌳 PDF Export - treeContainer:', treeContainer);
+  console.log('🌳 PDF Export - familyTree:', familyTree);
+  console.log('🌳 PDF Export - familyTree children:', familyTree?.children.length);
+
   if (!treeContainer || !familyTree) {
     showGlobalAlert('Tree container not found');
+    return;
+  }
+
+  if (familyTree.children.length === 0) {
+    showGlobalAlert('Tree is empty - nothing to export');
     return;
   }
 
@@ -224,16 +253,22 @@ export const exportAsPDF = async () => {
     bgLayer.style.opacity = '0.08';
     bgLayer.style.pointerEvents = 'none';
 
-    // Clone the family tree directly (not the container)
+    // Clone the family tree directly (not the container) with deep copy
     const treeClone = familyTree.cloneNode(true);
+
+    // Apply styles to cloned tree
     treeClone.style.position = 'relative';
     treeClone.style.zIndex = '1';
     treeClone.style.width = 'max-content';
     treeClone.style.height = 'max-content';
+    treeClone.style.display = 'block';
+    treeClone.style.visibility = 'visible';
 
     // Remove any hidden elements from the clone
     const hiddenElements = treeClone.querySelectorAll('.card-menu-btn');
     hiddenElements.forEach(el => el.remove());
+
+    console.log('📸 Tree clone created with', treeClone.children.length, 'children');
 
     wrapper.appendChild(bgLayer);
     wrapper.appendChild(treeClone);
@@ -265,16 +300,17 @@ export const exportAsPDF = async () => {
     }
 
     const imgData = canvas.toDataURL('image/png');
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+
     const pdf = new jsPDF({
-      orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+      orientation: imgWidth > imgHeight ? 'l' : 'p',
       unit: 'px',
-      format: [canvas.width, canvas.height]
+      format: [imgWidth, imgHeight]
     });
 
-    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
     pdf.save('vamsapattika.pdf');
-
-    showGlobalAlert('Tree exported as PDF successfully!');
   } catch (error) {
     console.error('Export error:', error);
 

@@ -19,23 +19,43 @@ export const AuthProvider = ({ children }) => {
   // Initialize auth state from localStorage
   useEffect(() => {
     const initAuth = async () => {
-      const token = localStorage.getItem('access_token');
-      const user = localStorage.getItem('user');
+      console.log('🔄 AuthContext: Initializing auth...');
 
-      if (token && user) {
-        try {
-          // Verify token is still valid by fetching profile
-          const profile = await authAPI.getProfile();
-          setCurrentUser(profile);
-        } catch (error) {
-          // Token invalid - clear storage
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          localStorage.removeItem('user');
-          setCurrentUser(null);
+      // Set a safety timeout to prevent infinite loading
+      const safetyTimeout = setTimeout(() => {
+        console.warn('⏱️ AuthContext: Init timeout - forcing loading to false');
+        setLoading(false);
+      }, 5000); // 5 second max
+
+      try {
+        const token = localStorage.getItem('access_token');
+        const user = localStorage.getItem('user');
+
+        if (token && user) {
+          try {
+            console.log('🔐 AuthContext: Verifying token...');
+            // Verify token is still valid by fetching profile
+            const profile = await authAPI.getProfile();
+            console.log('✅ AuthContext: User authenticated:', profile.email);
+            setCurrentUser(profile);
+          } catch (error) {
+            console.warn('❌ AuthContext: Token invalid, clearing storage');
+            // Token invalid - clear storage
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('user');
+            setCurrentUser(null);
+          }
+        } else {
+          console.log('ℹ️ AuthContext: No stored credentials');
         }
+      } catch (error) {
+        console.error('❌ AuthContext: Init error:', error);
+      } finally {
+        clearTimeout(safetyTimeout);
+        console.log('✅ AuthContext: Loading complete');
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     initAuth();
@@ -44,17 +64,20 @@ export const AuthProvider = ({ children }) => {
   // Sign up new user
   const signup = async (email, password, displayName, mobileNumber = '') => {
     try {
+      console.log('🔐 AuthContext: Signing up new user...', email);
       const data = await authAPI.register(email, password, displayName, mobileNumber);
 
+      console.log('✅ AuthContext: Signup successful, storing tokens');
       // Store tokens
       localStorage.setItem('access_token', data.tokens.access);
       localStorage.setItem('refresh_token', data.tokens.refresh);
       localStorage.setItem('user', JSON.stringify(data.user));
 
+      console.log('✅ AuthContext: User set:', data.user.email);
       setCurrentUser(data.user);
       return data.user;
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error('❌ AuthContext: Signup error:', error);
       throw error;
     }
   };
@@ -62,8 +85,10 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (email, password) => {
     try {
+      console.log('🔐 AuthContext: Logging in user...', email);
       const data = await authAPI.login(email, password);
 
+      console.log('✅ AuthContext: Login successful, storing tokens');
       // Store tokens
       localStorage.setItem('access_token', data.tokens.access);
       localStorage.setItem('refresh_token', data.tokens.refresh);

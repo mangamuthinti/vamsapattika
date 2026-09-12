@@ -12,33 +12,8 @@ export const useFamilyTree = () => {
   return context;
 };
 
-const initialFamilyData = {
-  1: {
-    id: 1,
-    name: 'Enter Name',
-    gender: 'male',
-    birthDate: '',
-    deathDate: '',
-    occupation: 'Enter Occupation',
-    level: 1,
-    photo: null,
-    photoShape: 'circle',
-    shape: 'rounded',
-    customColors: {},
-    textStyles: {},
-    link: null,
-    children: [],
-    spouse: null,
-    parent: null,
-    marriageDate: null,
-    coupleLabel: 'Couple',
-    coupleBoxStyle: {
-      borderColor: 'rgba(250, 112, 154, 0.4)',
-      backgroundColor: 'rgba(250, 112, 154, 0.1)',
-      borderThickness: 4
-    }
-  }
-};
+// Empty initial data for new users - they'll click "Start your Vamsapattika" button
+const initialFamilyData = {};
 
 export const FamilyTreeProvider = ({ children }) => {
   const { currentUser, loadFamilyTree, saveFamilyTree } = useAuth();
@@ -49,19 +24,91 @@ export const FamilyTreeProvider = ({ children }) => {
   const [currentTreeName, setCurrentTreeName] = useState('My Vamsapattika');
   const [currentTreeCreatedAt, setCurrentTreeCreatedAt] = useState(null);
 
+  // Reset dataLoaded when user changes (fixes stuck loading for new users)
+  useEffect(() => {
+    if (currentUser) {
+      setDataLoaded(false); // Force reload for this user
+    }
+  }, [currentUser?.email]); // Only reset when actual user changes
+
   // Initialize with default data (will be replaced by Backend data)
-  const [nextId, setNextId] = useState(2);
+  const [nextId, setNextId] = useState(1); // Start from 1 since no initial card
   const [familyData, setFamilyData] = useState(initialFamilyData);
+
+  // Clean orphaned cards - removes cards not reachable from root
+  const cleanOrphanedCardsFunc = React.useCallback((data) => {
+    if (!data || Object.keys(data).length === 0) return data;
+
+    // Find root person (level 1, no parent)
+    const root = Object.values(data).find(p => p && p.level === 1 && !p.parent);
+    if (!root) {
+      console.log('ℹ️ No root person found - tree is empty or has no valid root');
+      return {}; // Return empty tree if no root
+    }
+
+    // Recursively collect all reachable IDs from root
+    const reachableIds = new Set();
+    const traverse = (personId) => {
+      if (!personId || reachableIds.has(personId)) return;
+      reachableIds.add(personId);
+
+      const person = data[personId];
+      if (!person) return;
+
+      // Add spouse
+      if (person.spouse) {
+        traverse(person.spouse);
+      }
+
+      // Add all children
+      if (Array.isArray(person.children)) {
+        person.children.forEach(childId => traverse(childId));
+      }
+    };
+
+    traverse(root.id);
+
+    // Remove orphaned cards
+    const cleaned = {};
+    let orphanedCount = 0;
+    Object.keys(data).forEach(id => {
+      if (reachableIds.has(parseInt(id))) {
+        cleaned[id] = data[id];
+      } else {
+        orphanedCount++;
+        console.warn(`🗑️ Removing orphaned card: ${id} (${data[id]?.name})`);
+      }
+    });
+
+    if (orphanedCount > 0) {
+      console.log(`✅ Cleaned ${orphanedCount} orphaned cards. Before: ${Object.keys(data).length}, After: ${Object.keys(cleaned).length}`);
+    }
+
+    return cleaned;
+  }, []);
 
   // Load data from Backend when user logs in or switches tree
   useEffect(() => {
     const loadUserData = async () => {
       if (currentUser && !dataLoaded) {
+        console.log('🔄 Loading family tree data for user:', currentUser.email);
         setIsLoading(true);
+
+        // Add timeout to prevent infinite loading
+        const loadTimeout = setTimeout(() => {
+          console.warn('⏱️ Family tree load timeout - using empty tree');
+          setFamilyData(initialFamilyData); // Empty
+          setNextId(1);
+          setDataLoaded(true);
+          setIsLoading(false);
+        }, 10000); // 10 second timeout
+
         try {
           const backendData = await loadFamilyTree(currentTreeId);
+          clearTimeout(loadTimeout); // Clear timeout on success
+
           if (backendData && backendData.familyData) {
-            console.log('Loaded data from Backend:', backendData);
+            console.log('✅ Loaded data from Backend:', backendData);
 
             // Convert array to object if needed (bug fix)
             let cleanedData = backendData.familyData;
@@ -76,30 +123,38 @@ export const FamilyTreeProvider = ({ children }) => {
               console.log('✅ Converted to object with', Object.keys(cleanedData).length, 'cards:', cleanedData);
             }
 
+            // Clean orphaned cards that are not reachable from root
+            cleanedData = cleanOrphanedCardsFunc(cleanedData);
+
             setFamilyData(cleanedData);
-            setNextId(backendData.nextId || 2);
+            setNextId(backendData.nextId || 1);
             setCurrentTreeName(backendData.name || 'My Vamsapattika');
             setCurrentTreeCreatedAt(backendData.createdAt || new Date().toISOString());
 
             // Note: userPlan is now loaded from backend subscription API (separate useEffect below), not from tree data
           } else {
-            // No data in Backend, use initial data
-            console.log('No data in Backend, using initial data');
-            setFamilyData(initialFamilyData);
-            setNextId(2);
+            // No data in Backend, use initial data (empty for new users)
+            console.log('ℹ️ No data in Backend, starting with empty tree for new user');
+            setFamilyData(initialFamilyData); // Empty object
+            setNextId(1);
           }
           setDataLoaded(true);
           setIsLoading(false);
         } catch (error) {
-          console.error('Error loading data from Backend:', error);
-          // On error, use initial data
+          clearTimeout(loadTimeout);
+          console.error('❌ Error loading data from Backend:', error);
+          // On error, use initial data (empty)
           setFamilyData(initialFamilyData);
-          setNextId(2);
+          setNextId(1);
           setDataLoaded(true);
           setIsLoading(false);
         }
       } else if (!currentUser) {
         // No user logged in, stop loading
+        console.log('ℹ️ No user logged in');
+        setIsLoading(false);
+      } else if (dataLoaded) {
+        // Data already loaded
         setIsLoading(false);
       }
     };
@@ -125,29 +180,36 @@ export const FamilyTreeProvider = ({ children }) => {
     field: null
   });
 
-  // Payment/Plan state - Default Free plan, but track if loaded from backend
+  // Payment/Plan state - Start with default Free plan
   const [userPlan, setUserPlan] = useState({
     maxCards: 4,
     price: 0,
     name: 'Free',
     purchaseDate: null,
     expiryDate: null,
-    loaded: false // Track if plan has been loaded from backend
+    loaded: false
   });
   const [planLoading, setPlanLoading] = useState(true);
 
   const [showPricingModal, setShowPricingModal] = useState(false);
 
-  // Fetch subscription data from backend immediately when user logs in
-  useEffect(() => {
-    const fetchSubscription = async () => {
-      if (!currentUser) {
-        console.log('⚠️ No user logged in - setting planLoading to false');
-        setPlanLoading(false);
-        return;
-      }
+  // Function to fetch subscription - can be called manually or automatically
+  const fetchSubscription = React.useCallback(async (force = false) => {
+    if (!currentUser) {
+      console.log('⚠️ No user logged in - setting default Free plan');
+      setUserPlan({
+        maxCards: 4,
+        price: 0,
+        name: 'Free',
+        purchaseDate: null,
+        expiryDate: null,
+        loaded: true
+      });
+      setPlanLoading(false);
+      return;
+    }
 
-      console.log('🔄 Fetching subscription for user:', currentUser.email);
+    console.log('🔄 Fetching subscription for user:', currentUser.email, '(force:', force, ')');
 
       // Set a 5-second timeout to prevent infinite loading
       const timeoutId = setTimeout(() => {
@@ -172,8 +234,11 @@ export const FamilyTreeProvider = ({ children }) => {
         console.log('📦 Fetched subscription from backend:', subscriptionData);
 
         if (subscriptionData && subscriptionData.plan_details) {
+          const max_cards = subscriptionData.plan_details.max_cards;
+          console.log('📊 Plan max_cards from backend:', max_cards, 'type:', typeof max_cards);
+
           const newPlan = {
-            maxCards: subscriptionData.plan_details.max_cards === 999999 ? Infinity : parseInt(subscriptionData.plan_details.max_cards),
+            maxCards: max_cards === 999999 || max_cards >= 999999 ? Infinity : parseInt(max_cards),
             price: parseFloat(subscriptionData.plan_details.price),
             name: subscriptionData.plan_details.display_name,
             purchaseDate: subscriptionData.purchase_date,
@@ -181,6 +246,7 @@ export const FamilyTreeProvider = ({ children }) => {
             loaded: true
           };
           console.log('✅ Setting user plan to:', newPlan);
+          console.log('✅ maxCards is Infinity?', newPlan.maxCards === Infinity);
           setUserPlan(newPlan);
         } else {
           console.log('ℹ️ No subscription found - using Free plan');
@@ -207,14 +273,23 @@ export const FamilyTreeProvider = ({ children }) => {
           expiryDate: null,
           loaded: true
         });
-      } finally {
-        console.log('✅ Subscription fetch complete - setting planLoading to FALSE');
-        setPlanLoading(false);
-      }
-    };
-
-    fetchSubscription();
+    } finally {
+      console.log('✅ Subscription fetch complete - setting planLoading to FALSE');
+      setPlanLoading(false);
+    }
   }, [currentUser]);
+
+  // Fetch subscription data from backend when user logs in
+  useEffect(() => {
+    if (currentUser) {
+      console.log('🔄 User logged in, fetching subscription...');
+      // Always fetch fresh subscription data
+      fetchSubscription(true); // Force refresh
+    } else {
+      // No user, ensure loading is stopped
+      setPlanLoading(false);
+    }
+  }, [currentUser, fetchSubscription]); // Refetch when user changes or logs in
 
   // Save familyData, nextId, and userPlan to API with debounce (prevents race conditions)
   useEffect(() => {
@@ -257,6 +332,13 @@ export const FamilyTreeProvider = ({ children }) => {
   // Check if user can add more cards
   const canAddCard = () => {
     const currentCardCount = Object.keys(familyData).length;
+    console.log('🔍 canAddCard check:', {
+      currentCardCount,
+      maxCards: userPlan.maxCards,
+      canAdd: currentCardCount < userPlan.maxCards,
+      allCardIds: Object.keys(familyData),
+      cardNames: Object.keys(familyData).map(id => `${id}:${familyData[id]?.name}`)
+    });
     // Unlimited plans (Infinity or 999999) always allow adding
     if (userPlan.maxCards === Infinity || userPlan.maxCards >= 999999) {
       return true;
@@ -306,8 +388,16 @@ export const FamilyTreeProvider = ({ children }) => {
     // Check if user has reached the limit
     const currentCardCount = Object.keys(familyData).length;
 
+    console.log('➕ Adding person:', {
+      currentCardCount,
+      maxCards: userPlan.maxCards,
+      nextId,
+      personData
+    });
+
     // Trigger pricing modal at specific thresholds
     if (!canAddCard()) {
+      console.log('❌ Card limit reached! Showing pricing modal');
       setShowPricingModal(true);
       return null;
     }
@@ -366,6 +456,50 @@ export const FamilyTreeProvider = ({ children }) => {
     return newId;
   };
 
+  // Start tree - opens modal to fill details for first person
+  const startTree = () => {
+    console.log('🌳 Opening modal to start new Vamsapattika...');
+    setModalState({
+      isOpen: true,
+      mode: 'add-root', // Special mode for first root person
+      parentId: null
+    });
+  };
+
+  // Add root person with details from modal
+  const addRootPerson = (personData) => {
+    console.log('🌳 Creating first root person with details:', personData);
+    const rootPerson = {
+      id: 1,
+      name: personData.name,
+      gender: personData.gender,
+      birthDate: personData.birthDate || '',
+      deathDate: personData.deathDate || '',
+      occupation: personData.occupation || '',
+      level: 1,
+      photo: personData.photo || null,
+      photoShape: 'circle',
+      shape: 'rounded',
+      customColors: {},
+      textStyles: {},
+      link: null,
+      children: [],
+      spouse: null,
+      parent: null,
+      marriageDate: null,
+      coupleLabel: 'Couple',
+      coupleBoxStyle: {
+        borderColor: 'rgba(250, 112, 154, 0.4)',
+        backgroundColor: 'rgba(250, 112, 154, 0.1)',
+        borderThickness: 4
+      }
+    };
+
+    setFamilyData({ 1: rootPerson });
+    setNextId(2);
+    console.log('✅ Root person created successfully');
+  };
+
   // Update person data
   const updatePerson = (personId, updates) => {
     setFamilyData(prev => {
@@ -391,17 +525,11 @@ export const FamilyTreeProvider = ({ children }) => {
   const removePerson = (personId) => {
     const person = familyData[personId];
     if (!person) {
-      console.error('Person not found:', personId);
+      console.error('❌ Person not found:', personId);
       return;
     }
 
-    // Don't allow removing root person
-    if (person.level === 1 && !person.parent) {
-      showAlert('Cannot remove the root ancestor of the Vamsapattika');
-      return;
-    }
-
-    console.log('Removing person:', personId, person);
+    console.log('🗑️ FamilyTreeContext: Removing person:', personId, person.name);
 
     setFamilyData(prev => {
       const updated = { ...prev };
@@ -476,14 +604,14 @@ export const FamilyTreeProvider = ({ children }) => {
         }
       });
 
-      // Verify root person still exists
-      const rootExists = Object.values(updated).some(p => p && p.level === 1 && !p.parent);
-      if (!rootExists) {
-        console.error('Root person was accidentally deleted! Reverting...');
-        return prev; // Don't update if root was deleted
+      // Allow empty tree - user can delete all cards
+      const remainingCards = Object.keys(updated).length;
+      console.log(`✅ Removal complete. Remaining cards: ${remainingCards}`);
+
+      if (remainingCards === 0) {
+        console.log('🌳 Tree is now empty - Start button will appear');
       }
 
-      console.log('Updated family data after removal:', Object.keys(updated));
       return updated;
     });
   };
@@ -577,8 +705,8 @@ export const FamilyTreeProvider = ({ children }) => {
 
   // Reset tree to initial state
   const resetTree = () => {
-    setFamilyData(initialFamilyData);
-    setNextId(2);
+    setFamilyData(initialFamilyData); // Empty tree
+    setNextId(1);
     // Will be saved to Backend automatically by the useEffect
   };
 
@@ -605,6 +733,8 @@ export const FamilyTreeProvider = ({ children }) => {
     setModalState,
     textToolbarState,
     setTextToolbarState,
+    startTree,
+    addRootPerson,
     addPerson,
     updatePerson,
     removePerson,
@@ -621,9 +751,37 @@ export const FamilyTreeProvider = ({ children }) => {
     planLoading,
     upgradePlan,
     canAddCard,
+    refreshSubscription: fetchSubscription, // Manual refresh function
     showPricingModal,
-    setShowPricingModal
+    setShowPricingModal,
+    cleanOrphanedCards: () => {
+      console.log('🧹 Manual cleanup triggered');
+      const cleaned = cleanOrphanedCardsFunc(familyData);
+      if (cleaned !== familyData) {
+        setFamilyData(cleaned);
+        console.log('✅ Manual cleanup complete');
+      } else {
+        console.log('✅ No orphaned cards found');
+      }
+    }
   };
+
+  // Expose cleanup function to window for debugging
+  React.useEffect(() => {
+    window.cleanupFamilyTree = () => {
+      console.log('🧹 Running manual cleanup...');
+      const cleaned = cleanOrphanedCardsFunc(familyData);
+      if (cleaned !== familyData) {
+        setFamilyData(cleaned);
+        console.log('✅ Cleanup complete! Orphaned cards removed.');
+      } else {
+        console.log('✅ No orphaned cards found. Tree is clean.');
+      }
+    };
+    return () => {
+      delete window.cleanupFamilyTree;
+    };
+  }, [familyData, cleanOrphanedCardsFunc]);
 
   return (
     <FamilyTreeContext.Provider value={value}>

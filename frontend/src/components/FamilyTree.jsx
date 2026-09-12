@@ -346,7 +346,7 @@ const TreeNode = ({ personId }) => {
 };
 
 const FamilyTree = () => {
-  const { getRootPerson, isLoading, familyData, getChildren } = useFamilyTree();
+  const { getRootPerson, isLoading, familyData, getChildren, startTree } = useFamilyTree();
   const root = getRootPerson();
 
   // Calculate tree depth (number of generations)
@@ -377,6 +377,87 @@ const FamilyTree = () => {
         <div className="tree-loader">
           <div className="loader-spinner"></div>
           <p>Loading your family tree...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if tree is empty (no cards added yet)
+  const isTreeEmpty = !familyData || Object.keys(familyData).length === 0;
+
+  if (!root && isTreeEmpty) {
+    return (
+      <div className="tree-container" id="treeContainer">
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          gap: '20px',
+          padding: '40px'
+        }}>
+          <div style={{
+            fontSize: '48px',
+            marginBottom: '10px'
+          }}>
+            🌳
+          </div>
+          <h2 style={{
+            color: '#2d3748',
+            fontSize: '32px',
+            fontWeight: '700',
+            margin: '0',
+            textShadow: '2px 2px 8px rgba(255, 255, 255, 0.9)',
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '12px 24px',
+            borderRadius: '12px',
+            backdropFilter: 'blur(10px)'
+          }}>
+            Welcome to Vamsapattika
+          </h2>
+          <p style={{
+            color: '#4a5568',
+            fontSize: '18px',
+            textAlign: 'center',
+            maxWidth: '500px',
+            lineHeight: '1.6',
+            margin: '0',
+            background: 'rgba(255, 255, 255, 0.9)',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            backdropFilter: 'blur(10px)',
+            fontWeight: '500'
+          }}>
+            Begin your family tree journey by adding your first family member
+          </p>
+          <button
+            onClick={startTree}
+            style={{
+              marginTop: '20px',
+              padding: '16px 48px',
+              fontSize: '18px',
+              fontWeight: '600',
+              color: 'white',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              border: 'none',
+              borderRadius: '50px',
+              cursor: 'pointer',
+              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+              transition: 'all 0.3s ease',
+              fontFamily: 'inherit'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.6)';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+            }}
+          >
+            Start Your Vamsapattika
+          </button>
         </div>
       </div>
     );
@@ -418,7 +499,7 @@ const FamilyTree = () => {
           '--tree-scale': scaleFactor,
           '--card-width': `${180 * scaleFactor}px`,
           '--card-height': `${200 * scaleFactor}px`,
-          '--photo-size': `${55 * scaleFactor}px`,
+          '--photo-size': `${75 * scaleFactor}px`,
           '--font-size-name': `${0.9 * scaleFactor}rem`,
           '--font-size-details': `${0.72 * scaleFactor}rem`,
           '--couple-gap': `${25 * scaleFactor}px`,

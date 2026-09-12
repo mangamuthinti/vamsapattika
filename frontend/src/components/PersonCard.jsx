@@ -22,10 +22,24 @@ const PersonCard = ({ personId }) => {
 
   if (!person) return null;
 
+  // Calculate dynamic font size based on text length
+  const calculateFontSize = (text, baseSize = 0.9) => {
+    if (!text) return `${baseSize}rem`;
+    const length = text.length;
+
+    if (length <= 15) return `${baseSize}rem`;
+    if (length <= 20) return `${baseSize * 0.85}rem`;
+    if (length <= 25) return `${baseSize * 0.75}rem`;
+    if (length <= 30) return `${baseSize * 0.68}rem`;
+    if (length <= 40) return `${baseSize * 0.6}rem`;
+    return `${baseSize * 0.55}rem`;
+  };
+
   const cardStyle = {
     background: person.customColors?.background || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     borderColor: person.customColors?.border || '#764ba2',
-    color: person.customColors?.text || 'white'
+    color: person.customColors?.text || 'white',
+    paddingTop: '10px'
   };
 
   useEffect(() => {
@@ -155,10 +169,12 @@ const PersonCard = ({ personId }) => {
   };
 
   const handleRemove = () => {
+    console.log('🗑️ PersonCard: Remove clicked for', personId, person.name);
     setConfirmState({
       isOpen: true,
       message: `Are you sure you want to remove ${person.name}?`,
       onConfirm: () => {
+        console.log('✅ PersonCard: Remove confirmed, calling removePerson');
         removePerson(personId);
         setMenuOpen(false);
         setConfirmState({ isOpen: false, message: '', onConfirm: null });
@@ -290,7 +306,7 @@ const PersonCard = ({ personId }) => {
       />
       <div
         ref={cardRef}
-        className={`person level-${person.level} gender-${person.gender} shape-${person.shape} ${!globalShowPhotos || person.photo === '' ? 'no-photo' : ''}`}
+        className={`person level-${person.level} gender-${person.gender} shape-${person.shape} ${!globalShowPhotos || !person.photo || person.photo === '' ? 'no-photo' : ''}`}
         style={cardStyle}
         onClick={handleCardClick}
       >
@@ -324,27 +340,23 @@ const PersonCard = ({ personId }) => {
                 </button>
               )}
 
-              {/* Hide Remove for root node (id=1) */}
-              {personId !== 1 && (
-                <button className="menu-item menu-item-danger" onClick={handleRemove}>
-                  <span className="menu-icon">🗑️</span>
-                  <span>Remove</span>
-                </button>
-              )}
+              {/* Allow removing any card including root */}
+              <button className="menu-item menu-item-danger" onClick={handleRemove}>
+                <span className="menu-icon">🗑️</span>
+                <span>Remove</span>
+              </button>
             </div>
           </div>,
           document.body
         )}
 
-        {globalShowPhotos && person.photo !== '' && (
-          <div className={`photo-container ${!person.photo ? 'empty' : ''} ${person.photoShape ? `photo-shape-${person.photoShape}` : 'photo-shape-circle'}`}>
-            {person.photo ? (
-              <img
-                src={person.photo}
-                alt={person.name}
-                className="person-photo"
-              />
-            ) : null}
+        {globalShowPhotos && person.photo && person.photo !== '' && (
+          <div className={`photo-container ${person.photoShape ? `photo-shape-${person.photoShape}` : 'photo-shape-circle'}`}>
+            <img
+              src={person.photo}
+              alt={person.name}
+              className="person-photo"
+            />
           </div>
         )}
 
@@ -352,7 +364,12 @@ const PersonCard = ({ personId }) => {
           key={`name-${personId}-${person.name}`}
           className="name"
           style={{
+            lineHeight: '1.2',
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
+            hyphens: 'none',
             ...person.textStyles?.name,
+            fontSize: calculateFontSize(person.name, 0.9),
           }}
           onClick={(e) => handleTextClick(e, 'name')}
         >
@@ -378,7 +395,11 @@ const PersonCard = ({ personId }) => {
             key={`occupation-${personId}-${person.occupation}`}
             className="occupation"
             style={{
+              lineHeight: '1.2',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
               ...person.textStyles?.occupation,
+              fontSize: calculateFontSize(displayOccupation, 0.72),
             }}
             onClick={(e) => handleTextClick(e, 'occupation')}
           >

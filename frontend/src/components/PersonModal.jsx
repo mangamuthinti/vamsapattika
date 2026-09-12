@@ -3,7 +3,7 @@ import { useFamilyTree } from '../context/FamilyTreeContext';
 import CustomAlert from './CustomAlert';
 
 const PersonModal = () => {
-  const { familyData, modalState, setModalState, addPerson, updatePerson, selectedPerson, setSelectedPerson } = useFamilyTree();
+  const { familyData, modalState, setModalState, addPerson, addRootPerson, updatePerson, selectedPerson, setSelectedPerson } = useFamilyTree();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -105,6 +105,9 @@ const PersonModal = () => {
       if (person?.spouse && formData.marriageDate) {
         updatePerson(person.spouse, { marriageDate: formData.marriageDate });
       }
+    } else if (modalState.mode === 'add-root') {
+      // Create first root person
+      addRootPerson(formData);
     } else if (modalState.mode === 'spouse') {
       addPerson(formData, modalState.parentId, true);
     } else {
@@ -117,12 +120,14 @@ const PersonModal = () => {
   const getTitle = () => {
     if (modalState.mode === 'edit') return 'Edit Person Information';
     if (modalState.mode === 'spouse') return 'Add Spouse';
+    if (modalState.mode === 'add-root') return 'Start Your Vamsapattika';
     return 'Add New Family Member';
   };
 
   const getSubmitText = () => {
     if (modalState.mode === 'edit') return 'Update Person';
     if (modalState.mode === 'spouse') return 'Add Spouse';
+    if (modalState.mode === 'add-root') return 'Create First Member';
     return 'Add Person';
   };
 
@@ -237,7 +242,11 @@ const PersonModal = () => {
           </div>
 
           <div className="form-buttons">
-            <button type="submit" className="btn-submit">
+            <button
+              type="submit"
+              className="btn-submit"
+              style={modalState.mode === 'add-root' ? { fontSize: '15px', whiteSpace: 'nowrap' } : {}}
+            >
               {getSubmitText()}
             </button>
             <button type="button" className="btn-cancel" onClick={handleClose}>
