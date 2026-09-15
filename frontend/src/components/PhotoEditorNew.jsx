@@ -73,6 +73,10 @@ const PhotoEditorNew = ({ isOpen, onClose, imageUrl, onSave }) => {
           tempCanvas.height = 300;
           const tempCtx = tempCanvas.getContext('2d');
 
+          // Fill with white background
+          tempCtx.fillStyle = 'white';
+          tempCtx.fillRect(0, 0, 300, 300);
+
           // Calculate scale factor from displayed size to natural size
           const scaleX = img.width / imgRect.width;
           const scaleY = img.height / imgRect.height;
@@ -97,6 +101,10 @@ const PhotoEditorNew = ({ isOpen, onClose, imageUrl, onSave }) => {
           outputCanvas.width = 150;
           outputCanvas.height = 150;
           const outputCtx = outputCanvas.getContext('2d');
+
+          // Fill with white background first
+          outputCtx.fillStyle = 'white';
+          outputCtx.fillRect(0, 0, 150, 150);
 
           // Draw the cropped portion
           outputCtx.drawImage(

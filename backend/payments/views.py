@@ -103,7 +103,7 @@ def create_payment_order(request):
         'amount': amount_in_paise,
         'currency': 'INR',
         'key': settings.RAZORPAY_KEY_ID,
-        'transaction_id': transaction.id,
+        'transaction_id': transaction.transaction_id,
         'plan_name': plan.display_name
     }, status=status.HTTP_201_CREATED)
 

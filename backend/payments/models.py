@@ -1,6 +1,12 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+import uuid
+
+
+def generate_transaction_id():
+    """Generate unique transaction ID"""
+    return f"TXN{uuid.uuid4().hex[:12].upper()}"
 
 class Plan(models.Model):
     """Pricing plans - Free, Silver, Gold, Diamond"""
@@ -96,6 +102,9 @@ class PaymentTransaction(models.Model):
         ('MANUAL', 'Manual'),
     ]
     
+    # Unique transaction identifier
+    transaction_id = models.CharField(max_length=100, unique=True, editable=False, db_index=True)
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -103,7 +112,7 @@ class PaymentTransaction(models.Model):
     )
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    
+
     # Payment gateway fields
     payment_gateway = models.CharField(max_length=50, choices=GATEWAY_CHOICES, default='RAZORPAY')
     razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
@@ -131,6 +140,12 @@ class PaymentTransaction(models.Model):
             models.Index(fields=['razorpay_order_id']),
             models.Index(fields=['status']),
         ]
-    
+
+    def save(self, *args, **kwargs):
+        # Ensure transaction_id is set (should be handled by default, but double-check)
+        if not self.transaction_id:
+            self.transaction_id = generate_transaction_id()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"{self.user.email} - ₹{self.amount} - {self.status}"
+        return f"{self.transaction_id} - {self.user.email} - ₹{self.amount}"

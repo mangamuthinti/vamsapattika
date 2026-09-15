@@ -41,12 +41,12 @@ class PaymentTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentTransaction
         fields = [
-            'id', 'plan', 'plan_name', 'amount', 'payment_gateway',
+            'id', 'transaction_id', 'plan', 'plan_name', 'amount', 'payment_gateway',
             'razorpay_order_id', 'razorpay_payment_id', 'status',
             'failure_reason', 'created_at', 'completed_at'
         ]
         read_only_fields = [
-            'id', 'plan_name', 'razorpay_order_id', 'status',
+            'id', 'transaction_id', 'plan_name', 'razorpay_order_id', 'status',
             'failure_reason', 'created_at', 'completed_at'
         ]
 

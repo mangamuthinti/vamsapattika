@@ -25,10 +25,10 @@ class UserSubscriptionAdmin(admin.ModelAdmin):
 
 @admin.register(PaymentTransaction)
 class PaymentTransactionAdmin(admin.ModelAdmin):
-    list_display = ['user', 'plan', 'formatted_amount', 'payment_gateway', 'status', 'created_at']
+    list_display = ['transaction_id', 'user', 'plan', 'formatted_amount', 'payment_gateway', 'status', 'created_at']
     list_filter = ['status', 'payment_gateway', 'created_at']
-    search_fields = ['user__email', 'razorpay_order_id', 'razorpay_payment_id']
-    readonly_fields = ['created_at', 'updated_at', 'completed_at']
+    search_fields = ['transaction_id', 'user__email', 'razorpay_order_id', 'razorpay_payment_id']
+    readonly_fields = ['transaction_id', 'created_at', 'updated_at', 'completed_at']
 
     def formatted_amount(self, obj):
         return f"₹{obj.amount}"

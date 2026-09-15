@@ -854,18 +854,22 @@ body {
 .marriage-date {
     position: absolute;
     left: 50%;
-    bottom: 5px;
+    bottom: -12px;
     transform: translateX(-50%);
     font-size: 0.65rem;
     color: white;
     background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
     padding: 4px 12px;
-    border-radius: 20px;
+    border-radius: 12px;
     z-index: 10;
     white-space: nowrap;
-    pointer-events: none;
+    cursor: pointer;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     font-weight: 600;
+}
+
+.marriage-date:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* Spouse person styling */

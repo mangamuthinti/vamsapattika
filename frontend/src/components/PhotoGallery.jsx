@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { treesAPI } from '../api/trees';
 import CustomAlert from './CustomAlert';
+import JSZip from 'jszip';
 import '../styles/PhotoGallery.css';
 
 const PhotoGallery = ({ isOpen, onClose, treeId }) => {
@@ -58,12 +59,32 @@ const PhotoGallery = ({ isOpen, onClose, treeId }) => {
     }
 
     try {
+      const zip = new JSZip();
+
+      // Add each photo to the zip
       for (let i = 0; i < photos.length; i++) {
         const photo = photos[i];
-        setTimeout(() => {
-          downloadPhoto(photo.photo, `photo_${photo.id}`);
-        }, i * 500);
+
+        // Convert base64 to blob
+        const base64Data = photo.photo.split(',')[1];
+        const mimeType = photo.photo.match(/data:(.*?);/)[1];
+        const extension = mimeType.includes('png') ? 'png' : 'jpg';
+
+        // Add to zip with filename
+        zip.file(`photo_${photo.id}.${extension}`, base64Data, { base64: true });
       }
+
+      // Generate zip file
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+      // Download the zip file
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(zipBlob);
+      link.download = `vamsapattika_photos_${treeId}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
     } catch (error) {
       console.error('Error downloading all photos:', error);
       setAlertState({

@@ -35,6 +35,57 @@ export const FamilyTreeProvider = ({ children }) => {
   const [nextId, setNextId] = useState(1); // Start from 1 since no initial card
   const [familyData, setFamilyData] = useState(initialFamilyData);
 
+  // Consolidate children to primary parent (one with lower ID)
+  const consolidateChildrenToPrimary = React.useCallback((data) => {
+    if (!data || Object.keys(data).length === 0) return data;
+
+    const updated = { ...data };
+    let consolidationCount = 0;
+
+    Object.values(updated).forEach(person => {
+      if (person && person.spouse && updated[person.spouse]) {
+        const spouse = updated[person.spouse];
+
+        // Find primary parent (lower ID)
+        const primaryId = person.id < spouse.id ? person.id : spouse.id;
+        const secondaryId = person.id < spouse.id ? spouse.id : person.id;
+
+        const primaryParent = updated[primaryId];
+        const secondaryParent = updated[secondaryId];
+
+        // Collect all unique children from both parents
+        const primaryChildren = Array.isArray(primaryParent.children) ? primaryParent.children : [];
+        const secondaryChildren = Array.isArray(secondaryParent.children) ? secondaryParent.children : [];
+
+        if (secondaryChildren.length > 0) {
+          // Merge children, maintaining order (primary first, then secondary)
+          const allChildren = [...new Set([...primaryChildren, ...secondaryChildren])];
+
+          // Update primary parent with all children
+          updated[primaryId] = {
+            ...primaryParent,
+            children: allChildren
+          };
+
+          // Clear secondary parent's children
+          updated[secondaryId] = {
+            ...secondaryParent,
+            children: []
+          };
+
+          consolidationCount++;
+          console.log(`✅ Consolidated ${secondaryChildren.length} children from person ${secondaryId} to primary parent ${primaryId}`);
+        }
+      }
+    });
+
+    if (consolidationCount > 0) {
+      console.log(`✅ Consolidated children for ${consolidationCount} couples`);
+    }
+
+    return updated;
+  }, []);
+
   // Clean orphaned cards - removes cards not reachable from root
   const cleanOrphanedCardsFunc = React.useCallback((data) => {
     if (!data || Object.keys(data).length === 0) return data;
@@ -122,6 +173,9 @@ export const FamilyTreeProvider = ({ children }) => {
               });
               console.log('✅ Converted to object with', Object.keys(cleanedData).length, 'cards:', cleanedData);
             }
+
+            // Consolidate children to primary parent first
+            cleanedData = consolidateChildrenToPrimary(cleanedData);
 
             // Clean orphaned cards that are not reachable from root
             cleanedData = cleanOrphanedCardsFunc(cleanedData);
@@ -444,9 +498,30 @@ export const FamilyTreeProvider = ({ children }) => {
         };
         updated[newId] = { ...newPerson, spouse: parentId, level: parent.level };
       } else if (parent) {
+        // For children: always add to the primary parent (person with lower ID in the couple)
+        // This ensures all children are stored in one consistent place
+        let primaryParent = parent;
+        let primaryParentId = parentId;
+
+        // If adding child from spouse, find the primary parent (lower ID)
+        if (parent.spouse && familyData[parent.spouse]) {
+          const spouseId = parent.spouse;
+          const spouse = familyData[spouseId];
+          // Use the parent with lower ID as primary
+          if (spouseId < parentId) {
+            primaryParent = spouse;
+            primaryParentId = spouseId;
+          }
+        }
+
         // Ensure children array exists before spreading
-        const currentChildren = Array.isArray(parent.children) ? parent.children : [];
-        updated[parentId] = { ...parent, children: [...currentChildren, newId] };
+        const currentChildren = Array.isArray(primaryParent.children) ? primaryParent.children : [];
+        updated[primaryParentId] = { ...primaryParent, children: [...currentChildren, newId] };
+
+        // Clear children from the other parent to avoid duplication
+        if (primaryParentId !== parentId && parent.spouse) {
+          updated[parentId] = { ...parent, children: [] };
+        }
       }
 
       return updated;
@@ -544,28 +619,32 @@ export const FamilyTreeProvider = ({ children }) => {
           };
           console.log('Updated parent children:', updated[person.parent].children);
         }
+
+        // Also check if parent has a spouse and remove from their children array
+        if (parent && parent.spouse && updated[parent.spouse]) {
+          const parentSpouse = updated[parent.spouse];
+          if (parentSpouse && Array.isArray(parentSpouse.children)) {
+            updated[parent.spouse] = {
+              ...parentSpouse,
+              children: parentSpouse.children.filter(id => id !== personId)
+            };
+          }
+        }
       }
 
-      // Collect all children from BOTH the person and their spouse before removing
+      // Get children from primary parent (person with lower ID in couple)
       const getAllChildrenIds = (id) => {
         const p = updated[id];
         if (!p) return [];
 
-        const personChildren = Array.isArray(p.children) ? p.children : [];
-        const spouseChildren = [];
+        const spouse = p.spouse ? updated[p.spouse] : null;
+        // Find primary parent (lower ID)
+        const primaryParent = spouse && spouse.id < p.id ? spouse : p;
 
-        // Also get children from spouse if exists
-        if (p.spouse && updated[p.spouse]) {
-          const spouse = updated[p.spouse];
-          const spouseChildrenArray = Array.isArray(spouse.children) ? spouse.children : [];
-          spouseChildren.push(...spouseChildrenArray);
-        }
-
-        // Merge and deduplicate
-        return [...new Set([...personChildren, ...spouseChildren])];
+        return Array.isArray(primaryParent.children) ? primaryParent.children : [];
       };
 
-      // Get all children that need to be removed (from both person and spouse)
+      // Get all children that need to be removed
       const childrenToRemove = getAllChildrenIds(personId);
       console.log(`Children to remove from person ${personId}:`, childrenToRemove);
 
@@ -573,7 +652,6 @@ export const FamilyTreeProvider = ({ children }) => {
       if (person.spouse) {
         const spouse = updated[person.spouse];
         if (spouse) {
-          // Clear spouse's children array too, since we're removing all children
           updated[person.spouse] = {
             ...spouse,
             spouse: null,
@@ -586,23 +664,16 @@ export const FamilyTreeProvider = ({ children }) => {
       const removeDescendants = (id) => {
         const p = updated[id];
         if (p) {
-          // Safely handle children array
-          const children = Array.isArray(p.children) ? p.children : [];
+          // Get children before deleting
+          const children = getAllChildrenIds(id);
           console.log(`Removing descendants of ${id}:`, children);
           children.forEach(childId => removeDescendants(childId));
           delete updated[id];
         }
       };
 
-      // Remove the person first
+      // Remove the person and all descendants
       removeDescendants(personId);
-
-      // Then remove all children that were identified earlier
-      childrenToRemove.forEach(childId => {
-        if (updated[childId]) {
-          removeDescendants(childId);
-        }
-      });
 
       // Allow empty tree - user can delete all cards
       const remainingCards = Object.keys(updated).length;
@@ -616,7 +687,7 @@ export const FamilyTreeProvider = ({ children }) => {
     });
   };
 
-  // Get children of a person (check both person and spouse)
+  // Get children of a person (from primary parent to maintain order)
   const getChildren = (personId) => {
     if (!familyData || !personId) return [];
 
@@ -625,14 +696,17 @@ export const FamilyTreeProvider = ({ children }) => {
 
     const spouse = person.spouse ? familyData[person.spouse] : null;
 
-    // Collect children from both person and spouse
-    const personChildren = (person.children && Array.isArray(person.children)) ? person.children : [];
-    const spouseChildren = (spouse?.children && Array.isArray(spouse.children)) ? spouse.children : [];
+    // Find the primary parent (one with lower ID) - this is where all children are stored
+    let primaryParent = person;
+    if (spouse) {
+      // Use parent with lower ID as primary
+      primaryParent = person.id < spouse.id ? person : spouse;
+    }
 
-    // Merge and deduplicate
-    const allChildIds = [...new Set([...personChildren, ...spouseChildren])];
+    // Get children only from primary parent to maintain insertion order
+    const childIds = (primaryParent.children && Array.isArray(primaryParent.children)) ? primaryParent.children : [];
 
-    return allChildIds.map(id => familyData[id]).filter(Boolean);
+    return childIds.map(id => familyData[id]).filter(Boolean);
   };
 
   // Get spouse
@@ -671,6 +745,9 @@ export const FamilyTreeProvider = ({ children }) => {
             }
           });
         }
+
+        // Consolidate children to primary parent
+        cleanedData = consolidateChildrenToPrimary(cleanedData);
 
         setFamilyData(cleanedData);
         setNextId(backendData.nextId || 2);
@@ -713,9 +790,11 @@ export const FamilyTreeProvider = ({ children }) => {
   // Import family data (from JSON file)
   const importData = (importedFamilyData) => {
     if (importedFamilyData && typeof importedFamilyData === 'object') {
-      setFamilyData(importedFamilyData);
+      // Consolidate children to primary parent first
+      const cleanedData = consolidateChildrenToPrimary(importedFamilyData);
+      setFamilyData(cleanedData);
       // Find the highest ID to set nextId
-      const ids = Object.keys(importedFamilyData).map(id => parseInt(id));
+      const ids = Object.keys(cleanedData).map(id => parseInt(id));
       const maxId = ids.length > 0 ? Math.max(...ids) : 1;
       setNextId(maxId + 1);
       // Will be saved to Backend automatically by the useEffect
@@ -756,7 +835,10 @@ export const FamilyTreeProvider = ({ children }) => {
     setShowPricingModal,
     cleanOrphanedCards: () => {
       console.log('🧹 Manual cleanup triggered');
-      const cleaned = cleanOrphanedCardsFunc(familyData);
+      // First consolidate children
+      let cleaned = consolidateChildrenToPrimary(familyData);
+      // Then clean orphaned cards
+      cleaned = cleanOrphanedCardsFunc(cleaned);
       if (cleaned !== familyData) {
         setFamilyData(cleaned);
         console.log('✅ Manual cleanup complete');
@@ -770,18 +852,21 @@ export const FamilyTreeProvider = ({ children }) => {
   React.useEffect(() => {
     window.cleanupFamilyTree = () => {
       console.log('🧹 Running manual cleanup...');
-      const cleaned = cleanOrphanedCardsFunc(familyData);
+      // First consolidate children
+      let cleaned = consolidateChildrenToPrimary(familyData);
+      // Then clean orphaned cards
+      cleaned = cleanOrphanedCardsFunc(cleaned);
       if (cleaned !== familyData) {
         setFamilyData(cleaned);
-        console.log('✅ Cleanup complete! Orphaned cards removed.');
+        console.log('✅ Cleanup complete! Children consolidated and orphaned cards removed.');
       } else {
-        console.log('✅ No orphaned cards found. Tree is clean.');
+        console.log('✅ No issues found. Tree is clean.');
       }
     };
     return () => {
       delete window.cleanupFamilyTree;
     };
-  }, [familyData, cleanOrphanedCardsFunc]);
+  }, [familyData, cleanOrphanedCardsFunc, consolidateChildrenToPrimary]);
 
   return (
     <FamilyTreeContext.Provider value={value}>

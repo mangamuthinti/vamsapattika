@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFamilyTree } from '../context/FamilyTreeContext';
 import CustomAlert from './CustomAlert';
+import PhotoEditorNew from './PhotoEditorNew';
 
 const PersonModal = () => {
   const { familyData, modalState, setModalState, addPerson, addRootPerson, updatePerson, selectedPerson, setSelectedPerson } = useFamilyTree();
@@ -17,6 +18,10 @@ const PersonModal = () => {
 
   const [photoPreview, setPhotoPreview] = useState(null);
   const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
+
+  // Image cropping states
+  const [showPhotoEditor, setShowPhotoEditor] = useState(false);
+  const [tempImageUrl, setTempImageUrl] = useState(null);
 
   useEffect(() => {
     if (modalState.isOpen && modalState.mode === 'edit' && selectedPerson) {
@@ -78,12 +83,17 @@ const PersonModal = () => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const photoData = event.target.result;
-        setFormData(prev => ({ ...prev, photo: photoData }));
-        setPhotoPreview(photoData);
+        setTempImageUrl(event.target.result);
+        setShowPhotoEditor(true);
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handlePhotoSave = (croppedImageUrl) => {
+    setFormData(prev => ({ ...prev, photo: croppedImageUrl }));
+    setPhotoPreview(croppedImageUrl);
+    setTempImageUrl(null);
   };
 
   const handleSubmit = (e) => {
@@ -256,6 +266,17 @@ const PersonModal = () => {
         </form>
         </div>
       </div>
+
+      {/* Photo Crop Editor */}
+      <PhotoEditorNew
+        isOpen={showPhotoEditor}
+        onClose={() => {
+          setShowPhotoEditor(false);
+          setTempImageUrl(null);
+        }}
+        imageUrl={tempImageUrl}
+        onSave={handlePhotoSave}
+      />
     </>
   );
 };
