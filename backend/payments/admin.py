@@ -25,10 +25,30 @@ class UserSubscriptionAdmin(admin.ModelAdmin):
 
 @admin.register(PaymentTransaction)
 class PaymentTransactionAdmin(admin.ModelAdmin):
-    list_display = ['transaction_id', 'user', 'plan', 'formatted_amount', 'payment_gateway', 'status', 'created_at']
+    list_display = ['transaction_id', 'user', 'plan', 'formatted_amount', 'payment_gateway', 'bank_rrn', 'status', 'created_at']
     list_filter = ['status', 'payment_gateway', 'created_at']
-    search_fields = ['transaction_id', 'user__email', 'razorpay_order_id', 'razorpay_payment_id']
-    readonly_fields = ['transaction_id', 'created_at', 'updated_at', 'completed_at']
+    search_fields = ['transaction_id', 'user__email', 'razorpay_order_id', 'razorpay_payment_id', 'bank_rrn']
+    readonly_fields = ['transaction_id', 'bank_rrn', 'created_at', 'updated_at', 'completed_at']
+
+    fieldsets = (
+        ('Transaction Info', {
+            'fields': ('transaction_id', 'user', 'plan', 'amount', 'status')
+        }),
+        ('Payment Gateway', {
+            'fields': ('payment_gateway', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature')
+        }),
+        ('Bank Details', {
+            'fields': ('bank_rrn',),
+            'description': 'Bank Retrieval Reference Number for reconciliation'
+        }),
+        ('Additional Info', {
+            'fields': ('failure_reason', 'ip_address', 'user_agent'),
+            'classes': ('collapse',)
+        }),
+        ('Timestamps', {
+            'fields': ('created_at', 'updated_at', 'completed_at')
+        }),
+    )
 
     def formatted_amount(self, obj):
         return f"₹{obj.amount}"
