@@ -111,6 +111,8 @@ def create_payment_order(request):
 def _activate_transaction(transaction, payment_id, payment_signature=''):
     """Mark a paid transaction successful and activate its subscription."""
     transaction.razorpay_payment_id = payment_id
+    # Update transaction_id to use payment_id (more specific than order_id)
+    transaction.transaction_id = payment_id
     if payment_signature:
         transaction.razorpay_signature = payment_signature
     transaction.status = 'SUCCESS'
