@@ -16,11 +16,13 @@
 /* =========================================================
    ABOUT SECTION
 ========================================================= */
-
 .about {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+
+  /* Fix About section hiding behind navbar */
+  scroll-margin-top: 100px;
 
   min-height: 560px;
 
@@ -29,22 +31,10 @@
       circle at 7% 45%,
       rgba(0, 155, 181, 0.075),
       transparent 28%
-    ),
-    radial-gradient(
-      circle at 93% 80%,
-      rgba(239, 35, 128, 0.045),
-      transparent 28%
-    ),
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #fcfbf8 55%,
-      #f8f7f3 100%
     );
 
   color: #172844;
 }
-
 
 /* =========================================================
    LEFT CIRCULAR BACKGROUND ORNAMENT
@@ -159,8 +149,7 @@
 
 .about-label {
   position: absolute;
-
-  top: -58px;
+  top: -20px;
   left: 170px;
 
   z-index: 5;
