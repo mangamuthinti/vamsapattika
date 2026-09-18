@@ -154,7 +154,7 @@ html {
 ========================================================= */
 .about-label {
   position: absolute;
-  top: 10px; /* Prevent ABOUT from hiding behind navbar */
+  top: -50px; /* ABOUT above V */
   left: 170px;
 
   z-index: 5;
