@@ -147,7 +147,7 @@
 ========================================================= */
 .about-label {
   position: absolute;
-  top: 10px; /* Prevent ABOUT from hiding behind navbar */
+  top: 10px; /* Keep ABOUT visible below the navbar */
   left: 170px;
 
   z-index: 5;
@@ -183,29 +183,9 @@
 
 /* =========================================================
    SMALL VERTICAL LINE ABOVE ABOUT
+   (Handled by the main .about-label rule above)
 ========================================================= */
 
-.about-label {
-  position: absolute;
-  top: -60px; /* Move ABOUT upward */
-  left: 170px;
-
-  z-index: 5;
-
-  color: #009bb5;
-
-  font-family:
-    "Cinzel",
-    Georgia,
-    serif;
-
-  font-size: 29px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  line-height: 1;
-  white-space: nowrap;
-  opacity: 0.95;
-}
 
 /* =========================================================
    OLD MAN
