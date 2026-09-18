@@ -13,8 +13,11 @@ html {
 ========================================================= */
 
 .section {
-  padding: 50px 0 112px;
-}/* =========================================================
+  padding: 130px 0 112px;
+}
+
+
+/* =========================================================
    ABOUT SECTION
 ========================================================= */
 
@@ -23,7 +26,7 @@ html {
   overflow: hidden;
   isolation: isolate;
 
-  /* Fix navbar overlap when clicking About */
+  /* Fix About section hiding behind navbar */
   scroll-margin-top: 90px;
 
   min-height: 560px;
