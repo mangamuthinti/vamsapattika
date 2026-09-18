@@ -9,9 +9,8 @@
 ========================================================= */
 
 .section {
-  padding: 112px 0;
+  padding: 50px 0 112px;
 }
-
 
 /* =========================================================
    ABOUT SECTION
@@ -194,27 +193,27 @@
    SMALL VERTICAL LINE ABOVE ABOUT
 ========================================================= */
 
-.about-label::before {
-  content: "";
-
+.about-label {
   position: absolute;
+  top: -60px; /* Move ABOUT upward */
+  left: 170px;
 
-  width: 1px;
-  height: 48px;
+  z-index: 5;
 
-  left: 50%;
-  bottom: calc(100% + 10px);
+  color: #009bb5;
 
-  transform: translateX(-50%);
+  font-family:
+    "Cinzel",
+    Georgia,
+    serif;
 
-  background:
-    linear-gradient(
-      180deg,
-      transparent,
-      rgba(0, 155, 181, 0.65)
-    );
+  font-size: 29px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0.95;
 }
-
 
 /* =========================================================
    OLD MAN
