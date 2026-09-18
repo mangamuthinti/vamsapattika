@@ -4,16 +4,16 @@
 ========================================================= */
 
 html {
-  scroll-padding-top: 90px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
 }
-
 
 /* =========================================================
    COMMON SECTION
 ========================================================= */
 
 .section {
-  padding: 130px 0 112px;
+  padding: 70px 0 112px;
 }
 
 
@@ -154,15 +154,7 @@ html {
 ========================================================= */
 .about-label {
   position: absolute;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  top: -58px;
-=======
   top: -50px; /* ABOUT above V */
->>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
-=======
-  top: -50px; /* ABOUT above V */
->>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
   left: 170px;
 
   z-index: 5;
