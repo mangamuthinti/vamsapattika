@@ -303,8 +303,8 @@ const Toolbar = () => {
             src="/images/logo.jpeg"
             alt="Family Tree Logo"
             style={{
-              height: '50px',
-              width: '100px',
+              height: '77px',
+              width: '150px',
               marginRight: '10px',
               objectFit: 'contain',
               borderRadius: '4px',

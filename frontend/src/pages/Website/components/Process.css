@@ -3,7 +3,15 @@
    ========================================= */
 
 .process {
-  padding: 80px 0;
+<<<<<<< HEAD
+  padding: 113px 0;
+=======
+  /* Gap below fixed navbar when clicking navigation */
+  scroll-margin-top: 90px;
+
+  padding: 110px 0 80px;
+
+>>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
   background-color: var(--cream, #fdfbf7);
 }
 

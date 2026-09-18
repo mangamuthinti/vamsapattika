@@ -6,20 +6,23 @@
 .features {
   position: relative;
   width: 100%;
-  padding: 90px 24px 100px;
+<<<<<<< HEAD
+  padding: 115px 24px 100px;
+=======
+
+  /* Space below fixed navbar */
+  scroll-margin-top: 90px;
+
+  /* Top gap, right/left, bottom */
+  padding: 110px 24px 100px;
+>>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
 
   background:
     radial-gradient(
       circle at 10% 0%,
       rgba(190, 154, 83, 0.10),
       transparent 30%
-    ),
-    radial-gradient(
-      circle at 100% 100%,
-      rgba(64, 91, 74, 0.07),
-      transparent 32%
-    ),
-    #f7f5ef;
+    );
 
   color: #1b2b3a;
 
