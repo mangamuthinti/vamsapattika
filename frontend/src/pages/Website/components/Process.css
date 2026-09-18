@@ -4,13 +4,19 @@
 
 .process {
 <<<<<<< HEAD
+<<<<<<< HEAD
   padding: 113px 0;
 =======
+=======
+>>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
   /* Gap below fixed navbar when clicking navigation */
   scroll-margin-top: 90px;
 
   padding: 110px 0 80px;
 
+<<<<<<< HEAD
+>>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
+=======
 >>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
   background-color: var(--cream, #fdfbf7);
 }
