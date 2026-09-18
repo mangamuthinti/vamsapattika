@@ -6,22 +6,15 @@
 .features {
   position: relative;
   width: 100%;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   padding: 115px 24px 100px;
-=======
-=======
->>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
+
 
   /* Space below fixed navbar */
   scroll-margin-top: 90px;
 
   /* Top gap, right/left, bottom */
   padding: 110px 24px 100px;
-<<<<<<< HEAD
->>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
-=======
->>>>>>> e14a3907bf69902f6e84f42126a411282f211b71
 
   background:
     radial-gradient(
