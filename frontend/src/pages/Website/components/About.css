@@ -10,18 +10,17 @@
 
 .section {
   padding: 50px 0 112px;
-}
-
-/* =========================================================
+}/* =========================================================
    ABOUT SECTION
 ========================================================= */
+
 .about {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 
-  /* Fix About section hiding behind navbar */
-  scroll-margin-top: 100px;
+  /* Fix navbar overlap when clicking About */
+  scroll-margin-top: 90px;
 
   min-height: 560px;
 
@@ -35,6 +34,7 @@
   color: #172844;
 }
 
+ 
 /* =========================================================
    LEFT CIRCULAR BACKGROUND ORNAMENT
 ========================================================= */
@@ -145,10 +145,9 @@
 /* =========================================================
    ABOUT LABEL — ABOVE THE FAMILY / OLD MAN
 ========================================================= */
-
 .about-label {
   position: absolute;
-  top: -20px;
+  top: 10px; /* Prevent ABOUT from hiding behind navbar */
   left: 170px;
 
   z-index: 5;
@@ -161,19 +160,12 @@
     serif;
 
   font-size: 29px;
-
   font-weight: 700;
-
   letter-spacing: 2px;
-
   line-height: 1;
-
   white-space: nowrap;
-
   opacity: 0.95;
 }
-
-
 /* =========================================================
    RED UNDERLINE
 ========================================================= */
