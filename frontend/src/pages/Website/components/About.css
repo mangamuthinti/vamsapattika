@@ -5,10 +5,20 @@
 
 
 /* =========================================================
+   GLOBAL ANCHOR SCROLL FIX
+========================================================= */
+
+html {
+  scroll-padding-top: 90px;
+  scroll-behavior: smooth;
+}
+
+/* =========================================================
    COMMON SECTION
 ========================================================= */
 
 .section {
+  scroll-margin-top: 90px;
   padding: 50px 0 112px;
 }/* =========================================================
    ABOUT SECTION
@@ -19,8 +29,9 @@
   overflow: hidden;
   isolation: isolate;
 
-  /* Fix navbar overlap when clicking About */
+  /* Keep About fully visible below the fixed navbar */
   scroll-margin-top: 90px;
+  padding-top: 90px;
 
   min-height: 560px;
 
@@ -685,6 +696,8 @@
 
   .about {
     overflow: hidden;
+    padding-top: 70px;
+    scroll-margin-top: 90px;
   }
 
   .about-grid {
