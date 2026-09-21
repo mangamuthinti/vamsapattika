@@ -182,12 +182,24 @@ def payment_status(request, order_id):
         logger.info(f"💰 Captured payment found: {captured_payment['id']} for order {order_id}")
 
         # Fetch full payment details to get RRN
+        bank_rrn = None
         try:
             payment_details = client.payment.fetch(captured_payment['id'])
-            bank_rrn = payment_details.get('acquirer_data', {}).get('rrn')
-            logger.info(f"💳 Bank RRN: {bank_rrn}")
+            logger.info(f"📋 Full payment details: {payment_details}")
+
+            # Try to extract RRN from acquirer_data
+            acquirer_data = payment_details.get('acquirer_data', {})
+            logger.info(f"🏦 Acquirer data: {acquirer_data}")
+
+            if acquirer_data:
+                bank_rrn = acquirer_data.get('rrn') or acquirer_data.get('bank_transaction_id')
+
+            if bank_rrn:
+                logger.info(f"💳 Bank RRN extracted: {bank_rrn}")
+            else:
+                logger.warning(f"⚠️ No RRN found in payment details")
         except Exception as e:
-            logger.warning(f"⚠️ Could not fetch payment details for RRN: {str(e)}")
+            logger.error(f"❌ Error fetching payment details for RRN: {str(e)}", exc_info=True)
             bank_rrn = None
 
         _activate_transaction(transaction, captured_payment['id'], bank_rrn=bank_rrn)
@@ -301,10 +313,18 @@ def razorpay_webhook(request):
 
     logger.info(f"🚀 Activating subscription for order: {order_id}")
 
-    # Extract RRN from webhook payload if available
-    bank_rrn = payment.get('acquirer_data', {}).get('rrn')
+    # Extract RRN from webhook payload
+    acquirer_data = payment.get('acquirer_data', {})
+    logger.info(f"🏦 Webhook acquirer data: {acquirer_data}")
+
+    bank_rrn = None
+    if acquirer_data:
+        bank_rrn = acquirer_data.get('rrn') or acquirer_data.get('bank_transaction_id')
+
     if bank_rrn:
         logger.info(f"💳 Bank RRN from webhook: {bank_rrn}")
+    else:
+        logger.warning(f"⚠️ No RRN found in webhook payload")
 
     _activate_transaction(transaction, payment_id, bank_rrn=bank_rrn)
     logger.info(f"🎉 Webhook processed successfully - Subscription activated for user: {transaction.user.email}")
@@ -366,13 +386,25 @@ def verify_payment(request):
     logger.info(f"✅ Signature verified for order: {razorpay_order_id}")
 
     # Fetch payment details to get RRN
+    bank_rrn = None
     try:
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
         payment_details = client.payment.fetch(razorpay_payment_id)
-        bank_rrn = payment_details.get('acquirer_data', {}).get('rrn')
-        logger.info(f"💳 Bank RRN: {bank_rrn}")
+        logger.info(f"📋 Full payment details: {payment_details}")
+
+        # Try to extract RRN from acquirer_data
+        acquirer_data = payment_details.get('acquirer_data', {})
+        logger.info(f"🏦 Acquirer data: {acquirer_data}")
+
+        if acquirer_data:
+            bank_rrn = acquirer_data.get('rrn') or acquirer_data.get('bank_transaction_id')
+
+        if bank_rrn:
+            logger.info(f"💳 Bank RRN extracted: {bank_rrn}")
+        else:
+            logger.warning(f"⚠️ No RRN found in payment details")
     except Exception as e:
-        logger.warning(f"⚠️ Could not fetch payment details for RRN: {str(e)}")
+        logger.error(f"❌ Error fetching payment details for RRN: {str(e)}", exc_info=True)
         bank_rrn = None
 
     subscription = _activate_transaction(transaction, razorpay_payment_id, razorpay_signature, bank_rrn)

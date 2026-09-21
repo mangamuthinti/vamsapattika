@@ -366,20 +366,29 @@ export const printTree = async () => {
       height: treeContainer.style.height,
       width: treeContainer.style.width,
       maxHeight: treeContainer.style.maxHeight,
+      left: treeContainer.style.left,
+      right: treeContainer.style.right,
+      top: treeContainer.style.top,
+      bottom: treeContainer.style.bottom,
     };
 
     // Temporarily make the entire tree visible for printing
-    treeContainer.style.position = 'relative';
+    treeContainer.style.position = 'static';
     treeContainer.style.overflow = 'visible';
     treeContainer.style.height = 'auto';
     treeContainer.style.width = 'auto';
     treeContainer.style.maxHeight = 'none';
+    treeContainer.style.left = 'auto';
+    treeContainer.style.right = 'auto';
+    treeContainer.style.top = 'auto';
+    treeContainer.style.bottom = 'auto';
 
     familyTree.style.width = 'max-content';
     familyTree.style.height = 'max-content';
+    familyTree.style.overflow = 'visible';
 
-    // Wait for layout to complete
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // Wait longer for layout to complete and styles to be applied
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     // Trigger print
     window.print();
@@ -394,6 +403,7 @@ export const printTree = async () => {
 
     familyTree.style.width = '';
     familyTree.style.height = '';
+    familyTree.style.overflow = '';
 
     // Show buttons again
     menuBtns.forEach(btn => btn.style.display = '');
@@ -411,12 +421,17 @@ export const printTree = async () => {
       treeContainer.style.height = '';
       treeContainer.style.width = '';
       treeContainer.style.maxHeight = '';
+      treeContainer.style.left = '';
+      treeContainer.style.right = '';
+      treeContainer.style.top = '';
+      treeContainer.style.bottom = '';
     }
 
     const familyTree = document.getElementById('familyTree');
     if (familyTree) {
       familyTree.style.width = '';
       familyTree.style.height = '';
+      familyTree.style.overflow = '';
     }
 
     // Show buttons again

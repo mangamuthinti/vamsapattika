@@ -8,6 +8,7 @@ backend/*/*/__pycache__/
 # Environment / secrets
 .env
 backend/.env
+backend/staticfiles
 
 # Node
 node_modules/

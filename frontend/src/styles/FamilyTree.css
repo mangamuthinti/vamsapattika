@@ -1788,10 +1788,31 @@ body {
         display: none !important;
     }
 
-    .tree-container {
+   .tree-container {
+        position: static !important;
         box-shadow: none;
         padding: 20px;
         page-break-after: avoid;
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        width: auto !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+    }
+
+    .tree {
+        width: max-content !important;
+        height: max-content !important;
+        overflow: visible !important;
+    }
+
+    #familyTree {
+        width: max-content !important;
+        height: max-content !important;
+        overflow: visible !important;
     }
 
     body {
