@@ -59,7 +59,12 @@ const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgra
         </div>
 
         <div className="pricing-tiers">
-          {plansLoading && <p>Loading plans...</p>}
+         {plansLoading && (
+            <div className="pricing-loader">
+              <div className="loader-spinner"></div>
+              <p>Loading pricing plans...</p>
+            </div>
+          )}
           {!plansLoading && pricingTiers.map((tier, index) => {
             const isCurrentTier = (tier.max === Infinity && currentMaxCards === Infinity) ||
                                  (tier.max === currentTier.maxCards && tier.name === currentTier.name);

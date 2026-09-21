@@ -1805,7 +1805,8 @@ body {
     }
 
     /* Prevent empty pages */
-    html, body {
+    html,
+    body {
         height: auto;
         overflow: visible;
     }
@@ -2384,18 +2385,32 @@ body {
     .tree-container {
         margin: 0;
         padding: 20px;
-        position: relative;
+        position: relative !important;
         z-index: 1;
         page-break-after: auto;
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        width: auto !important;
     }
 
     .tree {
         page-break-inside: avoid;
         page-break-after: avoid;
+        width: max-content !important;
+        height: max-content !important;
+        overflow: visible !important;
+    }
+
+    #familyTree {
+        width: max-content !important;
+        height: max-content !important;
+        overflow: visible !important;
     }
 
     /* Prevent empty pages */
-    html, body {
+    html,
+    body {
         height: auto;
         overflow: visible;
     }
@@ -2471,15 +2486,15 @@ body {
     border-radius: 50%;
 }
 
-.toggle-switch input:checked + .toggle-slider {
+.toggle-switch input:checked+.toggle-slider {
     background-color: #009444;
 }
 
-.toggle-switch input:checked + .toggle-slider:before {
+.toggle-switch input:checked+.toggle-slider:before {
     transform: translateX(22px);
 }
 
-.toggle-switch input:focus + .toggle-slider {
+.toggle-switch input:focus+.toggle-slider {
     box-shadow: 0 0 1px #1976D2;
 }
 
@@ -2564,6 +2579,7 @@ body {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2838,6 +2854,7 @@ body {
     border-color: #ffcdd2;
     color: #c62828;
 }
+
 /* Footer Disclaimer */
 .footer-disclaimer {
     position: fixed;
@@ -2940,6 +2957,7 @@ body {
         opacity: 0;
         transform: translateY(-10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -3218,8 +3236,13 @@ body {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .tree-loader p {
@@ -3243,10 +3266,12 @@ body {
     box-sizing: border-box;
     transition: background .2s ease, border-color .2s ease;
 }
+
 .vamsapattika-language:hover {
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.50);
 }
+
 .vamsapattika-language-icon {
     display: flex;
     align-items: center;
@@ -3254,12 +3279,13 @@ body {
     width: 22px;
     height: 22px;
     margin-right: 7px;
-    border: 1px solid rgba(255,255,255,.65);
+    border: 1px solid rgba(255, 255, 255, .65);
     border-radius: 50%;
     color: #fff;
     font-size: 11px;
     font-weight: 700;
 }
+
 .vamsapattika-language-select {
     width: 100%;
     min-width: 0;
@@ -3276,10 +3302,12 @@ body {
     font-weight: 500;
     cursor: pointer;
 }
+
 .vamsapattika-language-select option {
     background: #fff;
     color: #222;
 }
+
 .vamsapattika-language-arrow {
     position: absolute;
     right: 9px;

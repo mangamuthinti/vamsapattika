@@ -335,6 +335,94 @@ export const exportAsPDF = async () => {
   }
 };
 
-export const printTree = () => {
-  window.print();
+export const printTree = async () => {
+  const treeContainer = document.getElementById('treeContainer');
+  const familyTree = document.getElementById('familyTree');
+
+  if (!treeContainer || !familyTree) {
+    showGlobalAlert('Tree container not found');
+    return;
+  }
+
+  if (familyTree.children.length === 0) {
+    showGlobalAlert('Tree is empty - nothing to print');
+    return;
+  }
+
+  try {
+    // Hide menu buttons and scale badge before print
+    const menuBtns = document.querySelectorAll('.card-menu-btn');
+    menuBtns.forEach(btn => btn.style.display = 'none');
+
+    // Hide the scale badge if present
+    const scaleBadge = document.querySelector('[style*="scale"]');
+    const originalBadgeDisplay = scaleBadge ? scaleBadge.style.display : null;
+    if (scaleBadge) scaleBadge.style.display = 'none';
+
+    // Store original container styles
+    const originalContainerStyles = {
+      position: treeContainer.style.position,
+      overflow: treeContainer.style.overflow,
+      height: treeContainer.style.height,
+      width: treeContainer.style.width,
+      maxHeight: treeContainer.style.maxHeight,
+    };
+
+    // Temporarily make the entire tree visible for printing
+    treeContainer.style.position = 'relative';
+    treeContainer.style.overflow = 'visible';
+    treeContainer.style.height = 'auto';
+    treeContainer.style.width = 'auto';
+    treeContainer.style.maxHeight = 'none';
+
+    familyTree.style.width = 'max-content';
+    familyTree.style.height = 'max-content';
+
+    // Wait for layout to complete
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // Trigger print
+    window.print();
+
+    // Wait for print dialog to close before restoring
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Restore original styles
+    Object.keys(originalContainerStyles).forEach(key => {
+      treeContainer.style[key] = originalContainerStyles[key];
+    });
+
+    familyTree.style.width = '';
+    familyTree.style.height = '';
+
+    // Show buttons again
+    menuBtns.forEach(btn => btn.style.display = '');
+    if (scaleBadge && originalBadgeDisplay !== null) {
+      scaleBadge.style.display = originalBadgeDisplay;
+    }
+  } catch (error) {
+    console.error('Print error:', error);
+
+    // Ensure styles are restored even on error
+    const treeContainer = document.getElementById('treeContainer');
+    if (treeContainer) {
+      treeContainer.style.position = '';
+      treeContainer.style.overflow = '';
+      treeContainer.style.height = '';
+      treeContainer.style.width = '';
+      treeContainer.style.maxHeight = '';
+    }
+
+    const familyTree = document.getElementById('familyTree');
+    if (familyTree) {
+      familyTree.style.width = '';
+      familyTree.style.height = '';
+    }
+
+    // Show buttons again
+    const menuBtns = document.querySelectorAll('.card-menu-btn');
+    menuBtns.forEach(btn => btn.style.display = '');
+
+    showGlobalAlert('Error printing. Please try again.');
+  }
 };

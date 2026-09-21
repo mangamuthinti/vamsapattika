@@ -35,14 +35,7 @@ const CustomAlert = ({ isOpen, message, onClose }) => {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div
-          style={{
-            fontSize: '28px',
-            marginBottom: '8px'
-          }}
-        >
-          ℹ️
-        </div>
+       
         <div
           style={{
             fontSize: '13px',
