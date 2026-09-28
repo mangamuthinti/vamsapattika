@@ -1778,72 +1778,6 @@ body {
     animation: fadeOut 0.3s ease-out;
 }
 
-/* Print and Export Styles */
-@media print {
-
-    .export-controls,
-    .instructions,
-    .actions,
-    .footer-disclaimer {
-        display: none !important;
-    }
-
-   .tree-container {
-        position: static !important;
-        box-shadow: none;
-        padding: 20px;
-        page-break-after: avoid;
-        overflow: visible !important;
-        height: auto !important;
-        max-height: none !important;
-        width: auto !important;
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
-        bottom: auto !important;
-    }
-
-    .tree {
-        width: max-content !important;
-        height: max-content !important;
-        overflow: visible !important;
-    }
-
-    #familyTree {
-        width: max-content !important;
-        height: max-content !important;
-        overflow: visible !important;
-    }
-
-    body {
-        background: white;
-        margin: 0;
-        height: auto;
-    }
-
-    .person:hover .actions {
-        display: none !important;
-    }
-
-    /* Prevent empty pages */
-    html,
-    body {
-        height: auto;
-        overflow: visible;
-    }
-
-    @page {
-        margin: 0.5cm;
-        size: auto;
-    }
-
-    /* Force all colors to print */
-    * {
-        print-color-adjust: exact !important;
-        -webkit-print-color-adjust: exact !important;
-        color-adjust: exact !important;
-    }
-}
 
 /* Loading indicator for export */
 .exporting {
@@ -2367,10 +2301,11 @@ body {
 /* Print Styles */
 @media print {
     body {
-        background: #f5f5f5;
-        margin: 0;
-        padding: 0;
-        height: auto;
+        background: #f5f5f5 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
     }
 
     body::before {
@@ -2386,7 +2321,7 @@ body {
         background-position: center center;
         opacity: 0.08;
         pointer-events: none;
-        z-index: 0;
+        z-index: -1 !important;
         print-color-adjust: exact !important;
         -webkit-print-color-adjust: exact !important;
     }
@@ -2399,34 +2334,74 @@ body {
     .btn-export-toolbar,
     .btn-share-toolbar,
     .export-dropdown,
-    .footer-disclaimer {
+    .footer-disclaimer,
+    .export-controls,
+    .instructions,
+    .actions {
         display: none !important;
     }
 
     .tree-container {
-        margin: 0;
-        padding: 20px;
         position: relative !important;
-        z-index: 1;
+        margin: 0 !important;
+        padding: 20px !important;
+        z-index: 1 !important;
         page-break-after: auto;
         overflow: visible !important;
         height: auto !important;
         max-height: none !important;
-        width: auto !important;
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        top: 0 !important;
+        bottom: auto !important;
+        display: block !important;
+        visibility: visible !important;
     }
 
     .tree {
         page-break-inside: avoid;
         page-break-after: avoid;
-        width: max-content !important;
-        height: max-content !important;
+        width: 100% !important;
+        max-width: none !important;
+        height: auto !important;
         overflow: visible !important;
+        display: flex !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 2 !important;
+        justify-content: center !important;
     }
 
     #familyTree {
         width: max-content !important;
-        height: max-content !important;
+        height: auto !important;
         overflow: visible !important;
+        display: block !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 2 !important;
+    }
+
+    /* Ensure tree structure is visible */
+    .tree ul,
+    .tree li {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    /* Ensure person cards are visible */
+    .person,
+    .person-card {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .family-box {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     /* Prevent empty pages */

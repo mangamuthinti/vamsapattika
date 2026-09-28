@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { AlertProvider } from './context/AlertContext';
 import Auth from './components/Auth';
 import WebsitePage from './pages/Website/WebsitePage';
+import DemoPage from './pages/Demo/DemoPage';
 import FamilyTreePage from './pages/FamilyTree/FamilyTreePage';
 import PasswordResetPage from './pages/PasswordReset/PasswordResetPage';
 import { LanguageProvider } from './context/LanguageContext';
@@ -36,6 +37,7 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<WebsitePage />} />
+          <Route path="/demo" element={<DemoPage />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/reset-password/:uid/:token" element={<PasswordResetPage />} />
           <Route

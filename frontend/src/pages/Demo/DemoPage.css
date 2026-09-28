@@ -1,0 +1,226 @@
+/* =========================================
+   DEMO PAGE WRAPPER
+   ========================================= */
+
+.demo-page {
+  min-height: 100vh;
+  background-color: var(--cream, #fdfbf7);
+}
+
+/* =========================================
+   DEMO MAIN CONTENT
+   ========================================= */
+
+.demo-main {
+  padding: 60px 30px 100px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.demo-page-heading {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--teal, #0097a7);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.demo-page-heading h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--navy, #1a2b4c);
+  margin: 0 0 20px 0;
+  line-height: 1.1;
+}
+
+.demo-page-heading h1 em {
+  font-style: italic;
+  color: #6b2b9f;
+}
+
+.demo-description {
+  font-size: 18px;
+  color: #2c3e50;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* =========================================
+   VIDEOS GRID
+   ========================================= */
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   VIDEO CARD
+   ========================================= */
+
+.video-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================================
+   VIDEO THUMBNAIL
+   ========================================= */
+
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  background-color: #e0e0e0;
+  overflow: hidden;
+}
+
+.video-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
+/* =========================================
+   PLAY OVERLAY
+   ========================================= */
+
+.play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.video-card:hover .play-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.play-button {
+  transition: transform 0.3s ease;
+}
+
+.video-card:hover .play-button {
+  transform: scale(1.15);
+}
+
+/* =========================================
+   VIDEO INFO
+   ========================================= */
+
+.video-info {
+  padding: 25px;
+  text-align: center;
+}
+
+.video-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--navy, #1a2b4c);
+}
+
+.video-language {
+  margin: 0;
+  font-size: 18px;
+  color: #6b2b9f;
+  font-weight: 600;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1050px) {
+  .videos-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .demo-main {
+    padding: 60px 25px 80px;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 800px) {
+  .demo-main {
+    padding: 50px 20px 70px;
+  }
+
+  .demo-page-heading {
+    margin-bottom: 40px;
+  }
+
+  .demo-page-heading h1 {
+    font-size: 32px;
+  }
+
+  .demo-description {
+    font-size: 16px;
+  }
+
+  .videos-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .video-info h3 {
+    font-size: 20px;
+  }
+
+  .video-language {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-main {
+    padding: 40px 16px 60px;
+  }
+
+  .demo-page-heading h1 {
+    font-size: 28px;
+  }
+
+  .demo-description {
+    font-size: 15px;
+  }
+
+  .videos-grid {
+    gap: 20px;
+  }
+}

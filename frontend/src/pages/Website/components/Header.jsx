@@ -14,6 +14,7 @@ export default function Header({ scrollTo, menuOpen, setMenuOpen, navigate }) {
           <button onClick={() => scrollTo("about")}>About</button>
           <button onClick={() => scrollTo("features")}>Features</button>
           <button onClick={() => scrollTo("how-it-works")}>How It Works</button>
+          <button onClick={() => navigate("/demo")}>Demo</button>
           <button onClick={() => scrollTo("faq")}>FAQ</button>
           <button className="nav-cta" onClick={() => navigate("/family-tree")}>LOGIN / REGISTER</button>
         </nav>

@@ -1,0 +1,203 @@
+/* =========================================
+   VIDEO MODAL OVERLAY
+   ========================================= */
+
+.video-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   VIDEO MODAL CONTENT
+   ========================================= */
+
+.video-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   CLOSE BUTTON
+   ========================================= */
+
+.video-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.video-modal-close:hover {
+  background-color: #fff;
+  transform: scale(1.1);
+}
+
+.video-modal-close svg {
+  color: #333;
+}
+
+/* =========================================
+   VIDEO MODAL HEADER
+   ========================================= */
+
+.video-modal-header {
+  padding: 20px 20px 15px;
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #444;
+}
+
+.video-modal-header h3 {
+  margin: 0 0 5px 0;
+  font-size: 24px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.video-modal-header p {
+  margin: 0;
+  font-size: 16px;
+  color: #a8a8a8;
+}
+
+/* =========================================
+   VIDEO PLAYER
+   ========================================= */
+
+.video-modal-player {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+}
+
+.video-modal-player video {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: calc(100vh - 200px);
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1024px) {
+  .video-modal-content {
+    max-width: 90%;
+  }
+
+  .video-modal-header h3 {
+    font-size: 22px;
+  }
+
+  .video-modal-player video {
+    max-height: calc(100vh - 180px);
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+  .video-modal-overlay {
+    padding: 10px;
+  }
+
+  .video-modal-content {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .video-modal-header {
+    padding: 15px;
+  }
+
+  .video-modal-header h3 {
+    font-size: 18px;
+    padding-right: 30px;
+  }
+
+  .video-modal-header p {
+    font-size: 14px;
+  }
+
+  .video-modal-close {
+    width: 35px;
+    height: 35px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .video-modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .video-modal-player video {
+    max-height: calc(100vh - 150px);
+  }
+}
+
+@media (max-width: 430px) {
+  .video-modal-header {
+    padding: 12px;
+  }
+
+  .video-modal-header h3 {
+    font-size: 16px;
+  }
+
+  .video-modal-header p {
+    font-size: 13px;
+  }
+
+  .video-modal-close {
+    width: 32px;
+    height: 32px;
+  }
+}
