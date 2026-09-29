@@ -37,14 +37,6 @@ const CustomConfirm = ({ isOpen, message, onConfirm, onCancel }) => {
       >
         <div
           style={{
-            fontSize: '28px',
-            marginBottom: '8px'
-          }}
-        >
-          ⚠️
-        </div>
-        <div
-          style={{
             fontSize: '13px',
             color: '#444',
             marginBottom: '16px',

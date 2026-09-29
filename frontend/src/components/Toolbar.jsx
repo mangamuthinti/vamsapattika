@@ -459,10 +459,10 @@ const Toolbar = () => {
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>📄</span>
                 Download as PDF
               </button>
-              <button onClick={handlePrint}>
+              {/* <button onClick={handlePrint}>
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>🖨️</span>
                 Print / Save as PDF
-              </button>
+              </button> */}
             </div>
           )}
 

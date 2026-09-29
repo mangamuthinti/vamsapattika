@@ -137,11 +137,9 @@
   justify-content: center;
   border-radius: 999px;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #183866 0%,
-      #294d7e 100%
-    );
+      #294d7e 100%);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
@@ -157,12 +155,36 @@
 
 .nav-links .nav-cta:hover {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #56327e 0%,
-      #7547a0 100%
-    );
+      #7547a0 100%);
   color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 9px 22px rgba(86, 50, 126, 0.25);
+}
+
+
+.nav-links .demo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #17366f;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.demo-btn:hover {
+   background:
+    linear-gradient(135deg,
+      #56327e 0%,
+      #7547a0 100%) !important;
+  color: #ffffff !important;
   transform: translateY(-2px);
   box-shadow:
     0 9px 22px rgba(86, 50, 126, 0.25);
@@ -351,6 +373,7 @@
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .brand img,
   .nav-links button,
   .nav-links .nav-cta,

@@ -152,7 +152,7 @@ const PricingModal = ({ isOpen, onClose, currentCardCount, requiredTier, onUpgra
 
         <div className="pricing-modal-footer">
           <div className="pricing-warning">
-            <span className="warning-icon">⚠️</span>
+            <span className="warning-icon"></span>
             <span className="warning-text">
               <strong>Important:</strong> All paid packages are valid for 1 year from the date of purchase.
               After 1 year, you will need to renew your subscription to continue accessing premium features.

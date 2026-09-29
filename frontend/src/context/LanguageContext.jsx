@@ -18,7 +18,7 @@ const dictionaries = {
     'Download as PDF': 'PDF के रूप में डाउनलोड करें', 'Print / Save as PDF': 'प्रिंट / PDF के रूप में सहेजें',
     'WhatsApp': 'व्हाट्सऐप', 'Facebook': 'फेसबुक', 'Instagram': 'इंस्टाग्राम',
     'Twitter': 'ट्विटर', 'Copy Link': 'लिंक कॉपी करें', 'Trees': 'ट्री', 'Pricing': 'कीमत',
-    'Profile': 'प्रोफ़ाइल', 'Settings': 'सेटिंग्स', 'Logout': 'लॉगआउट',
+    'Profile': 'प्रोफ़ाइल', 'Settings': 'सेटिंग्स', '': 'लॉगआउट',
     'Create New Tree': 'नया ट्री बनाएं', 'Create': 'बनाएं', 'Enter tree name': 'ट्री का नाम दर्ज करें',
     'No trees found. Create your first tree below!': 'कोई ट्री नहीं मिला। नीचे अपना पहला ट्री बनाएं!',
     'Updated:': 'अपडेट किया गया:', 'Rename': 'नाम बदलें', 'Delete': 'हटाएं',
