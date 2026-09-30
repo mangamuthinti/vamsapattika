@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { translateDynamicText, transliterateName } from '../utils/dynamicTranslate';
 
 const LanguageContext = createContext(null);
@@ -8,7 +9,18 @@ const dictionaries = {
   hi: {
     'Vamsapattika': 'वंशपट्टिका',
     'Preserve your family history': 'अपने परिवार के इतिहास को सुरक्षित रखें',
+    'Send Feedback': 'प्रतिक्रिया भेजें',
+    "We'd love to hear from you! Share your thoughts, suggestions, or report issues. You can also reach us directly at": 'हम आपसे सुनना चाहेंगे! अपने विचार, सुझाव या समस्याएँ साझा करें। आप हमें सीधे इस पते पर भी संपर्क कर सकते हैं:',
+    'Rate your experience *': 'अपने अनुभव को दर दें *', 'Poor': 'खराब', 'Fair': 'औसत', 'Good': 'अच्छा',
+    'Very Good': 'बहुत अच्छा', 'Excellent': 'उत्कृष्ट', 'Your Feedback *': 'आपकी प्रतिक्रिया *',
+    'Tell us what you think...': 'आप क्या सोचते हैं, हमें बताएं...', 'Cancel': 'रद्द करें',
+    'Submit Feedback': 'प्रतिक्रिया सबमिट करें', 'Sending...': 'भेजा जा रहा है...',
+    'Please select a rating': 'कृपया रेटिंग चुनें', 'Please write your feedback': 'कृपया अपनी प्रतिक्रिया लिखें',
+    "Thank you for your feedback! We've received your message.": 'आपकी प्रतिक्रिया के लिए धन्यवाद! हमारे पास आपका संदेश पहुंच गया है।',
+    'Failed to send feedback. Please try again later or email us directly at support@vamsapattika.com': 'प्रतिक्रिया भेजने में विफलता हुई। कृपया बाद में पुनः प्रयास करें या सीधे support@vamsapattika.com पर ईमेल करें',
     'Login': 'लॉगिन', 'Sign Up': 'साइन अप', 'Full Name': 'पूरा नाम',
+    'Are you sure you want to logout?': 'क्या आप वाकई लॉग आउट करना चाहते हैं?', 'Confirm': 'पुष्टि करें',
+    'Link copied to clipboard!': 'लिंक क्लिपबोर्ड पर कॉपी किया गया!', 'OK': 'ठीक है',
     'Email': 'ईमेल', 'Password': 'पासवर्ड', 'Enter your name': 'अपना नाम दर्ज करें',
     'Enter your email': 'अपना ईमेल दर्ज करें', 'Enter your password': 'अपना पासवर्ड दर्ज करें',
     'Please wait...': 'कृपया प्रतीक्षा करें...', 'Continue with Google': 'Google के साथ जारी रखें',
@@ -72,7 +84,18 @@ const dictionaries = {
   te: {
     'Vamsapattika': 'వంశపట్టిక',
     'Preserve your family history': 'మీ కుటుంబ చరిత్రను భద్రపరచండి',
+    'Send Feedback': 'ఫీడ్బ్యాక్ పంపండి',
+    "We'd love to hear from you! Share your thoughts, suggestions, or report issues. You can also reach us directly at": 'మీరు మీ అభిప్రాయాలను, సూచనలను లేదా సమస్యలను పంచుకోవడం ద్వారా మాకు సహాయం చేయగలరు. మీరు మాకు నేరుగా ఈ చిరునామా ద్వారా కూడా సంప్రదించవచ్చు:',
+    'Rate your experience *': 'మీ అనుభవాన్ని రేట్ చేయండి *', 'Poor': 'చెడు', 'Fair': 'సమంజసం', 'Good': 'మంచిది',
+    'Very Good': 'చాలా మంచి', 'Excellent': 'అద్భుతం', 'Your Feedback *': 'మీ అభిప్రాయం *',
+    'Tell us what you think...': 'మీ అభిప్రాయాన్ని మాకు చెప్పండి...', 'Cancel': 'రద్దు చేయండి',
+    'Submit Feedback': 'ఫీడ్బ్యాక్ పంపండి', 'Sending...': 'పంపుతోంది...',
+    'Please select a rating': 'దయచేసి రేటింగ్ ఎంచుకోండి', 'Please write your feedback': 'దయచేసి మీ అభిప్రాయాన్ని రాయండి',
+    "Thank you for your feedback! We've received your message.": 'మీ అభిప్రాయానికి ధన్యవాదాలు! మీ సందేశాన్ని మేము అందుకున్నాము.',
+    'Failed to send feedback. Please try again later or email us directly at support@vamsapattika.com': 'ఫీడ్బ్యాక్ పంపడంలో విఫలమైంది. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి లేదా support@vamsapattika.comకు ఇమెయిల్ పంపండి',
     'Login': 'లాగిన్', 'Sign Up': 'సైన్ అప్', 'Full Name': 'పూర్తి పేరు',
+    'Are you sure you want to logout?': 'మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?', 'Confirm': 'నిర్ధారించండి',
+    'Link copied to clipboard!': 'లింక్ క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!', 'OK': 'సరే',
     'Email': 'ఈమెయిల్', 'Password': 'పాస్‌వర్డ్', 'Enter your name': 'మీ పేరు నమోదు చేయండి',
     'Enter your email': 'మీ ఈమెయిల్ నమోదు చేయండి', 'Enter your password': 'మీ పాస్‌వర్డ్ నమోదు చేయండి',
     'Please wait...': 'దయచేసి వేచి ఉండండి...', 'Continue with Google': 'Googleతో కొనసాగించండి',
@@ -200,6 +223,7 @@ const translateWithGoogle = async (text, language) => {
 };
 
 export const LanguageProvider = ({ children }) => {
+  const { pathname } = useLocation();
   const [language, setLanguageState] = useState(
     () => localStorage.getItem('vamsapattika-language') || 'en'
   );
@@ -248,7 +272,10 @@ export const LanguageProvider = ({ children }) => {
           originals.current.set(textNode, original);
         }
         const core = normalize(original);
-        if (core && !unique.has(core)) unique.set(core, original);
+        if (core) {
+          if (!unique.has(core)) unique.set(core, []);
+          unique.get(core).push(textNode);
+        }
       });
 
       // Small concurrency limit so a large family tree does not fire hundreds
@@ -261,29 +288,25 @@ export const LanguageProvider = ({ children }) => {
           const current = entries[index++];
           const core = current[0];
           const translated = await translateWithGoogle(core, targetLanguage);
-          translatedMap.set(core, translated || core);
+          if (runId !== translationRun.current) return;
+          const result = translated || core;
+          current[1].forEach(textNode => {
+            const original = originals.current.get(textNode) || textNode.nodeValue;
+            const leading = original.match(/^\s*/)?.[0] || '';
+            const trailing = original.match(/\s*$/)?.[0] || '';
+            textNode.nodeValue = leading + result + trailing;
+          });
         }
       };
       await Promise.all([worker(), worker(), worker(), worker(), worker(), worker()]);
 
       if (runId !== translationRun.current) return;
 
-      nodes.forEach(textNode => {
-        const original = originals.current.get(textNode) || textNode.nodeValue;
-        const leading = original.match(/^\s*/)?.[0] || '';
-        const trailing = original.match(/\s*$/)?.[0] || '';
-        const core = normalize(original);
-        const translated = targetLanguage === 'en'
-          ? core
-          : (translatedMap.get(core) || core);
-        textNode.nodeValue = leading + translated + trailing;
-      });
-
       // Translate placeholders, titles, aria labels and image alt text too.
       const elements = root.querySelectorAll('[placeholder], [title], [aria-label], [alt]');
-      for (const el of elements) {
-        if (el.closest('.vamsapattika-language')) continue;
-        if (el.closest('[data-no-translate="true"]')) continue;
+      await Promise.all([...elements].map(async (el) => {
+        if (el.closest('.vamsapattika-language')) return;
+        if (el.closest('[data-no-translate="true"]')) return;
 
         for (const attr of ['placeholder', 'title', 'aria-label', 'alt']) {
           if (!el.hasAttribute(attr)) continue;
@@ -302,10 +325,10 @@ export const LanguageProvider = ({ children }) => {
           if (runId !== translationRun.current) return;
           el.setAttribute(attr, translated || original);
         }
-      }
+      }));
     } finally {
       applying.current = false;
-      if (pendingLanguage.current && pendingLanguage.current !== targetLanguage) {
+      if (pendingLanguage.current) {
         const nextLanguage = pendingLanguage.current;
         pendingLanguage.current = null;
         scheduleTranslation(nextLanguage);
@@ -337,7 +360,7 @@ export const LanguageProvider = ({ children }) => {
 
     const root = document.getElementById('root') || document.body;
     const observer = new MutationObserver(() => {
-      if (!applying.current) scheduleTranslation(language);
+      scheduleTranslation(language);
     });
 
     // Watch only structural changes. We intentionally do NOT watch
@@ -349,7 +372,7 @@ export const LanguageProvider = ({ children }) => {
       if (frame.current) cancelAnimationFrame(frame.current);
       translationRun.current += 1;
     };
-  }, [language]);
+  }, [language, pathname]);
 
   const value = useMemo(() => ({
     language,

@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const CustomConfirm = ({ isOpen, message, onConfirm, onCancel }) => {
+  const { t } = useLanguage();
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
@@ -44,7 +46,7 @@ const CustomConfirm = ({ isOpen, message, onConfirm, onCancel }) => {
             whiteSpace: 'pre-line'
           }}
         >
-          {message}
+          {t(message)}
         </div>
         <div
           style={{
@@ -76,7 +78,7 @@ const CustomConfirm = ({ isOpen, message, onConfirm, onCancel }) => {
               e.target.style.color = '#666';
             }}
           >
-            Cancel
+            {t('Cancel')}
           </button>
           <button
             onClick={onConfirm}
@@ -103,7 +105,7 @@ const CustomConfirm = ({ isOpen, message, onConfirm, onCancel }) => {
               e.target.style.boxShadow = 'none';
             }}
           >
-            Confirm
+            {t('Confirm')}
           </button>
         </div>
       </div>

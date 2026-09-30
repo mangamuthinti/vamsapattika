@@ -12,6 +12,7 @@ const PersonCard = ({ personId }) => {
   const { language, translateDynamic, translateName } = useLanguage();
   const person = familyData[personId];
 
+  const [displayName, setDisplayName] = useState(person?.name || '');
   const [displayOccupation, setDisplayOccupation] = useState(person?.occupation || '');
 
   const cardRef = useRef(null);
@@ -41,6 +42,26 @@ const PersonCard = ({ personId }) => {
     color: person.customColors?.text || 'white',
     paddingTop: '10px'
   };
+
+  useEffect(() => {
+    if (!person) return undefined;
+
+    let cancelled = false;
+    if (language === 'en') {
+      setDisplayName(person.name || '');
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    translateName(person.name).then((name) => {
+      if (!cancelled) setDisplayName(name || person.name || '');
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [person?.name, language, translateName]);
 
   useEffect(() => {
     if (!person) return undefined;
@@ -354,26 +375,27 @@ const PersonCard = ({ personId }) => {
           <div className={`photo-container ${person.photoShape ? `photo-shape-${person.photoShape}` : 'photo-shape-circle'}`}>
             <img
               src={person.photo}
-              alt={person.name}
+              alt={displayName}
               className="person-photo"
             />
           </div>
         )}
 
         <div
-          key={`name-${personId}-${person.name}`}
+          key={`name-${personId}-${displayName}`}
           className="name"
+          data-no-translate="true"
           style={{
             lineHeight: '1.2',
             wordBreak: 'break-word',
             overflowWrap: 'break-word',
             hyphens: 'none',
             ...person.textStyles?.name,
-            fontSize: calculateFontSize(person.name, 0.9),
+            fontSize: calculateFontSize(displayName, 0.9),
           }}
           onClick={(e) => handleTextClick(e, 'name')}
         >
-          {person.name}
+          {displayName}
         </div>
         <div className="gender-badge">{genderSymbol[person.gender]}</div>
         {(person.birthDate || person.deathDate) && (

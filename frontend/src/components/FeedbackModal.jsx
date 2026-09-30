@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import CustomAlert from './CustomAlert';
 import api from '../api/axios';
 import '../styles/FeedbackModal.css';
 
 const FeedbackModal = ({ isOpen, onClose }) => {
   const { currentUser } = useAuth();
+  const { t } = useLanguage();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [alertState, setAlertState] = useState({ isOpen: false, message: '' });
+  const [alertState, setAlertState] = useState({ isOpen: false, message: '', isSuccess: false });
 
   // Auto-fill name and email from logged-in user
   useEffect(() => {
@@ -43,12 +45,12 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     if (!rating) {
-      setAlertState({ isOpen: true, message: 'Please select a rating' });
+      setAlertState({ isOpen: true, message: t('Please select a rating'), isSuccess: false });
       return;
     }
 
     if (!feedback.trim()) {
-      setAlertState({ isOpen: true, message: 'Please write your feedback' });
+      setAlertState({ isOpen: true, message: t('Please write your feedback'), isSuccess: false });
       return;
     }
 
@@ -67,7 +69,11 @@ const FeedbackModal = ({ isOpen, onClose }) => {
       // Send feedback via backend API
       const response = await api.post('/auth/feedback/', feedbackData);
 
-      setAlertState({ isOpen: true, message: response.data.message || 'Thank you for your feedback! We\'ve received your message.' });
+      setAlertState({
+        isOpen: true,
+        message: response.data.message || t("Thank you for your feedback! We've received your message."),
+        isSuccess: true,
+      });
 
       // Reset form (keep name and email from user account)
       setRating(0);
@@ -75,8 +81,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
       // Don't close immediately, let alert close do it
     } catch (error) {
       console.error('Error sending feedback:', error);
-      const errorMessage = error.response?.data?.error || 'Failed to send feedback. Please try again later or email us directly at support@vamsapattika.com';
-      setAlertState({ isOpen: true, message: errorMessage });
+      const errorMessage = error.response?.data?.error || t('Failed to send feedback. Please try again later or email us directly at support@vamsapattika.com');
+      setAlertState({ isOpen: true, message: errorMessage, isSuccess: false });
     } finally {
       setIsSubmitting(false);
     }
@@ -93,14 +99,13 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     <div className="feedback-modal-overlay" onClick={handleOverlayClick}>
       <div className="feedback-modal" onClick={(e) => e.stopPropagation()}>
         <div className="feedback-modal-header">
-          <h3>Send Feedback</h3>
+          <h3>{t('Send Feedback')}</h3>
           <button className="feedback-close-btn" onClick={onClose}>×</button>
         </div>
 
         <div className="feedback-info">
           <p>
-            We'd love to hear from you! Share your thoughts, suggestions, or report issues.
-            You can also reach us directly at{' '}
+            {t("We'd love to hear from you! Share your thoughts, suggestions, or report issues. You can also reach us directly at")}{' '}
             <a href="mailto:support@vamsapattika.com" style={{ color: '#009444', fontWeight: '600' }}>
               support@vamsapattika.com
             </a>
@@ -110,7 +115,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit} className="feedback-form">
           {/* Star Rating */}
           <div className="feedback-section">
-            <label className="feedback-label">Rate your experience *</label>
+            <label className="feedback-label">{t('Rate your experience *')}</label>
             <div className="star-rating">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -126,11 +131,11 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               ))}
               <span className="rating-text">
                 {rating > 0 && (
-                  rating === 1 ? 'Poor' :
-                  rating === 2 ? 'Fair' :
-                  rating === 3 ? 'Good' :
-                  rating === 4 ? 'Very Good' :
-                  'Excellent'
+                  rating === 1 ? t('Poor') :
+                  rating === 2 ? t('Fair') :
+                  rating === 3 ? t('Good') :
+                  rating === 4 ? t('Very Good') :
+                  t('Excellent')
                 )}
               </span>
             </div>
@@ -138,13 +143,13 @@ const FeedbackModal = ({ isOpen, onClose }) => {
 
           {/* Feedback */}
           <div className="feedback-section">
-            <label className="feedback-label" htmlFor="feedback">Your Feedback *</label>
+            <label className="feedback-label" htmlFor="feedback">{t('Your Feedback *')}</label>
             <textarea
               id="feedback"
               className="feedback-textarea"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              placeholder="Tell us what you think..."
+              placeholder={t('Tell us what you think...')}
               rows={6}
               required
             />
@@ -158,14 +163,14 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               onClick={onClose}
               disabled={isSubmitting}
             >
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               type="submit"
               className="feedback-btn-primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Submit Feedback'}
+              {isSubmitting ? t('Sending...') : t('Submit Feedback')}
             </button>
           </div>
         </form>
@@ -179,9 +184,9 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         isOpen={alertState.isOpen}
         message={alertState.message}
         onClose={() => {
-          setAlertState({ isOpen: false, message: '' });
+          setAlertState({ isOpen: false, message: '', isSuccess: false });
           // Close feedback modal after success message
-          if (alertState.message.includes('Thank you')) {
+          if (alertState.isSuccess) {
             onClose();
           }
         }}

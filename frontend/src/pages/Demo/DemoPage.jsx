@@ -7,25 +7,23 @@ import "./DemoPage.css";
 const videos = [
     {
         id: 1,
-        title: "English Demo",
-        language: "English",
-        thumbnail: "/images/tree.png",
-        videoUrl: "/videos/english.mp4"
+        title: "తెలుగు డెమో వీడియో",
+        videoUrl: "/videos/telugu.mp4"
     },
-    {
+     {
         id: 2,
-        title: "Hindi Demo",
-        language: "हिंदी",
-        thumbnail: "/images/family.png",
+        title: "हिंदी डेमो वीडियो",
+        // language: "हिंदी",
         videoUrl: "/videos/hindi.mp4"
     },
     {
         id: 3,
-        title: "Telugu Demo",
-        language: "తెలుగు",
-        thumbnail: "/images/memories.png",
-        videoUrl: "/videos/telugu.mp4"
-    }
+        title: "English Demo Video",
+        // language: "English",
+        videoUrl: "/videos/english.mp4"
+    },
+   
+
 ];
 
 export default function DemoPage() {
@@ -82,7 +80,14 @@ export default function DemoPage() {
                                 onClick={() => openVideo(video)}
                             >
                                 <div className="video-thumbnail">
-                                    <img src={video.thumbnail} alt={video.title} />
+                                    <video
+                                        src={video.videoUrl}
+                                        preload="metadata"
+                                        muted
+                                        playsInline
+                                        aria-hidden="true"
+                                        tabIndex={-1}
+                                    />
                                     <div className="play-overlay">
                                         <div className="play-button">
                                             <svg width="60" height="60" viewBox="0 0 60 60" fill="none">

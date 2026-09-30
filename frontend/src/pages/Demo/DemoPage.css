@@ -96,7 +96,7 @@
     overflow: hidden;
 }
 
-.video-thumbnail img {
+.video-thumbnail video {
     position: absolute;
     top: 0;
     left: 0;
@@ -154,7 +154,7 @@
 .video-language {
     margin: 0;
     font-size: 18px;
-      color: var(--teal, #0097a7);
+    color: var(--navy, #1a2b4c);
     font-weight: 600;
 }
 

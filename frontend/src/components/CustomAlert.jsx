@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const CustomAlert = ({ isOpen, message, onClose }) => {
+  const { t } = useLanguage();
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
@@ -44,7 +46,7 @@ const CustomAlert = ({ isOpen, message, onClose }) => {
             lineHeight: '1.5'
           }}
         >
-          {message}
+          {t(message)}
         </div>
         <button
           onClick={onClose}
@@ -71,7 +73,7 @@ const CustomAlert = ({ isOpen, message, onClose }) => {
             e.target.style.boxShadow = 'none';
           }}
         >
-          OK
+          {t('OK')}
         </button>
       </div>
     </div>,

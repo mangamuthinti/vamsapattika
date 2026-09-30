@@ -37,7 +37,6 @@ export default function VideoModal({ video, onClose }) {
         </button>
         <div className="video-modal-header">
           <h3>{video.title}</h3>
-          <p>{video.language}</p>
         </div>
         <div className="video-modal-player">
           <video
